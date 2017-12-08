@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Login StepLight</title>
+  <link href="style.css.gz" rel="stylesheet">
+  <style>
+    label {color: black;}
+    input[type="text"]:focus~label,
+    input[type="text"]:valid~label,
+    input[type="password"]:focus~label,
+    input[type="password"]:valid~label {
+      color: aliceblue;
+    }
+    .alert {
+      position: fixed;
+      top: 0;
+      width: 95%;
+    }
+  </style>
+</head>
+<body>
+  <div id="alert" class="alert danger" style="display: none;">
+    <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Внимание!</strong> Не верные логин или пароль.
+  </div>
+  <div class="cont" style="margin-top: 10em; min-width: 450px; max-width: 450px;text-align: center;">
+    <fieldset class="purple">
+      <h1>Login</h1>
+      <div class="row">
+        <div class="col">
+          <div class="group">
+            <input type="text" id="login" value="">
+            <label for="name">Login</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="group">
+            <input type="password" id="pass" value="">
+            <label for="name">Password</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" style="text-align: left;">
+          Login "admin" <br> Password "0000"
+        </div>
+        <div class="col col-33">
+          <div class="group">
+            <button class="info" onclick="login()" id="myBtn">LOGIN</button>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <script>
+    function send(page, date, callback) {
+      var req = new XMLHttpRequest();
+      req.open("POST", page, true);
+      req.setRequestHeader('Content-Type', 'application/json');
+      req.addEventListener("load", function() {
+        if (req.status < 400) {
+          callback(req.responseText)
+        } else {
+          callback(req.status)
+        }
+      });
+      req.send(JSON.stringify(date));
+    }
+
+    function name(val) {
+      return document.getElementById(val).value
+    }
+
+    function login() {
+      var data = {}
+      data.login = name("login")
+      data.pass = name("pass")
+      send("auth.lua", data, function(res) {
+        if (res != "false") {
+          document.cookie = "id=" + res;
+          location.href = '/';
+        } else {
+          document.getElementById('alert').style.display = "inline";
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>
