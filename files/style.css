@@ -27,6 +27,9 @@ body {
   line-height: 1.6;
   margin: 0;
 }
+hr{
+  margin-top: 5em;
+}
 
 .cont {
   margin: 0 auto;
@@ -154,7 +157,7 @@ body {
   }
   .row .col {
     margin-bottom: inherit;
-    padding: 0 1.0rem
+    padding: 0 1.0rem;
   }
 }
 
@@ -206,7 +209,7 @@ ul.nav li a.active {
 
 ul.nav li a:hover {
   color: #fff;
-  background: rgba(0, 0, 0, .1);
+  background: rgba(255, 255, 255, .2);
 }
 
 ul.nav li.-icon {
@@ -478,7 +481,6 @@ input[type="password"]:valid~label {
 
 .group {
   position: relative;
-  margin-bottom: 1em;
 }
 
 .search {
@@ -629,8 +631,12 @@ pre{
     opacity: 1;
     transition: opacity 0.6s;
 }
+.n-nav{
+  background-color: #ccc;
+  
+}
 
-.modal-cont {
+.m-cont {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
@@ -639,6 +645,11 @@ pre{
 }
 
 .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
     width: 100%;
+    background-color: black;
+    color: white;
     text-align: center;
 }

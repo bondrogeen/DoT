@@ -19,9 +19,11 @@ local function getRequestData(payload)
    local body=payload:sub(bodyStart,#payload) 
    payload=nil
    collectgarbage()
-   if mimeType=="application/json"then   
+   if mimeType=="application/json"then
+   print(body)
    local ok, json = pcall(sjson.decode,body)
    requestData = ok and json or {}
+   print(requestData.init)
    elseif mimeType=="application/x-www-form-urlencoded" then
     requestData=parse(body,"%s*&?([^=]+=[^&]*)")
    else        

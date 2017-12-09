@@ -56,7 +56,8 @@ return function(conn,filename,args,cookie)
   until not line
   fd:close() fd=nil
   elseif ftype=="lua"then
-   conn:send(dofile(filename)(args))
+  local k, c = pcall(dofile(filename),args)
+  conn:send(type(c)=="string"and c or"error")
   else
   local data=0
   local all=file.open(filename,"r")

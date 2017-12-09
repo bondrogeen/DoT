@@ -30,16 +30,16 @@
       <div class="row">
         <div class="col">
           <div class="group">
-            <input type="text" id="login" value="">
-            <label for="name">Login</label>
+            <input type="text" id="login" name="login" value="">
+            <label for="login">Login</label>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col">
           <div class="group">
-            <input type="password" id="pass" value="">
-            <label for="name">Password</label>
+            <input type="password" name="pass" id="pass" value="">
+            <label for="pass">Password</label>
           </div>
         </div>
       </div>
@@ -69,21 +69,20 @@
       });
       req.send(JSON.stringify(date));
     }
-
     function name(val) {
       return document.getElementById(val).value
     }
-
     function login() {
-      var data = {}
-      data.login = name("login")
-      data.pass = name("pass")
-      send("auth.lua", data, function(res) {
-        if (res != "false") {
+      var data = {};
+      data.init="auth";
+      data.login = name("login");
+      data.pass = name("pass");
+      send("web_control.lua", data, function(res) {
+        if (res == "false") {
+          document.getElementById('alert').style.display = "inline";
+        } else {
           document.cookie = "id=" + res;
           location.href = '/';
-        } else {
-          document.getElementById('alert').style.display = "inline";
         }
       })
     }
