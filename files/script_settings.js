@@ -1,6 +1,7 @@
 window.onload = function () {
 	var modal = document.getElementById('Modal');
 	var int;
+
 	function send(page, data, callback) {
 		var req = new XMLHttpRequest();
 		req.open("POST", page, true);
@@ -14,6 +15,7 @@ window.onload = function () {
 		});
 		req.send(JSON.stringify(data));
 	}
+
 	function nav() {
 		var x = document.getElementById("myTopnav");
 		if (x.className === "nav") {
@@ -22,9 +24,11 @@ window.onload = function () {
 			x.className = "nav";
 		}
 	}
+
 	function id(val) {
 		return document.getElementById(val).value
 	}
+
 	function check_sel(val) {
 		var s = document.getElementById(val);
 		for (var i = 0; i < s.options.length; i++) {
@@ -33,10 +37,12 @@ window.onload = function () {
 			}
 		}
 	}
+
 	function logout() {
 		document.cookie = "id=";
 		location.href = '/login.html';
 	}
+
 	function save() {
 		var data = {
 			init: "save"
@@ -61,13 +67,15 @@ window.onload = function () {
 		}, 600);
 
 		send("web_control.lua", data, function (res) {
-            if(res="true") {
-                send("web_control.lua", {init: "reboot"}, function (res) {
-                    setTimeout(function () {
-                        location.href = location.href;
-                    }, 10000);
-                });
-            }
+			if (res = "true") {
+				send("web_control.lua", {
+					init: "reboot"
+				}, function (res) {
+					setTimeout(function () {
+						location.href = location.href;
+					}, 10000);
+				});
+			}
 		})
 	}
 	var x = ["|", "(|", "((|", "(((|", "((((|"];
@@ -80,6 +88,7 @@ window.onload = function () {
 		document.getElementById('search').value = x[y];
 		y = y + 1
 	}
+
 	function scan() {
 		int = setInterval(ani, 200);
 		send("web_control.lua", {
@@ -119,12 +128,12 @@ window.onload = function () {
 			scan();
 		} else if (event.target.id == "btn_nav") {
 			nav();
-		} else if (event.target.id == "btn_exit") {	
+		} else if (event.target.id == "btn_exit") {
 			logout();
 		} else if (event.target.id == "btn_save") {
 			modal.style.opacity = "1";
 			modal.style.display = "block";
-		} else if (event.target.id == "close_m"| event.target.id == "close") {
+		} else if (event.target.id == "close_m" | event.target.id == "close") {
 			modal.style.opacity = "0";
 			setTimeout(function () {
 				modal.style.display = "none";

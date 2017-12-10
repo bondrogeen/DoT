@@ -1,102 +1,111 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Login StepLight</title>
-  <link href="style.css.gz" rel="stylesheet">
-  <style>
-    label {color: black;}
-    input[type="text"]:focus~label,
-    input[type="text"]:valid~label,
-    input[type="password"]:focus~label,
-    input[type="password"]:valid~label {
-      color: aliceblue;
-    }
-    .alert {
-      position: fixed;
-      top: 0;
-      width: 95%;
-    }
-			.cont{
-				padding-left:3em;
-				padding-right:3em;
-				margin-top: 10em;
-				min-width: 450px;
-				max-width: 450px;
-				border-radius: 10px;					
-			}
-  </style>
+	<meta charset="UTF-8">
+	<title>Login StepLight</title>
+	<link href="style.css.gz" rel="stylesheet">
+	<style>
+		label {
+			color: black;
+		}
+
+		input[type="text"]:focus~label,
+		input[type="text"]:valid~label,
+		input[type="password"]:focus~label,
+		input[type="password"]:valid~label {
+			color: aliceblue;
+		}
+
+		.alert {
+			position: fixed;
+			top: 0;
+			width: 95%;
+		}
+
+		.cont {
+			padding-left: 3em;
+			padding-right: 3em;
+			margin-top: 10em;
+			min-width: 450px;
+			max-width: 450px;
+			border-radius: 10px;
+		}
+	</style>
 </head>
+
 <body>
-  <div id="alert" class="alert danger" style="display: none;">
-    <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
-    <strong>Внимание!</strong> Не верные логин или пароль.
-  </div>
-  <div class="cont center purple">
-      <h1>Login</h1>
-      <div class="row">       
-        <div class="xs-12">
-          <div class="group">
-            <input type="text" id="login" name="login" required=" " value="">
-            <label for="login">LOGIN</label>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="xs-12">
-          <div class="group">
-            <input type="password" name="pass" id="pass" required=" " value="">
-            <label for="pass">PASSWORD</label>
-          </div>
-        </div>
-      </div>
-      <div class="row start">
-        <div class="xs-12 ">
-        <smal style="font-size:0.8em">default login "admin" password "0000"</smal>          
-        </div>
-      </div>      
-      <div class="row end">
-        <div class="xs-6">
-          <div class="group">
-            <button class="info" onclick="login()" id="myBtn">LOGIN</button>
-          </div>
-        </div>
-      </div>
-      <br>
-  </div>
-  <script>
-    function send(page, date, callback) {
-      var req = new XMLHttpRequest();
-      req.open("POST", page, true);
-      req.setRequestHeader('Content-Type', 'application/json');
-      req.addEventListener("load", function() {
-        if (req.status < 400) {
-          callback(req.responseText)
-        } else {
-          callback(req.status)
-        }
-      });
-      req.send(JSON.stringify(date));
-    }
-    function name(val) {
-      return document.getElementById(val).value
-    }
-    function login() {
-					document.getElementById('alert').style.display = "none";
-      var data = {};
-      data.init="auth";
-      data.login = name("login");
-      data.pass = name("pass");
-      send("web_control.lua", data, function(res) {
-        if (res == "false") {
-          document.getElementById('alert').style.display = "inline";
-        } else {
-          document.cookie = "id=" + res;
-          location.href = '/';
-        }
-      })
-    }
-  </script>
+	<div id="alert" class="alert danger" style="display: none;">
+		<span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+		<strong>Внимание!</strong> Не верные логин или пароль.
+	</div>
+	<div class="cont center purple">
+		<h1>Login</h1>
+		<div class="row">
+			<div class="xs-12">
+				<div class="group">
+					<input type="text" id="login" name="login" required=" " value="">
+					<label for="login">LOGIN</label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="xs-12">
+				<div class="group">
+					<input type="password" name="pass" id="pass" required=" " value="">
+					<label for="pass">PASSWORD</label>
+				</div>
+			</div>
+		</div>
+		<div class="row start">
+			<div class="xs-12 ">
+				<smal style="font-size:0.8em">default login "admin" password "0000"</smal>
+			</div>
+		</div>
+		<div class="row end">
+			<div class="xs-6">
+				<div class="group">
+					<button class="info" onclick="login()" id="myBtn">LOGIN</button>
+				</div>
+			</div>
+		</div>
+		<br>
+	</div>
+	<script>
+		function send(page, date, callback) {
+			var req = new XMLHttpRequest();
+			req.open("POST", page, true);
+			req.setRequestHeader('Content-Type', 'application/json');
+			req.addEventListener("load", function() {
+				if (req.status < 400) {
+					callback(req.responseText)
+				} else {
+					callback(req.status)
+				}
+			});
+			req.send(JSON.stringify(date));
+		}
+
+		function name(val) {
+			return document.getElementById(val).value
+		}
+
+		function login() {
+			document.getElementById('alert').style.display = "none";
+			var data = {};
+			data.init = "auth";
+			data.login = name("login");
+			data.pass = name("pass");
+			send("web_control.lua", data, function(res) {
+				if (res == "false") {
+					document.getElementById('alert').style.display = "inline";
+				} else {
+					document.cookie = "id=" + res;
+					location.href = '/';
+				}
+			})
+		}
+	</script>
 </body>
 
 </html>

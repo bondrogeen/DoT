@@ -687,7 +687,7 @@ button {
 	-moz-transition: 0.35s ease-in-out;
 	-o-transition: 0.35s ease-in-out;
 	transition: all 0.35s ease-in-out;
-	color: black;	
+	color: black;
 }
 
 button:hover {
@@ -987,6 +987,7 @@ pre {
 	opacity: 1;
 	transition: opacity 0.6s;
 }
+
 .m-cont {
 	background-color: #fefefe;
 	margin: auto;
@@ -995,12 +996,15 @@ pre {
 	border-radius: 10px;
 	padding: 15px;
 }
-.m-body{
-  padding: 15px;
+
+.m-body {
+	padding: 15px;
 }
-.m-foo{
+
+.m-foo {
 	text-align: end;
 }
+
 .footer {
 	position: fixed;
 	left: 0;
