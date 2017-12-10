@@ -1,29 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<title>Start page</title>
 	<link href="style.css.gz" rel="stylesheet">
-	<style type="text/css">
-	</style>
 </head>
-
 <body>
 	<ul class="nav" id="myTopnav">
 		<li><a href="#" class="brand">NodeMCU</a></li>
-		<li class="drop">
-			<a href="#">Настройки</a>
-			<div class="drop-cont">
-				<a href="#">Устройства</a>
-				<a href="#">Сети</a>
-			</div>
-		</li>
-		<li><a href="#">Info</a></li>
-		<li style="float:right;margin-right: 10px;"><a href="#" id="btn_exit">Выход</a></li>
-		<li class="-icon">
-			<a href="#" id="btn_nav">☰</a>
-		</li>
+		<li><a href="#">Настройки</a></li>
+		<li><a href="#">Инфо</a></li>
+		<li style="float:right;margin-right:10px;"><a href="#" id="btn_exit">Выход</a></li>
+		<li class="-icon"><a href="#" id="btn_nav">☰</a></li>
 	</ul>
 	<div id="Modal" class="modal">
 		<div class="m-cont">
@@ -40,10 +28,9 @@
 	<div class="cont-flu">
 		<div class="row">
 			<div class="xs-12 sm-2 lg-2">
-
 			</div>
 			<div class="xs-12 sm-10 lg-9">
-				<h1>Settings :</h1>
+				<h1>Settings</h1>
 				<div class="row">
 					<div class="xs-12 sm-6 lg-6">
 						<h3>Wi-Fi :</h3>
@@ -70,7 +57,6 @@
 									</div>
 								</div>
 							</div>
-
 							<div class="xs-10">
 								<div class="group">
 									<input id="wifi_pass" type="password" required="" value="<?lua return(s.wifi_pass)?>">
@@ -117,13 +103,50 @@
 						</div>
 					</div>
 				</div>
+				<br>
+				<h1>Info</h1>
+		<div class="row">
+	<div class="xs-12">
+<table>
+  <thead>
+    <tr>
+      <th>ChipID</th>
+      <th>FlashID</th>
+      <th>FS Total</th>
+      <th>FS Used</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><?luareturn(string.format("%x",node.chipid()*256))?></td>
+      <td><?luareturn(string.format("%x",node.flashid()*256))?></td>
+      <td><?lua local x=file.fsinfo() return(x)?></td>
+      <td><?lua local _, x=file.fsinfo() return(x)?></td>
+    </tr>
+  </tbody>
+</table>
+	</div>
+</div>
+	<br>
+		<div class="row">
+	<div class="xs-2">
+<span> Память :</span>
+	</div>
+	<div class="xs-10">
+		<div class="progbar">
+			<div class="bar" style="width:<?luareturn(node.heap()*100/45000)?>%">
+				<div class="label"><?luareturn(node.heap()*100/45000)?>%</div>
+			</div>
+		</div>
+	</div>
+</div>
+		
+		
+		
 			</div>
 		</div>
 	</div>
 
-	<div class="footer">
-		<p>Footer</p>
-	</div>
 	<script src="script_settings.js"></script>
 
 </body>
