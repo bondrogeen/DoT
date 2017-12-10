@@ -5,7 +5,7 @@ local function parse(body,reg,dec)
  local data={}
  if body==nil or body=="" then return r end
  for kv in body:gmatch(reg)do
-  local key,value=kv:match("(.*)=(.*)")
+  local key,value=kv:match("(%w*)=(.*)")
   data[key]=not dec and uri_decode(value) or value
  end
  return data
@@ -20,10 +20,8 @@ local function getRequestData(payload)
    payload=nil
    collectgarbage()
    if mimeType=="application/json"then
-   print(body)
    local ok, json = pcall(sjson.decode,body)
    requestData = ok and json or {}
-   print(requestData.init)
    elseif mimeType=="application/x-www-form-urlencoded" then
     requestData=parse(body,"%s*&?([^=]+=[^&]*)")
    else        

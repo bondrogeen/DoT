@@ -6,9 +6,6 @@
 	<title>Start page</title>
 	<link href="style.css.gz" rel="stylesheet">
 	<style type="text/css">
-		.search:focus{
-			border-color: #64ac15;
-		}
 	</style>
 </head>
 
@@ -23,123 +20,110 @@
 			</div>
 		</li>
 		<li><a href="#">Info</a></li>
-		<li style="float:right;margin-right: 10px;"><a href="#" onclick="logout()">Выход</a></li>
+		<li style="float:right;margin-right: 10px;"><a href="#" id="btn_exit">Выход</a></li>
 		<li class="-icon">
-			<a href="javascript:void(0);" onclick="myFunction()">☰</a>
+			<a href="#" id="btn_nav">☰</a>
 		</li>
 	</ul>
-	<div id="myModal" class="modal">
-		<div class="m-nav">
-			Настройка
-		</div>
+	<div id="Modal" class="modal">
 		<div class="m-cont">
 			<span class="close" id="close_m">&times;</span>
+		<div class="m-body">			
 			<p>Сохранить настройки и перезагрузить модуль?</p>
-			<p style="text-align: left">
-				<button class="success">Yes</button>
-				<button class="danger">No</button>
-			</p>
+		</div>
+		<div class="m-foo">
+				<button id="save_m" class="success">Yes</button>
+				<button id="close" class="danger">No</button>
+		</div>
 		</div>
 	</div>
-	<div class="cont flu">
+	<div class="cont-flu">
 		<div class="row">
-			<div class="col">
-				<h3>Wi-Fi :</h3>
+			<div class="xs-12 sm-2 lg-2">
+
+			</div>
+			<div class="xs-12 sm-10 lg-9">
+				<h1>Settings :</h1>
 				<div class="row">
-					<div class="col">
-						<div class="group">
-							<select id="wifi_mode" name="wifi_mode">
-              <option <?lua return(s.wifi_mode=="OFF" and 'selected' or '') ?> value="OFF">Выключить</option>
-              <option <?lua return(s.wifi_mode=="ST" and 'selected' or '') ?> value="ST">Wireless client</option>
-              <option <?lua return(s.wifi_mode=="AP" and 'selected' or '') ?> value="AP">Access point</option>             
-              </select>
+					<div class="xs-12 sm-6 lg-6">
+						<h3>Wi-Fi :</h3>
+						<div class="row center">
+							<div class="xs-10">
+								<div class="group">
+									<select id="wifi_mode">
+        <option <?lua return(s.wifi_mode=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
+        <option <?lua return(s.wifi_mode=="ST"and'selected'or'')?> value="ST">Wireless client</option>
+        <option <?lua return(s.wifi_mode=="AP"and'selected'or'')?> value="AP">Access point</option>             
+        </select>
+								</div>
+							</div>
+						</div>
+						<div class="row center">
+							<div class="xs-10">
+								<div class="group">
+									<div class="search">
+										<input id="wifi_id" type="text" required="" value="<?lua return(s.wifi_id)?>">
+										<label for="wifi_id">Имя (SSID):</label>
+										<input id="search" type="submit" value="Поиск">
+										<ul id="list" style="display:none;">
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div class="xs-10">
+								<div class="group">
+									<input id="wifi_pass" type="password" required="" value="<?lua return(s.wifi_pass)?>">
+									<label for="wifi_pass">Password</label>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="group">
-							<div class="search">
-								<input id="tb" value="<?lua return(s.wifi_id)?>" required=" " type="text" name="wifi_id">
-								<label for="wifi_id">Имя (SSID):</label>
-								<input id="sb" type="submit" value="Поиск">
-								<ul id="list" style="display:none;">
-								</ul>
+					<div class="xs-12 sm-6 lg-6">
+						<h3>Аутентификация :</h3>
+						<div class="row center">
+							<div class="xs-10">
+								<div class="group">
+									<select id="auth">
+              <option <?lua return(s.auth=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
+              <option <?lua return(s.auth=="ON"and'selected'or'')?> value="ON">Включить</option>           
+              </select>
+								</div>
+							</div>
+						</div>
+						<div class="row center">
+							<div class="xs-10">
+								<div class="group">
+									<input id="auth_login" type="text" required="" value="<?lua return(s.auth_login)?>">
+									<label for="auth_login">Login</label>
+								</div>
+							</div>
+						</div>
+						<div class="row center">
+							<div class="xs-10">
+								<div class="group">
+									<input id="auth_pass" type="password" required="" value="<?lua return(s.auth_pass)?>">
+									<label for="auth_pass">Password</label>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col">
-						<div class="group">
-							<input type="password" name="pass" id="pass" value="<?lua return(s.wifi_pass)?>">
-							<label for="pass">Password</label>
-						</div>
-					</div>
-				</div>
+			<br><br>
+							<div class="row end">
+        <div class="xs-12">
+          <div class="group">
+            <button class="info" style="margin-right: 2em;" id="btn_save">Save</button>
+          </div>
+        </div>
+      </div>
 			</div>
-			<div class="col">
-				<h3>Аутентификация :</h3>
-				<div class="row">
-					<div class="col">
-						<div class="group">
-							<select id="auth" name="wifi_mode">
-              <option <?lua return(s.auth=="OFF" and 'selected' or '') ?> value="OFF">Выключить</option>
-              <option <?lua return(s.auth=="ON" and 'selected' or '') ?> value="ON">Включить</option>           
-              </select>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="group">
-							<input type="text" name="a_login" id="a_login" value="<?lua return(s.auth_login)?>">
-							<label for="a_login">Login</label>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="group">
-							<input type="password" name="a_pass" id="a_pass" value="<?lua return(s.auth_pass)?>">
-							<label for="a_pass">Password</label>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		</div>			 
+	</div>
 
 	<div class="footer">
 		<p>Footer</p>
 	</div>
-
-	<script>
-		function myFunction() {
-			var x = document.getElementById("myTopnav");
-			if (x.className === "nav") {
-				x.className += " res";
-			} else {
-				x.className = "nav";
-			}
-		}
-	</script>
-	<script>
-		var modal = document.getElementById('myModal');
-		var btn_save = document.getElementById("save");
-		var close_m = document.getElementById("close_m");
-		var btn_modal = document.getElementById("btn_modal");
-
-		btn_save.onclick = function() {
-			modal.style.opacity = "1";
-			modal.style.display = "block";
-		};
-		close_m.onclick = function() {
-			modal.style.opacity = "0";
-			setTimeout(function() {
-				modal.style.display = "none";
-			}, 600);
-		}
-	</script>
 	<script src="script_settings.js"></script>
 
 </body>

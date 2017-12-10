@@ -17,6 +17,14 @@
       top: 0;
       width: 95%;
     }
+			.cont{
+				padding-left:3em;
+				padding-right:3em;
+				margin-top: 10em;
+				min-width: 450px;
+				max-width: 450px;
+				border-radius: 10px;					
+			}
   </style>
 </head>
 <body>
@@ -24,36 +32,37 @@
     <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
     <strong>Внимание!</strong> Не верные логин или пароль.
   </div>
-  <div class="cont" style="margin-top: 10em; min-width: 450px; max-width: 450px;text-align: center;">
-    <fieldset class="purple">
+  <div class="cont center purple">
       <h1>Login</h1>
-      <div class="row">
-        <div class="col">
+      <div class="row">       
+        <div class="xs-12">
           <div class="group">
-            <input type="text" id="login" name="login" value="">
-            <label for="login">Login</label>
+            <input type="text" id="login" name="login" required=" " value="">
+            <label for="login">LOGIN</label>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="xs-12">
           <div class="group">
-            <input type="password" name="pass" id="pass" value="">
-            <label for="pass">Password</label>
+            <input type="password" name="pass" id="pass" required=" " value="">
+            <label for="pass">PASSWORD</label>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col" style="text-align: left;">
-          Login "admin" <br> Password "0000"
+      <div class="row start">
+        <div class="xs-12 ">
+        <smal style="font-size:0.8em">default login "admin" password "0000"</smal>          
         </div>
-        <div class="col col-33">
+      </div>      
+      <div class="row end">
+        <div class="xs-6">
           <div class="group">
             <button class="info" onclick="login()" id="myBtn">LOGIN</button>
           </div>
         </div>
       </div>
-    </fieldset>
+      <br>
   </div>
   <script>
     function send(page, date, callback) {
@@ -73,6 +82,7 @@
       return document.getElementById(val).value
     }
     function login() {
+					document.getElementById('alert').style.display = "none";
       var data = {};
       data.init="auth";
       data.login = name("login");

@@ -49,6 +49,8 @@ return function (tab)
 local r="false"
  if tab.init=="save"then tab.init=nil r=save(tab)
  elseif tab.init=="scan" then wifi.sta.getap(listap) r="true"
+ elseif tab.init=="reboot" then
+  tmr.create():alarm(2000, tmr.ALARM_SINGLE, function()print("reboot")node.restart()end)
  elseif tab.init=="get" then
   if (file.open("get_network.json","r")) then r = file.read('\n') file.close()end
  elseif tab.init=="auth" then r=auth(tab) end

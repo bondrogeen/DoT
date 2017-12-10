@@ -26,9 +26,11 @@ end
 return function(conn,filename,args,cookie)
  local line
  local gzip=filename:match(".gz")
- local ftype=filename:gsub(".gz",""):match("%.([%a%d]+)$") 
+ local ftype=filename:gsub(".gz",""):match("%.([%a%d]+)$")
+ if s.auth=="ON"then
  if not cookie or cookie.id~=crypto.toBase64(crypto.mask(s.auth_login..s.auth_pass,s.token)) then
   if ftype=="html"then filename="login.html"end
+ end
  end
  local fd=file.open(filename,"r")
  if fd then
