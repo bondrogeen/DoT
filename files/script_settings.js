@@ -1,7 +1,24 @@
 window.onload = function () {
 	var modal = document.getElementById('Modal');
 	var int;
-
+	
+	function sendGet(page, data, callback) {
+		var req = new XMLHttpRequest();
+		req.open("GET", page, true);		
+		req.addEventListener("load", function () {
+			if (req.status < 400) {
+				callback(req.responseText);
+			} else {
+				callback(req.status);
+			}
+		});
+		req.send();
+	}
+	sendGet("http://codedevice.ru", "", function(s){
+		alert(s)
+	})
+	
+	
 	function send(page, data, callback) {
 		var req = new XMLHttpRequest();
 		req.open("POST", page, true);

@@ -8,17 +8,13 @@ local extmap={
   jpeg = "image/jpeg",
   jpg = "image/jpeg"
 }
-local function executeCode (str,pattern)
- local _,_,c=str:find(pattern)
- local luaFunc, err=loadstring(c)
- if luaFunc ~=nil then
-  return str:gsub(pattern,luaFunc())
- else
-  return ("Syntax error: "..err)
- end
+local function executeCode (str,par)
+ local _,_,c=str:find(par)
+ local ok , code = pcall(loadstring(c))
+ return ok and str:gsub(par,code) or "Syntax error: "..code 
 end
 local function header(c,t,g)
- local s="HTTP/1.0 "..c .."\r\nServer: httpserver\r\nContent-Type: "..t.."\r\n"
+ local s="HTTP/1.0 "..c .."\r\nServer: web-server\r\nContent-Type: "..t.."\r\n"
  if g then s=s.."Cache-Control: private, max-age=2592000\r\nContent-Encoding: gzip\r\n" end
  s=s.."Connection: close\r\n\r\n"
  return s

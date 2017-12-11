@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-	<title>Start page</title>
+	<title>Settings page</title>
 	<link href="style.css.gz" rel="stylesheet">
 </head>
+
 <body>
 	<ul class="nav" id="myTopnav">
 		<li><a href="#" class="brand">NodeMCU</a></li>
@@ -105,44 +107,50 @@
 				</div>
 				<br>
 				<h1>Info</h1>
-		<div class="row">
-	<div class="xs-12">
-<table>
-  <thead>
-    <tr>
-      <th>ChipID</th>
-      <th>FlashID</th>
-      <th>FS Total</th>
-      <th>FS Used</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><?luareturn(string.format("%x",node.chipid()*256))?></td>
-      <td><?luareturn(string.format("%x",node.flashid()*256))?></td>
-      <td><?lua local x=file.fsinfo() return(x)?></td>
-      <td><?lua local _, x=file.fsinfo() return(x)?></td>
-    </tr>
-  </tbody>
-</table>
-	</div>
-</div>
-	<br>
-		<div class="row">
-	<div class="xs-2">
-<span> Память :</span>
-	</div>
-	<div class="xs-10">
-		<div class="progbar">
-			<div class="bar" style="width:<?luareturn(node.heap()*100/45000)?>%">
-				<div class="label"><?luareturn(node.heap()*100/45000)?>%</div>
-			</div>
-		</div>
-	</div>
-</div>
-		
-		
-		
+				<div class="row">
+					<div class="xs-12">
+						<table>
+							<thead>
+								<tr>
+									<th>ChipID</th>
+									<th>FlashID</th>
+									<th>FS Total</th>
+									<th>FS Used</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<?luareturn(string.format("%x",node.chipid()*256))?>
+									</td>
+									<td>
+										<?luareturn(string.format("%x",node.flashid()*256))?>
+									</td>
+									<td>
+										<?lua local x=file.fsinfo() return(x)?>
+									</td>
+									<td>
+										<?lua local _, x=file.fsinfo() return(x)?>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="xs-2">
+						<span> Память :</span> 
+					</div>
+					<div class="xs-10">
+						<div class="progbar">
+							<div class="bar" style="width:<?luareturn(node.heap()*100/45000)?>%">
+								<div class="label">
+									<?luareturn(node.heap()*100/45000)?>%</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
