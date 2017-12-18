@@ -2,24 +2,31 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Settings page</title>
-	<link href="style.css.gz" rel="stylesheet">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Step light</title>
+	<link rel="stylesheet" href="style.css.gz" />
+	<style>
+		.cont-flu{
+			margin-top: 3em;
+		}
+	</style>
 </head>
 
 <body>
-	<ul class="nav" id="myTopnav">
+	<ul class="nav fix" id="myTopnav">
 		<li><a href="#" class="brand">NodeMCU</a></li>
-		<li><a href="#">Настройки</a></li>
-		<li><a href="#">Инфо</a></li>
-		<li style="float:right;margin-right:10px;"><a href="#" id="btn_exit">Выход</a></li>
+		<li><a href="settings.html">Настройки</a></li>
+		<li><a href="https://github.com/bondrogeen/nodemcu-css" target="_blank" >Инфо CSS</a></li>
+		<li><a href="https://github.com/bondrogeen/web-server" target="_blank" >Инфо web-server</a></li>
+		<li style="float:right;margin-right:10px;"><a href="#" onclick="logout()" >Выход</a></li>
 		<li class="-icon"><a href="#" id="btn_nav">☰</a></li>
 	</ul>
 	<div id="Modal" class="modal">
 		<div class="m-cont">
 			<span class="close" id="close_m">&times;</span>
 			<div class="m-body">
-				<p>Сохранить настройки и перезагрузить модуль?</p>
+				<p>Сохранить настройки?</p>
 			</div>
 			<div class="m-foo">
 				<button id="save_m" class="success">Yes</button>
@@ -29,83 +36,7 @@
 	</div>
 	<div class="cont-flu">
 		<div class="row">
-			<div class="xs-12 sm-2 lg-2">
-			</div>
-			<div class="xs-12 sm-10 lg-9">
-				<h1>Settings</h1>
-				<div class="row">
-					<div class="xs-12 sm-6 lg-6">
-						<h3>Wi-Fi :</h3>
-						<div class="row center">
-							<div class="xs-10">
-								<div class="group">
-									<select id="wifi_mode">
-        <option <?lua return(s.wifi_mode=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
-        <option <?lua return(s.wifi_mode=="ST"and'selected'or'')?> value="ST">Wireless client</option>
-        <option <?lua return(s.wifi_mode=="AP"and'selected'or'')?> value="AP">Access point</option>             
-        </select>
-								</div>
-							</div>
-						</div>
-						<div class="row center">
-							<div class="xs-10">
-								<div class="group">
-									<div class="search">
-										<input id="wifi_id" type="text" required="" value="<?lua return(s.wifi_id)?>">
-										<label for="wifi_id">Имя (SSID):</label>
-										<input id="search" type="submit" value="Поиск">
-										<ul id="list" style="display:none;">
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="xs-10">
-								<div class="group">
-									<input id="wifi_pass" type="password" required="" value="<?lua return(s.wifi_pass)?>">
-									<label for="wifi_pass">Password</label>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="xs-12 sm-6 lg-6">
-						<h3>Аутентификация :</h3>
-						<div class="row center">
-							<div class="xs-10">
-								<div class="group">
-									<select id="auth">
-              <option <?lua return(s.auth=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
-              <option <?lua return(s.auth=="ON"and'selected'or'')?> value="ON">Включить</option>           
-              </select>
-								</div>
-							</div>
-						</div>
-						<div class="row center">
-							<div class="xs-10">
-								<div class="group">
-									<input id="auth_login" type="text" required="" value="<?lua return(s.auth_login)?>">
-									<label for="auth_login">Login</label>
-								</div>
-							</div>
-						</div>
-						<div class="row center">
-							<div class="xs-10">
-								<div class="group">
-									<input id="auth_pass" type="password" required="" value="<?lua return(s.auth_pass)?>">
-									<label for="auth_pass">Password</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<br><br>
-				<div class="row end">
-					<div class="xs-12">
-						<div class="group">
-							<button class="info" style="margin-right: 2em;" id="btn_save">Save</button>
-						</div>
-					</div>
-				</div>
-				<br>
+			<div class="xs-12 sm-10 sm-of-2 lg-9 lg-of-2">
 				<h1>Info</h1>
 				<div class="row">
 					<div class="xs-12">
@@ -120,43 +51,61 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>
-										<?luareturn(string.format("%x",node.chipid()*256))?>
-									</td>
-									<td>
-										<?luareturn(string.format("%x",node.flashid()*256))?>
-									</td>
-									<td>
-										<?lua local x=file.fsinfo() return(x)?>
-									</td>
-									<td>
-										<?lua local _, x=file.fsinfo() return(x)?>
-									</td>
+									<td><?luareturn(string.format("%x",node.chipid()*256))?></td>
+									<td><?luareturn(string.format("%x",node.flashid()*256))?></td>
+									<td><?lua local x=file.fsinfo() return(x)?></td>
+									<td><?lua local _, x=file.fsinfo() return(x)?></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<br>
-				<div class="row">
-					<div class="xs-2">
-						<span> Память :</span> 
+			<div class="row">
+					<div class="xs-3">
+						<span> Память : <?luareturn(node.heap())?></span>
 					</div>
-					<div class="xs-10">
+					<div class="xs-9">
 						<div class="progbar">
-							<div class="bar" style="width:<?luareturn(node.heap()*100/45000)?>%">
+							<div class="bar purple" style="width:<?luareturn(node.heap()*100/45000)?>%">
 								<div class="label">
 									<?luareturn(node.heap()*100/45000)?>%</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<h1>File list</h1>
+				<div class="row">
+					<div class="xs-8">
+						<button class="grey" onclick='document.getElementById("list").style.display = "block"; this.parentElement.style.display="none";'>Open</button>
+					</div>
+				</div>
+			 		<br>
+				<div id="list" style="display:none;" class="row">
+					<div class="xs-12">
+						<table>
+							<thead>
+								<tr>
+									<th>№</th>
+									<th>Name</th>
+									<th>size</th>
+								</tr>
+							</thead>
+							<tbody>
+<?lua local n=1 local buf="" for k,v in pairs(file.list()) do buf = buf.."<tr><td>"..n.."</td><td>"..k.."</td><td>"..v.."</td><tr>" n=n+1 end return(buf)?>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
-	<script src="script_settings.js"></script>
-
+	<script>
+			function logout() {
+				document.cookie = "id=";
+				location.href = '/login.html';
+				}
+	</script>
 </body>
 
 </html>

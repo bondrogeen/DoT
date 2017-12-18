@@ -14,11 +14,7 @@ window.onload = function () {
 		});
 		req.send();
 	}
-	sendGet("http://codedevice.ru", "", function(s){
-		alert(s)
-	})
-	
-	
+
 	function send(page, data, callback) {
 		var req = new XMLHttpRequest();
 		req.open("POST", page, true);
@@ -60,18 +56,45 @@ window.onload = function () {
 		location.href = '/login.html';
 	}
 
+	function input(val) {
+		var arr = ["mqtt_time", "mqtt_server", "mqtt_port", "mqtt_login", "mqtt_pass"];
+		for (var i = 0; i < arr.length; i++) {
+			document.getElementById(arr[i]).disabled = val;
+			if (val) {document.getElementById(arr[i]).value = "";}
+		}
+	}
+
+if (check_sel("mqtt") == "OFF") {
+  input(true);
+}
+
+
 	function save() {
-		var data = {
-			init: "save"
-		};
-		var arr = ["wifi_id", "wifi_pass", "wifi_mode", "auth_pass", "auth_login", "auth"];
+		var data = {init: "save"};
+		var stop=false
+		var arr = ["wifi_id", "wifi_pass", "wifi_mode", "auth_pass", "auth_login", "auth", "mqtt_port", "mqtt_pass", "mqtt_server", "mqtt", "mqtt_login", "mqtt_time"];
 		arr.forEach(function (item, i, arr) {
-			if (item == "wifi_mode" || item == "auth") {
+			if (item == "wifi_mode" || item == "auth" || item == "mqtt") {
 				data[item] = check_sel(item)
-			} else {
-				data[item] = id(item)
-			}
+				}
+				else {
+					if (check_sel("mqtt") == "ON") {
+						if (item == "mqtt_time" || item == "mqtt_server" || item == "mqtt_port") {
+							if (id(item) !== "") {
+								document.getElementById(item).style.borderColor = "#bbb";
+							}else{
+								stop=true;
+								document.getElementById(item).style.borderColor = "red";
+							}
+						}
+						data[item] = id(item)
+					}else{
+						data[item] = id(item)
+					}
+
+				}
 		});
+		if (stop){ modal.style.display = "none"; return}
 		if (check_sel("wifi_mode") == "OFF") {
 			var w = confirm("Внимание!!! Wi-fi будет отключен, Вы точно этого хотите?");
 			if (!w) {
@@ -89,7 +112,7 @@ window.onload = function () {
 					init: "reboot"
 				}, function (res) {
 					setTimeout(function () {
-						location.href = location.href;
+						location.href = "/";
 					}, 10000);
 				});
 			}
@@ -157,6 +180,12 @@ window.onload = function () {
 			}, 600);
 		} else if (event.target.id == "save_m") {
 			save()
+		} else if (event.target.id == "mqtt") {
+			if (check_sel("mqtt") == "OFF") {
+				 input(true);
+				}else{
+					input(false);
+				}
 		} else {
 			if (event.target.tagName == "LI" && event.target.id) {
 				document.getElementById('wifi_id').value = event.target.id;

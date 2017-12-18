@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Settings page</title><link href="style.css.gz" rel="stylesheet"></head><body><ul class="nav" id="myTopnav"><li><a href="index.html" class="brand">NodeMCU</a></li>
+<li><a href="#">Настройки</a></li><li><a href="https://github.com/bondrogeen/nodemcu-css" target="_blank" >Инфо CSS</a></li><li><a href="https://github.com/bondrogeen/web-server" target="_blank" >Инфо web-server</a></li><li style="float:right;margin-right:10px;"><a href="#" id="btn_exit">Выход</a></li><li class="-icon"><a href="#" id="btn_nav">☰</a></li></ul><div id="Modal" class="modal">
+<div class="m-cont"><span class="close" id="close_m">&times;</span><div class="m-body"><p>Сохранить настройки и перезагрузить модуль?</p></div><div class="m-foo"><button id="save_m" class="success">Yes</button><button id="close" class="danger">No</button></div></div></div><div class="cont-flu"><div class="row"><div class="xs-12 sm-2 lg-2">
+</div><div class="xs-12 sm-10 lg-9"><h1>Settings</h1><div class="row"><div class="xs-12 sm-6 lg-6">
+<h3>Wi-Fi :</h3><div class="row center"><div class="xs-10"><div class="group"><select id="wifi_mode">
+<option <?lua return(s.wifi_mode=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
+<option <?lua return(s.wifi_mode=="ST"and'selected'or'')?> value="ST">Wireless client</option>
+<option <?lua return(s.wifi_mode=="AP"and'selected'or'')?> value="AP">Access point</option>
+</select></div></div></div><div class="row center"><div class="xs-10"><div class="group"><div class="search">
+<input id="wifi_id" name="wifi_id" type="text" required=" " value="<?lua return(s.wifi_id)?>">
+<label for="wifi_id">Имя (SSID):</label><input id="search" type="submit" value="Поиск"><ul id="list" style="display:none;">
+</ul></div></div></div><div class="xs-10"><div class="group"><input id="wifi_pass" type="password" required="" value="<?lua return(s.wifi_pass)?>"><label for="wifi_pass">Password</label></div></div></div></div><div class="xs-12 sm-6 lg-6">
+<h3>Аутентификация :</h3><div class="row center"><div class="xs-10"><div class="group"><select id="auth">
+<option <?lua return(s.auth=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
+<option <?lua return(s.auth=="ON"and'selected'or'')?> value="ON">Включить</option></select>
+</div></div></div><div class="row center"><div class="xs-10"><div class="group"><input id="auth_login" type="text" required="" value="<?lua return(s.auth_login)?>"><label for="auth_login">Login</label></div></div></div>
+<div class="row center"><div class="xs-10"><div class="group"><input id="auth_pass" type="password" required="" value="<?lua return(s.auth_pass)?>"><label for="auth_pass">Password</label></div></div></div></div></div>
+<div class="row"><div class="xs-12"><h3>MQTT :</h3></div></div><div class="row"><div class="xs-12 sm-6 lg-6">
+<div class="row center"><div class="xs-10"><div class="group"><select id="mqtt">
+<option <?lua return(s.mqtt=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
+<option <?lua return(s.mqtt=="ON"and'selected'or'')?> value="ON">Включить</option>
+</select></div></div></div><div class="row center"><div class="xs-10"><div class="group"><input id="mqtt_login" type="text" required="" value="<?lua return(s.mqtt_login)?>"><label for="mqtt_login">Login</label></div>
+</div><div class="xs-10"><div class="group"><input id="mqtt_pass" type="password" required="" value="<?lua return(s.mqtt_pass)?>"><label for="mqtt_pass">Password</label></div></div></div></div>
+<div class="xs-12 sm-6 lg-6"><div class="row center"><div class="xs-10"><div class="group"><input id="mqtt_time" type="text" required="" value="<?lua return(s.mqtt_time)?>"><label for="mqtt_time">Период(сек)</label></div></div>
+</div><div class="row center"><div class="xs-10"><div class="group"><input id="mqtt_server" type="text" required="" value="<?lua return(s.mqtt_server)?>"><label for="mqtt_server">Server</label></div></div></div><div class="row center">
+<div class="xs-10"><div class="group"><input id="mqtt_port" type="text" required="" value="<?lua return(s.mqtt_port)?>">
+<label for="mqtt_port">Port</label></div></div></div></div></div><br><br><div class="row end">
+<div class="xs-12"><div class="group"><button class="info" style="margin-right: 2em;" id="btn_save">Save</button>
+</div></div></div></div></div></div>
+	<script src="script_settings.min.js.gz"></script>
+</body>
+</html>

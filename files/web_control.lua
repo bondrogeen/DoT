@@ -34,7 +34,7 @@ local function listap(t)
 local d = {}
 local i = {}
  for ssid,v in pairs(t) do
-  local authmode, rssi, bssid, channel = string.match(v, "([^,]+),([^,]+),([^,]+),([^,]+)")
+  local authmode, rssi, bssid, channel = v:match("([^,]+),([^,]+),([^,]+),([^,]+)")
   d.sd=ssid
   d.bd=bssid
   d.ri=rssi
