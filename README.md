@@ -29,7 +29,7 @@
 			
 5. Переходим в **Настройки**.
 			
-![Logo](doc/web_server_index_page.jpg)
+![Logo](doc/web_server_settings_page.jpg)
 
 6. Подключаемся к вашей wi-fi сети 
 
