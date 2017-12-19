@@ -1,15 +1,14 @@
 # web-server
 
 Веб сервер для прошивок NodeMCU для ESP8266
-
 Вернее это базовая заготовка для ваших проектов с веб интерфейсом.
 
+[English](https://github.com/bondrogeen/web-server/doc/en/README.md)
 
 ## Особенности
 
 * GET, POST запросы
 * Запуск скриптов
-* Error pages (404)
 * Вставка Lua кода в html страницу (<?lua return(node.chipid()) ?>)
 * Поддержка сжатых файлов .gz
 * Forms authentication
@@ -35,7 +34,7 @@
 
 ## Как работать со скриптами lua
 
-Пример фаил "test.lua"
+Пример файл "test.lua"
    
 ...lua
    
@@ -54,4 +53,4 @@ end
 
 http://IP/test.lua?key=value&name=Roman
 
-
+![test.lua](doc/test_lua_args.jpg)
