@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Settings page</title><link href="style.css.gz" rel="stylesheet"></head><body><ul class="nav" id="myTopnav"><li><a href="index.html" class="brand">NodeMCU</a></li>
-<li><a href="#">Настройки</a></li><li><a href="https://github.com/bondrogeen/nodemcu-css" target="_blank" >Инфо CSS</a></li><li><a href="https://github.com/bondrogeen/web-server" target="_blank" >Инфо web-server</a></li><li style="float:right;margin-right:10px;"><a href="#" id="btn_exit">Выход</a></li><li class="-icon"><a href="#" id="btn_nav">☰</a></li></ul><div id="Modal" class="modal">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Settings page</title><link href="style.css.gz" rel="stylesheet"><style>.cont-flu{margin-top: 3em;}</style></head><body><ul class="nav fix" id="myTopnav"><li><a href="index.html" class="brand">Web-server</a></li>
+<li><a href="#">Настройки</a></li><li style="float:right;margin-right:10px;"><a href="#" id="btn_exit">Выход</a></li>
+<li style="float:right;margin-right:10px;"><a href="http://codedevice.ru" target="_blank" >Code Device</a></li><li class="-icon"><a href="#" id="btn_nav">☰</a></li></ul><div id="Modal" class="modal">
 <div class="m-cont"><span class="close" id="close_m">&times;</span><div class="m-body"><p>Сохранить настройки и перезагрузить модуль?</p></div><div class="m-foo"><button id="save_m" class="success">Yes</button><button id="close" class="danger">No</button></div></div></div><div class="cont-flu"><div class="row"><div class="xs-12 sm-2 lg-2">
 </div><div class="xs-12 sm-10 lg-9"><h1>Settings</h1><div class="row"><div class="xs-12 sm-6 lg-6">
 <h3>Wi-Fi :</h3><div class="row center"><div class="xs-10"><div class="group"><select id="wifi_mode">
@@ -27,6 +28,6 @@
 <label for="mqtt_port">Port</label></div></div></div></div></div><br><br><div class="row end">
 <div class="xs-12"><div class="group"><button class="info" style="margin-right: 2em;" id="btn_save">Save</button>
 </div></div></div></div></div></div>
-	<script src="script_settings.min.js.gz"></script>
+	<script src="script_settings.js.gz"></script>
 </body>
 </html>
