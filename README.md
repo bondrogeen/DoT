@@ -20,15 +20,15 @@
 2. Загрузить все [файлы](https://github.com/bondrogeen/web-server/tree/master/files) в модуль.
 3. Подключиться к точке доступа **Web server** и перейти по адресу **192.168.4.1**.
 			
-![Logo](doc/web_server_login.jpg)
+![Logo](doc/image/web_server_login.jpg)
 			
 4. Вводим логин (admin) и пароль (0000).
 			
-![Logo](doc/web_server_index_page.jpg)
+![Logo](doc/image/web_server_index_page.jpg)
 			
 5. Переходим в **Настройки**.
 			
-![Logo](doc/web_server_settings_page.jpg)
+![Logo](doc/image/web_server_settings_page.jpg)
 
 6. Подключаемся к вашей wi-fi сети 
 
@@ -53,7 +53,7 @@ end
 
 http://IP/test.lua?key=value&name=Roman
 
-![test.lua](doc/test_lua_args.jpg)
+![test.lua](doc/image/test_lua_args.jpg)
 
 Есть ограничения для lua скриптов, принятые данные (args) не должны превышать 1400 байт, а для отправленных не более 4000 байт.
 Если хотите получить большой объем данных, то можно при выполнении скрипта записать эти данные в файл, например (big_data.txt) и вторым запросом получить его.

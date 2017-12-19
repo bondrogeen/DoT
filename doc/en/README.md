@@ -20,15 +20,15 @@ Rather, this is the basic template for your projects with a web interface.
 2. Download all [files] (https://github.com/bondrogeen/web-server/tree/master/files) to the module.
 3. Connect to the access point ** Web server ** and go to the address ** 192.168.4.1 **.
 			
-![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/web_server_login.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/web_server_login.jpg)
 			
 4. Enter the login (admin) and password (0000).
 			
-![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/web_server_index_page.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/web_server_index_page.jpg)
 			
 5. Go to ** Settings **.
 			
-![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/web_server_settings_page.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/web_server_settings_page.jpg)
 
 6. Connect to your wi-fi network
 
@@ -53,5 +53,5 @@ Parameters from forms (if any) will be passed to the table ** args **.
 
 http://IP/test.lua?key=value&name=Roman
 
-![test.lua](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/test_lua_args.jpg)
+![test.lua](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/test_lua_args.jpg)
 
