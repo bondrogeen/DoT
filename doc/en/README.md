@@ -5,7 +5,7 @@ Web server for NodeMCU firmware for ESP8266
 Rather, this is the basic template for your projects with a web interface.
 
 
-## Особенности
+## Features
 
 * GET, POST requests
 * Running scripts
@@ -14,25 +14,25 @@ Rather, this is the basic template for your projects with a web interface.
 * Forms authentication
 * Analysis of forms (application / x-www-form-urlencoded and application / json)
 
-## Установка
+## Installation
 
 1. The modules you need (crypto, file, gpio, net, node, sjson, tmr, uart, wifi) are optional. [Assemble the firmware] (https://nodemcu-build.com/)
 2. Download all [files] (https://github.com/bondrogeen/web-server/tree/master/files) to the module.
 3. Connect to the access point ** Web server ** and go to the address ** 192.168.4.1 **.
 			
-![Logo](doc/web_server_login.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/web_server_login.jpg)
 			
 4. Enter the login (admin) and password (0000).
 			
-![Logo](doc/web_server_index_page.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/web_server_index_page.jpg)
 			
 5. Go to ** Settings **.
 			
-![Logo](doc/web_server_settings_page.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/web_server_settings_page.jpg)
 
 6. Connect to your wi-fi network
 
-## Как работать со скриптами lua
+## How to work with lua scripts
 
 Example file "test.lua"
    
@@ -53,5 +53,5 @@ Parameters from forms (if any) will be passed to the table ** args **.
 
 http://IP/test.lua?key=value&name=Roman
 
-![test.lua](doc/test_lua_args.jpg)
+![test.lua](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/test_lua_args.jpg)
 
