@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Your page</title>
+	<link rel="stylesheet" href="style.css.gz" />
+	<style>
+		h1 {}
+	</style>
+</head>
+
+<body>
+	<ul class="nav" id="myTopnav">
+		<li><a href="#" class="brand">Web-server</a></li>
+		<li><a href="settings.html">Настройки</a></li>
+		<li style="float:right;margin-right:10px;"><a href="#" onclick="logout()">Выход</a></li>
+		<li class="-icon"><a href="#" onclick="nav()">☰</a></li>
+	</ul>
+	<div class="cont-flu">
+		<div class="row">
+			<div class="xs-12 sm-2 lg-2">
+				<br>
+				<span> Память : <?luareturn(node.heap())?></span>
+			</div>
+			<div class="xs-12 sm-10 lg-9">
+				<h1> Template page</h1>
+				<div class="row">
+					<div class="xs-12">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est similique, eaque optio nobis accusantium blanditiis doloremque velit repellendus fugiat quas. Repudiandae ipsa maxime incidunt delectus, rerum! Illum quam velit maiores.
+					</div>
+				</div>
+				<div class="row">
+					<div class="xs-3"><br>
+						<button class="danger" onclick='reboot()'>Reboot</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function send(page, data, callback) {
+			var req = new XMLHttpRequest();
+			req.open("POST", page, true);
+			req.setRequestHeader('Content-Type', 'application/json');
+			req.addEventListener("load", function() {
+				if (req.status < 400) {
+					callback(req.responseText);
+				} else {
+					callback(req.status);
+				}
+			});
+			req.send(JSON.stringify(data));
+		}
+
+		function reboot() {
+			send("web_control.lua", {
+				init: "reboot"
+			}, function(res) {
+				alert("The page will automatically reboot after 10 seconds")
+				setTimeout(function() {
+					location.href = "/";
+				}, 10000);
+			});
+		}
+
+		function logout() {
+			document.cookie = "id=";
+			location.href = '/login.html';
+		}
+
+		function nav() {
+			var x = document.getElementById("myTopnav");
+			if (x.classList.contains("res")) {
+				x.classList.remove('res');
+			} else {
+				x.classList.add('res');
+			}
+		}
+	</script>
+</body>
+
+</html>

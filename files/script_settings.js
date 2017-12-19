@@ -29,14 +29,14 @@ window.onload = function () {
 		req.send(JSON.stringify(data));
 	}
 
-	function nav() {
-		var x = document.getElementById("myTopnav");
-		if (x.className === "nav") {
-			x.className += " res";
-		} else {
-			x.className = "nav";
+		function nav() {
+			var x = document.getElementById("myTopnav");
+			if (x.classList.contains("res")) {
+				x.classList.remove('res');
+			} else {
+				x.classList.add('res');
+			}
 		}
-	}
 
 	function id(val) {
 		return document.getElementById(val).value
