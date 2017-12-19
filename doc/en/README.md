@@ -9,7 +9,7 @@ Rather, this is the basic template for your projects with a web interface.
 
 * GET, POST requests
 * Running scripts
-* Inserting Lua code into an html page (<? Lua return (node.chipid ())?>)
+* Inserting Lua code into an html page ('<? Lua return (node.chipid ())?>')
 * Support for compressed .gz files
 * Forms authentication
 * Analysis of forms (application / x-www-form-urlencoded and application / json)

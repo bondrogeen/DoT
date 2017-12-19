@@ -9,7 +9,7 @@
 
 * GET, POST запросы
 * Запуск скриптов
-* Вставка Lua кода в html страницу (<?lua return(node.chipid()) ?>)
+* Вставка Lua кода в html страницу (...<?lua return(node.chipid()) ?>...)
 * Поддержка сжатых файлов .gz
 * Forms authentication
 * Разбор форм (application/x-www-form-urlencoded и application/json)
