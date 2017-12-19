@@ -34,7 +34,7 @@ Rather, this is the basic template for your projects with a web interface.
 
 ## How to work with lua scripts
 
-Example file "test.lua"
+Example file "template.lua"
    
 ...lua
    
