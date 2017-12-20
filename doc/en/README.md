@@ -1,6 +1,6 @@
 # web-server
 
-Web server for NodeMCU firmware for ESP8266
+Web server for NodeMCU firmware for ESP8266.   
 
 Rather, this is the basic template for your projects with a web interface.
 

@@ -1,7 +1,7 @@
 # web-server
 
-Веб сервер для прошивок NodeMCU для ESP8266
-Вернее это базовая заготовка для ваших проектов с веб интерфейсом.
+Веб сервер для прошивок NodeMCU для ESP8266.   
+Вернее это базовый шаблон для ваших проектов с веб интерфейсом.
 
 [English](https://github.com/bondrogeen/web-server/blob/master/doc/en/README.md)
 
