@@ -1,5 +1,5 @@
 
-return function ()
+return function (val)
 local s = {}
 local def
 if file.open("setting.json", "r") then
