@@ -26,13 +26,9 @@ end
 local function listap(t)
 local d = {}
 local i = {}
- for ssid,v in pairs(t) do
-  local authmode, rssi, bssid, channel = v:match("([^,]+),([^,]+),([^,]+),([^,]+)")
-  d.sd=ssid
-  d.bd=bssid
-  d.ri=rssi
-  d.am=authmode
-  d.cl=channel
+ for k,v in pairs(t) do
+  d.am, d.ri, d.bd, d.cl = v:match("([^,]+),([^,]+),([^,]+),([^,]+)")
+  d.sd=k
   i[#i+1]=d
   d={}
  end
