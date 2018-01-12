@@ -11,7 +11,7 @@ Rather, this is the basic template for your projects with a web interface.
 * Parser forms (application / x-www-form-urlencoded and application / json)
 * Ability to download additional. files (js, css, ico, txt, jpg).
 * Minimum code size in memory, in standby mode.
-* Ability to include LUA code in the HTML page. (\ <? lua return (node.chipid ())?>)
+* Ability to include LUA code in the HTML page. ( \<?lua return(node.chipid()) ?>)
 * Run LUA scripts and send them parameters using POST and GET requests.
 * Minimal authentication.
 * Ability to download compressed files (.gz).
