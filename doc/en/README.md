@@ -8,11 +8,33 @@ Rather, this is the basic template for your projects with a web interface.
 ## Features
 
 * GET, POST requests
-* Running scripts
-* Inserting Lua code into an html page ( \<? Lua return (node.chipid ())?> )
-* Support for compressed .gz files
-* Forms authentication
-* Analysis of forms (application / x-www-form-urlencoded and application / json)
+* Parser forms (application / x-www-form-urlencoded and application / json)
+* Ability to download additional. files (js, css, ico, txt, jpg).
+* Minimum code size in memory, in standby mode.
+* Ability to include LUA code in the HTML page. (\ <? lua return (node.chipid ())?>)
+* Run LUA scripts and send them parameters using POST and GET requests.
+* Minimal authentication.
+* Ability to download compressed files (.gz).
+
+## Structure
+
+### Initialization:
+* init.lua - initialization of settings and wi-fi.
+* get_settings.lua - get settings, as well as the default settings.
+
+### The server consists of four main scripts:
+* web_server.lua - is the web server itself.
+* web_request.lua - analysis of responses from the client.
+* web_file.lua - transfer files, run scripts and load html pages with lua code.
+* web_control.lua - authentication, saving parameters, obtaining a list of access points.
+
+### Files:
+* favicon.ico - icon.
+* index.html - home page.
+* settings.html - settings page.
+* login.html - page authentication.
+* script_settings.js.gz - js script (compressed) for processing and sending forms.
+* style.css.gz - style file (compressed).
 
 ## Installation
 
@@ -38,12 +60,16 @@ Example file "template.lua"
    
 ...lua
    
-return function (args)   
- local str=""   
- for k, v in pairs(args) do   
-  str=str..k.." : "..v.."<br>"    
- end    
- return str    
+Local function arg_to_str(val)
+  local str=""
+  for k, v in pairs(val) do
+    str=str..k.." : "..v.."
+  end
+  return str
+end
+
+return function (args)
+ return arg_to_str(args)
 end   
    
 ... 
@@ -51,7 +77,10 @@ end
 
 Parameters from forms (if any) will be passed to the table ** args **.
 
-http://IP/test.lua?key=value&name=Roman
+http://IP/template.lua?key=value&name=CodeDevice
 
 ![test.lua](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/test_lua_args.jpg)
 
+## Restrictions.
+The server processes the files in different ways, so for files with the extension .html the reading from the file is progressive, this is done to simplify the processing of the built-in Lua code, there is no limitation on the file size. With files with the .lua extension, the size of the sent data is no more than 4KB.
+All other files are transferred byte by byte (1024 bytes at a time), there are also no restrictions on the file size. The server can not receive data more than 1.4KB (data + header). While there was no such need.)))
