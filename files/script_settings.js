@@ -1,19 +1,6 @@
 window.onload = function () {
 	var modal = document.getElementById('Modal');
 	var int;
-	
-	function sendGet(page, data, callback) {
-		var req = new XMLHttpRequest();
-		req.open("GET", page, true);		
-		req.addEventListener("load", function () {
-			if (req.status < 400) {
-				callback(req.responseText);
-			} else {
-				callback(req.status);
-			}
-		});
-		req.send();
-	}
 
 	function send(page, data, callback) {
 		var req = new XMLHttpRequest();
@@ -68,7 +55,6 @@ if (check_sel("mqtt") == "OFF") {
   input(true);
 }
 
-
 	function save() {
 		var data = {init: "save"};
 		var stop=false
@@ -91,7 +77,6 @@ if (check_sel("mqtt") == "OFF") {
 					}else{
 						data[item] = id(item)
 					}
-
 				}
 		});
 		if (stop){ modal.style.display = "none"; return}

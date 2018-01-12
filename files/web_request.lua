@@ -1,4 +1,4 @@
-local function hex_to_char(x)return string.char(tonumber(x,16))end
+local function hex_to_char(x) return string.char(tonumber(x,16))end
 local function uri_decode(input)return input:gsub("%+"," "):gsub("%%(%x%x)",hex_to_char)
 end
 local function parse(body,reg,dec)

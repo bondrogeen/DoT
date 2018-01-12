@@ -2,11 +2,11 @@ gpio.mode(1, gpio.INPUT)
 local on=gpio.read(1)
 print(on)
 s={}
-s=dofile("get_settings.lua")()
+s=dofile("get_settings.lua")(on)
 local cfg={}
 cfg.ssid=s.wifi_id
 if string.len(s.wifi_pass)>=8 then cfg.pwd=s.wifi_pass end
-if s.wifi_mode=="AP"or on==0 then
+if s.wifi_mode=="AP"then
 print("Access point")
 wifi.setmode(wifi.STATIONAP)
 wifi.ap.config(cfg)

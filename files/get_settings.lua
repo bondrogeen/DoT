@@ -1,15 +1,18 @@
 
-return function ()
-local s = {};
-local f = file;
-if (f.open("setting.json", "r")) then
-local j = sjson;
-local ok, json = pcall(j.decode,f.read('\n'))
+return function (val)
+local s = {}
+local def
+if file.open("setting.json", "r") then
+def = val==1
+else
+def=nil
+end
+if def then
+file.open("setting.json", "r")
+local ok, json = pcall(sjson.decode,file.read('\n'))
 s = ok and json or {}
 s.token=crypto.toBase64(node.random(100000))
-f.close();
-f=nil
-j=nil
+file.close()
 else
 s.wifi_id = "Web Server";
 s.wifi_pass = "";
