@@ -56,7 +56,7 @@ Rather, this is the basic template for your projects with a web interface.
 
 ## How to work with lua scripts
 
-Example file "template.lua"
+Example file "test.lua"
    
 ...lua
    
@@ -77,7 +77,7 @@ end
 
 Parameters from forms (if any) will be passed to the table ** args **.
 
-http://IP/template.lua?key=value&name=CodeDevice
+http://IP/test.lua?key=value&name=Roman
 
 ![test.lua](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/test_lua_args.jpg)
 

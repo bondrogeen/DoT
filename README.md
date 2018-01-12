@@ -57,7 +57,7 @@
 
 ## Шаблон lua-скрипта для сервера
 
-Пример файл "template.lua"
+Пример файл "test.lua"
 
 
 ...lua
@@ -79,7 +79,7 @@ end
 
 Параметры от форм (если они есть) будут переданы в таблицу **args**.
 
-http://IP/template.lua?key=value&name=CodeDevice
+http://IP/test.lua?key=value&name=Roman
 
 ![test.lua](doc/image/test_lua_args.jpg)
 
