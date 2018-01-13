@@ -61,20 +61,10 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>
-										<?luareturn(string.format("%x",node.chipid()*256))?>
-									</td>
-									<td>
-										<?luareturn(string.format("%x",node.flashid()*256))?>
-									</td>
-									<td>
-										<?lua local x=file.fsinfo() return(x)?>
-									</td>
-									<td>
-										<?lua local _, x=file.fsinfo() return(x)?>
-									</td>
-								</tr>
+								<tr><td><?luareturn(string.format("%x",node.chipid()*256))?></td>
+          <td><?luareturn(string.format("%x",node.flashid()*256))?></td>
+          <td><?lua local x=file.fsinfo() return(x)?></td>
+									<td><?lua local _, x=file.fsinfo() return(x)?></td></tr>
 							</tbody>
 						</table>
 					</div>

@@ -4,9 +4,7 @@
 <div class="m-cont"><span class="close" id="close_m">&times;</span><div class="m-body"><p>Сохранить настройки и перезагрузить модуль?</p></div><div class="m-foo"><button id="save_m" class="success">Yes</button><button id="close" class="danger">No</button></div></div></div><div class="cont-flu"><div class="row"><div class="xs-12 sm-2 lg-2">
 </div><div class="xs-12 sm-10 lg-9"><h1>Settings</h1><div class="row"><div class="xs-12 sm-6 lg-6">
 <h3>Wi-Fi :</h3><div class="row center"><div class="xs-10"><div class="group"><select id="wifi_mode">
-<option <?lua return(s.wifi_mode=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
-<option <?lua return(s.wifi_mode=="ST"and'selected'or'')?> value="ST">Wireless client</option>
-<option <?lua return(s.wifi_mode=="AP"and'selected'or'')?> value="AP">Access point</option>
+<option <?lua return(s.wifi_mode=="OFF"and'selected'or'')?> value="OFF">Выключить</option><option <?lua return(s.wifi_mode=="ST"and'selected'or'')?> value="ST">Wireless client</option><option <?lua return(s.wifi_mode=="AP"and'selected'or'')?> value="AP">Access point</option>
 </select></div></div></div><div class="row center"><div class="xs-10"><div class="group"><div class="search">
 <input id="wifi_id" name="wifi_id" type="text" required=" " value="<?lua return(s.wifi_id)?>">
 <label for="wifi_id">Имя (SSID):</label><input id="search" type="submit" value="Поиск"><ul id="list" style="display:none;">

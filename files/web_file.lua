@@ -8,10 +8,11 @@ local extmap={
   jpeg = "image/jpeg",
   jpg = "image/jpeg"
 }
-local function executeCode (str,par)
- local _,_,c=str:find(par)
- local ok , code = pcall(loadstring(c))
- return ok and str:gsub(par,code) or "Syntax error: "..code 
+local function executeCode (s,p)
+ for v in s:gmatch(p) do
+  local _,c=pcall(loadstring(v))
+  s=s:gsub(p,tostring(c),1)
+ end return s
 end
 local function header(c,t,g)
  local s="HTTP/1.0 "..c .."\r\nServer: web-server\r\nContent-Type: "..t.."\r\n"
@@ -40,8 +41,8 @@ return function(conn,filename,args,cookie)
   repeat
    line=fd:readline()
     if line then
-     if line:find("<%?lua(.+)%?>")then
-      buf=buf..executeCode(line,"<%?lua(.+)%?>")
+     if line:find("<%?lua(.-)%?>")then
+      buf=buf..executeCode(line,"<%?lua(.-)%?>")
      else
       buf=buf..line
      end
