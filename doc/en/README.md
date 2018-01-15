@@ -20,7 +20,8 @@ Rather, this is the basic template for your projects with a web interface.
 
 ### Initialization:
 * init.lua - initialization of settings and wi-fi.
-* get_settings.lua - get settings, as well as the default settings.
+* init_settings.lua - getting settings, as well as keeping the default settings.
+* init_wifi.lua - connection to the wifi network.
 
 ### The server consists of four main scripts:
 * web_server.lua - is the web server itself.

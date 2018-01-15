@@ -1,6 +1,6 @@
 return function (v,back)
-local s
 print(v)
+local s
 if file.open("setting.json", "r") and v==1 then
 local ok, json = pcall(sjson.decode,file.read('\n'))
 s = ok and json or {}
