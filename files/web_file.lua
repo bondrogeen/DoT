@@ -11,7 +11,7 @@ local extmap={
 local function executeCode (s,p)
  for v in s:gmatch(p) do
   local _,c=pcall(loadstring(v))
-  s=s:gsub(p,tostring(c),1)
+  s=s:gsub(p,tostring(c==nil and "" or c),1)
  end return s
 end
 local function header(c,t,g)
@@ -37,6 +37,7 @@ return function(conn,filename,args,cookie)
   conn:send("<h1>Page not found</h1>") return
  end
  if ftype=="html"then
+  arg=args
   local buf=""
   repeat
    line=fd:readline()
@@ -53,7 +54,7 @@ return function(conn,filename,args,cookie)
      buf=""
    end
   until not line
-  fd:close() fd=nil
+  fd:close() fd=nil arg=nil
   elseif ftype=="lua"then
   local k, c = pcall(dofile(filename),args)
   conn:send(type(c)=="string"and c or"error")

@@ -1,7 +1,7 @@
 return function (m,i,p,c)
 local cfg={}
 cfg.ssid=i
-cfg.pwd = p:len()>=8 and p or nil
+cfg.pwd = string.len(p)>=8 and p or nil
 if m=="AP"then
 print("Access point")
 wifi.setmode(wifi.STATIONAP)

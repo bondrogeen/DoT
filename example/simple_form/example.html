@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Форма</title>
+ </head>
+ <body>
+  <form id="get"></form>
+  <p>Simple form, processing the form on the page (GET)</p>
+  <p><input name="loginGet" form="get" value="<?lua return(arg.loginGet)?>">
+  <input name="passGet"  form="get" value="<?lua return(arg.passGet)?>"></p>
+  <p><input type="submit" form="get"></p>
+  <br>
+  <br>
+  <form id="post" method="post"></form>
+  <p>Simple form, processing the form on the page (POST)</p>
+  <p><input name="loginPost" form="post" value="<?lua return(arg.loginPost)?>">
+  <input name="passPost"  form="post" value="<?lua return(arg.passPost)?>"></p>
+  <p><input type="submit" form="post"></p>
+  <br>
+  <br>
+  <form id="postSendTo" method="post" action="example.lua"></form>
+  <p>Processing the form in the file "example.lua"</p>
+  <p><input name="loginSendTo" form="postSendTo" value="">
+  <input name="passSendTo"  form="postSendTo" value=""></p>
+  <p><input type="submit" form="postSendTo"></p>
+
+ </body>
+</html>

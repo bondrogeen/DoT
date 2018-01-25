@@ -1,4 +1,4 @@
-return function (v,back)
+return function (v)
 print(v)
 local s
 if file.open("setting.json", "r") and v==1 then
