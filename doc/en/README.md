@@ -24,7 +24,7 @@ Rather, this is the basic template for your projects with a web interface.
 * init_wifi.lua - connection to the wifi network.
 
 ### The server consists of four main scripts:
-* web_server.lua - is the web server itself.
+* web.lua - is the web server itself.
 * web_request.lua - analysis of responses from the client.
 * web_file.lua - transfer files, run scripts and load html pages with lua code.
 * web_control.lua - authentication, saving parameters, obtaining a list of access points.

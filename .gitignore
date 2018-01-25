@@ -2,3 +2,6 @@
 /files/style.css
 /files/script_settings.js
 /files/web_get.lua
+/files/mqtt.lua
+/files/mqtt_message.lua
+/files/mqtt_test.lua
