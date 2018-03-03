@@ -12,17 +12,26 @@
 </head>
 
 <body>
+	<div id="mySidenav" class="sidenav">
+		<span href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</span>
+		<a href="https://github.com/bondrogeen/nodemcu-css" target="_blank">CSS</a>
+		<a href="https://bondrogeen.github.io/" target="_blank">Example css</a>
+		<a href="https://github.com/bondrogeen/web-server" target="_blank">Web-server</a>
+		<a href="http://codedevice.ru" target="_blank">Code Device</a>
+		<a href="#">About</a>
+	</div>
+	<div class="sideopen"><span onclick="openNav()">&#9776;</span></div>
 	<ul class="nav" id="myTopnav">
 		<li><a href="#" class="brand">Web-server</a></li>
-		<li><a href="settings.html">Настройки</a></li>
-		<li style="float:right;margin-right:10px;"><a href="#" onclick="logout()">Выход</a></li>
+		<li><a href="settings.html">Settings</a></li>
+		<li style="float:right;margin-right:10px;"><a href="#" onclick="logout()">Exit</a></li>
 		<li class="-icon"><a href="#" onclick="nav()">☰</a></li>
 	</ul>
-	<div class="cont-flu">
+	<div class="cont">
 		<div class="row">
 			<div class="xs-12 sm-2 lg-2">
 				<br>
-				<span> Память : <?luareturn(node.heap())?></span>
+				<span> RAM : <?luareturn(node.heap())?></span>
 			</div>
 			<div class="xs-12 sm-10 lg-9">
 				<h1> Template page</h1>

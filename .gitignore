@@ -5,3 +5,5 @@
 /files/mqtt.lua
 /files/mqtt_message.lua
 /files/mqtt_test.lua
+/files/nodemcu-css.css
+/files/nodemcu-css.min.css

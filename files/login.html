@@ -22,7 +22,10 @@
 			top: 0;
 			width: 95%;
 		}
-
+		h1{
+			color: aliceblue;
+			padding-top: 30px;
+		}
 		.cont {
 			padding-left: 3em;
 			padding-right: 3em;
@@ -30,6 +33,26 @@
 			min-width: 450px;
 			max-width: 450px;
 			border-radius: 10px;
+		}
+		.login:hover{
+			 box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+		}
+		.login{
+			background: #9152f8;
+   background: -webkit-linear-gradient(top, #7579ff, #b224ef);
+			transition: 0.5s;
+		}
+		small:hover{
+			color: #000000cc;
+			cursor: pointer;
+		}
+		small{
+			padding-left: 10px;
+   color: white;
+		}
+		button{
+			font-weight: 700;
+		 opacity: 0.9 !important;
 		}
 	</style>
 </head>
@@ -39,7 +62,7 @@
 		<span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
 		<strong>Внимание!</strong> Не верные логин или пароль.
 	</div>
-	<div class="cont center purple">
+	<div class="cont center login">
 		<h1>Login</h1>
 		<div class="row">
 			<div class="xs-12">
@@ -59,19 +82,20 @@
 		</div>
 		<div class="row start">
 			<div class="xs-12 ">
-				<smal style="font-size:0.8em">default login "admin" password "0000"</smal>
+				<small onclick="def()">default login "admin" password "0000"</small>
 			</div>
 		</div>
 		<div class="row end">
 			<div class="xs-6">
 				<div class="group">
-					<button class="info" onclick="login()" id="myBtn">LOGIN</button>
+					<button onclick="login()" id="myBtn">LOGIN</button>
 				</div>
 			</div>
 		</div>
 		<br>
 	</div>
 	<script>
+		document.getElementsByName('pass')[0].focus();
 		function send(page, date, callback) {
 			var req = new XMLHttpRequest();
 			req.open("POST", page, true);
@@ -89,7 +113,10 @@
 		function name(val) {
 			return document.getElementById(val).value
 		}
-
+  function def(){
+			document.getElementById('login').value = "admin";
+			document.getElementById('pass').value = "0000";
+		}
 		function login() {
 			document.getElementById('alert').style.display = "none";
 			var data = {};

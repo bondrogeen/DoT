@@ -5,32 +5,34 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Web-server</title>
+	<!--	<link rel="stylesheet" href="style.css.gz" />-->
 	<link rel="stylesheet" href="style.css.gz" />
 	<style>
-		.cont-flu {
-			margin-top: 3em;
-		}
 
-		a {
-			text-decoration: none;
-			color: deeppink;
-		}
 	</style>
 </head>
 
 <body>
+	<div id="mySidenav" class="sidenav">
+		<span href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</span>
+		<a href="https://github.com/bondrogeen/nodemcu-css" target="_blank">CSS</a>
+		<a href="https://bondrogeen.github.io/" target="_blank">Example css</a>
+		<a href="https://github.com/bondrogeen/web-server" target="_blank">Web-server</a>
+		<a href="http://codedevice.ru" target="_blank">Code Device</a>
+		<a href="#">About</a>
+	</div>
+	<div class="sideopen"><span onclick="openNav()">&#9776;</span></div>
 	<ul class="nav fix" id="myTopnav">
 		<li><a href="#" class="brand">Web-server</a></li>
-		<li><a href="settings.html">Настройки</a></li>
-		<li style="float:right;margin-right:10px;"><a href="#" onclick="logout()">Выход</a></li>
-		<li style="float:right;margin-right:10px;"><a href="http://codedevice.ru" target="_blank">Code Device</a></li>
+		<li><a href="settings.html">Settings</a></li>
+		<li style="float:right;margin-right:10px;"><a href="#" onclick="logout()">Exit</a></li>
 		<li class="-icon"><a href="#" onclick="nav()">☰</a></li>
 	</ul>
 	<div id="Modal" class="modal">
 		<div class="m-cont">
 			<span class="close" id="close_m">&times;</span>
 			<div class="m-body">
-				<p>Сохранить настройки?</p>
+				<p>Save settings?</p>
 			</div>
 			<div class="m-foo">
 				<button id="save_m" class="success">Yes</button>
@@ -38,17 +40,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="cont-flu">
+	<div class="cont">
 		<div class="row">
-			<div class="xs-12 sm-2 lg-2" style="min-width: 150px;">
-				<h3>More info</h3>
-				<ul>
-					<li><a href="https://github.com/bondrogeen/nodemcu-css" target="_blank">CSS</a></li>
-					<li><a href="https://bondrogeen.github.io/" target="_blank">Example css</a></li>
-					<li><a href="https://github.com/bondrogeen/web-server" target="_blank">Web-server</a></li>
-				</ul>
+			<div class="xs-12 sm-2 lg-2">
+
 			</div>
 			<div class="xs-12 sm-10 lg-9 ">
+			<h1>Main</h1>
 				<div class="row">
 					<div class="xs-12">
 						<table>
@@ -61,10 +59,20 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr><td><?luareturn(string.format("%x",node.chipid()*256))?></td>
-          <td><?luareturn(string.format("%x",node.flashid()*256))?></td>
-          <td><?lua local x=file.fsinfo() return(x)?></td>
-									<td><?lua local _, x=file.fsinfo() return(x)?></td></tr>
+								<tr>
+									<td>
+										<?luareturn(string.format("%x",node.chipid()*256))?>
+									</td>
+									<td>
+										<?luareturn(string.format("%x",node.flashid()*256))?>
+									</td>
+									<td>
+										<?lua local x=file.fsinfo() return(x)?>
+									</td>
+									<td>
+										<?lua local _, x=file.fsinfo() return(x)?>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -72,7 +80,7 @@
 				<br>
 				<div class="row">
 					<div class="xs-3">
-						<span> Память : <?luareturn(node.heap())?></span>
+						<span> RAM : <?luareturn(node.heap())?></span>
 					</div>
 					<div class="xs-9">
 						<div class="progbar">
@@ -122,6 +130,13 @@
 			} else {
 				x.classList.add('res');
 			}
+		}
+
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "200px";
+		}
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
 		}
 	</script>
 </body>
