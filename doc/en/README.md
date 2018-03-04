@@ -85,3 +85,17 @@ http://IP/test.lua?key=value&name=Roman
 ## Restrictions.
 The server processes the files in different ways, so for files with the extension .html the reading from the file is progressive, this is done to simplify the processing of the built-in Lua code, there is no limitation on the file size. With files with the .lua extension, the size of the sent data is no more than 4KB.
 All other files are transferred byte by byte (1024 bytes at a time), there are also no restrictions on the file size. The server can not receive data more than 1.4KB (data + header). While there was no such need.)))
+
+## Changelog
+
+### 0.0.5 (2018-03-04)
+* (bondrogeen) Added a test firmware, added NodeMCU Flasher
+### 0.0.4 (2013-03-03)
+* (nedoskiv) Fix memory leak.
+* (bondrogeen) Changed the appearance, minor fixes css.
+### 0.0.3 (2018-01-25)
+* (bondrogeen) Rename web_server.lua to web.lua
+### 0.0.2 (2018-01-13)
+* (bondrogeen) Changed executeCode()
+### 0.0.1 (2017-12-08)
+* (bondrogeen) init.

@@ -5,8 +5,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Web-server</title>
-	<!--	<link rel="stylesheet" href="style.css.gz" />-->
 	<link rel="stylesheet" href="style.css.gz" />
+<!--		<link href="nodemcu-css.css" rel="stylesheet">-->
 	<style>
 
 	</style>
@@ -15,18 +15,17 @@
 <body>
 	<div id="mySidenav" class="sidenav">
 		<span href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</span>
-		<a href="https://github.com/bondrogeen/nodemcu-css" target="_blank">CSS</a>
 		<a href="https://bondrogeen.github.io/" target="_blank">Example css</a>
 		<a href="https://github.com/bondrogeen/web-server" target="_blank">Web-server</a>
 		<a href="http://codedevice.ru" target="_blank">Code Device</a>
 		<a href="#">About</a>
 	</div>
-	<div class="sideopen"><span onclick="openNav()">&#9776;</span></div>
+	<div class="sideopen"><span onclick="openNav()">&equiv;</span></div>
 	<ul class="nav fix" id="myTopnav">
 		<li><a href="#" class="brand">Web-server</a></li>
 		<li><a href="settings.html">Settings</a></li>
-		<li style="float:right;margin-right:10px;"><a href="#" onclick="logout()">Exit</a></li>
-		<li class="-icon"><a href="#" onclick="nav()">☰</a></li>
+		<li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
+		<li class="-icon"><a href="#" onclick="nav()">&equiv;</a></li>
 	</ul>
 	<div id="Modal" class="modal">
 		<div class="m-cont">
@@ -133,7 +132,12 @@
 		}
 
 		function openNav() {
-			document.getElementById("mySidenav").style.width = "200px";
+			var side = document.getElementById("mySidenav")
+			if (side.style.width === "200px") {
+			side.style.width = "0px";
+		} else {
+			side.style.width = "200px";
+		}
 		}
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";

@@ -4,23 +4,26 @@
 	<meta charset="UTF-8">
 	<title>Settings page</title>
 	<link href="style.css.gz" rel="stylesheet">
+<!--	<link href="nodemcu-css.css" rel="stylesheet">-->
+	<style>
+	</style>
 </head>
 
 <body>
+<div id="loader" class="loader hide"></div>
 	<div id="mySidenav" class="sidenav">
-		<span href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</span>
-		<a href="https://github.com/bondrogeen/nodemcu-css" target="_blank">CSS</a>
+		<span class="closebtn" id="closeNav">&times;</span>
 		<a href="https://bondrogeen.github.io/" target="_blank">Example css</a>
 		<a href="https://github.com/bondrogeen/web-server" target="_blank">Web-server</a>
 		<a href="http://codedevice.ru" target="_blank">Code Device</a>
 		<a href="#">About</a>
 	</div>
-	<div class="sideopen"><span onclick="openNav()">&#9776;</span></div>
+	<div class="sideopen"><span id="openNav">&equiv;</span></div>
 	<ul class="nav fix" id="myTopnav">
 		<li><a href="index.html" class="brand">Web-server</a></li>
 		<li><a href="#">Settings</a></li>
-		<li style="float:right;margin-right:10px;"><a href="#" id="btn_exit">Exit</a></li>
-		<li class="-icon"><a href="#" id="btn_nav">☰</a></li>
+		<li class="-exit"><a id="btn_exit" href="#">Exit</a></li>
+		<li class="-icon"><a href="#" id="btn_nav">&equiv;</a></li>
 	</ul>
 	<div id="Modal" class="modal">
 		<div class="m-cont"><span class="close" id="close_m">&times;</span>
@@ -42,7 +45,7 @@
 						<div class="row center">
 							<div class="xs-10">
 								<div class="group"><select id="wifi_mode">
-<option <?lua return(s.wifi_mode=="OFF"and'selected'or'')?> value="OFF">Выключить</option><option <?lua return(s.wifi_mode=="ST"and'selected'or'')?> value="ST">Wireless client</option><option <?lua return(s.wifi_mode=="AP"and'selected'or'')?> value="AP">Access point</option>
+<option <?lua return(s.wifi_mode=="OFF"and'selected'or'')?> value="OFF">OFF</option><option <?lua return(s.wifi_mode=="ST"and'selected'or'')?> value="ST">Wireless client</option><option <?lua return(s.wifi_mode=="AP"and'selected'or'')?> value="AP">Access point</option>
 </select></div>
 							</div>
 						</div>
@@ -51,7 +54,7 @@
 								<div class="group">
 									<div class="search">
 										<input id="wifi_id" name="wifi_id" type="text" required=" " value="<?lua return(s.wifi_id)?>">
-										<label for="wifi_id">Name (SSID):</label><input id="search" type="submit" value="Поиск">
+										<label for="wifi_id">Name (SSID):</label><input id="search" type="submit" value="Search">
 										<ul id="list" style="display:none;">
 										</ul>
 									</div>
@@ -67,8 +70,8 @@
 						<div class="row center">
 							<div class="xs-10">
 								<div class="group"><select id="auth">
-<option <?lua return(s.auth=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
-<option <?lua return(s.auth=="ON"and'selected'or'')?> value="ON">Включить</option></select>
+<option <?lua return(s.auth=="OFF"and'selected'or'')?> value="OFF">OFF</option>
+<option <?lua return(s.auth=="ON"and'selected'or'')?> value="ON">ON</option></select>
 								</div>
 							</div>
 						</div>
@@ -94,8 +97,8 @@
 						<div class="row center">
 							<div class="xs-10">
 								<div class="group"><select id="mqtt">
-<option <?lua return(s.mqtt=="OFF"and'selected'or'')?> value="OFF">Выключить</option>
-<option <?lua return(s.mqtt=="ON"and'selected'or'')?> value="ON">Включить</option>
+<option <?lua return(s.mqtt=="OFF"and'selected'or'')?> value="OFF">OFF</option>
+<option <?lua return(s.mqtt=="ON"and'selected'or'')?> value="ON">ON</option>
 </select></div>
 							</div>
 						</div>

@@ -15,12 +15,6 @@ window.onload = function () {
 		});
 		req.send(JSON.stringify(data));
 	}
-	function openNav(){
-		document.getElementById("mySidenav").style.width = "200px";
-	}
-	function closeNav() {
-		document.getElementById("mySidenav").style.width = "0";
-	}
 	function nav() {
 		var x = document.getElementById("myTopnav");
 		if (x.classList.contains("res")) {
@@ -57,11 +51,12 @@ window.onload = function () {
 		}
 	}
 
-	if (check_sel("mqtt") == "OFF") {
+	if (check_sel("mqtt") === "OFF") {
 		input(true);
 	}
 
 	function save() {
+		document.getElementById('loader').classList.remove('hide')
 		var data = {
 			init: "save"
 		};
@@ -71,8 +66,8 @@ window.onload = function () {
 			if (item == "wifi_mode" || item == "auth" || item == "mqtt") {
 				data[item] = check_sel(item)
 			} else {
-				if (check_sel("mqtt") == "ON") {
-					if (item == "mqtt_time" || item == "mqtt_server" || item == "mqtt_port") {
+				if (check_sel("mqtt") === "ON") {
+					if (item === "mqtt_time" || item === "mqtt_server" || item === "mqtt_port") {
 						if (id(item) !== "") {
 							document.getElementById(item).style.borderColor = "#bbb";
 						} else {
@@ -82,6 +77,7 @@ window.onload = function () {
 					}
 					data[item] = id(item)
 				} else {
+//					alert(item +' : ' +id(item));
 					data[item] = id(item)
 				}
 			}
@@ -142,7 +138,7 @@ window.onload = function () {
 					try {
 						var j = JSON.parse(res);
 						for (var i = 0; i < j.length; i++) {
-							if (i == 0) {
+							if (i === 0) {
 								a.innerHTML = '<li id="' + j[i].sd + '"><b>' + j[i].sd + '</b> rssi : ' + j[i].ri + ' channel : ' + j[i].cl + '</li>';
 							} else {
 								a.innerHTML += '<li id="' + j[i].sd + '"><b>' + j[i].sd + '</b> rssi : ' + j[i].ri + ' channel : ' + j[i].cl + '</li>';
@@ -156,33 +152,48 @@ window.onload = function () {
 			});
 		}, 5000);
 	}
-	document.body.addEventListener("click", function (event) {
-		var a = document.getElementById('list');
-		//alert(event.target.id)
-		if (event.target.id == "search") {
-			scan();
-		} else if (event.target.id == "btn_nav") {
-			nav();
-		} else if (event.target.id == "btn_exit") {
-			logout();
-		} else if (event.target.id == "btn_save") {
-			modal.style.opacity = "1";
-			modal.style.display = "block";
-		} else if (event.target.id == "close_m" | event.target.id == "close") {
-			modal.style.opacity = "0";
-			setTimeout(function () {
-				modal.style.display = "none";
-			}, 600);
-		} else if (event.target.id == "save_m") {
-			save()
-		} else if (event.target.id == "mqtt") {
-			if (check_sel("mqtt") == "OFF") {
+	var mqtt = document.getElementById('mqtt');
+	if(mqtt){
+		mqtt.addEventListener("change", function (e) {
+			if (e.target.value === "OFF") {
 				input(true);
 			} else {
 				input(false);
 			}
+			});
+		}
+
+	document.body.addEventListener("click", function (event) {
+		var a = document.getElementById('list');
+		var side = document.getElementById('mySidenav');
+//		alert(JSON.stringify(event.target.id));
+		if (event.target.id === "search") {
+			scan();
+		} else if (event.target.id === "closeNav") {
+			side.style.width = "0";
+		} else if (event.target.id === "openNav") {
+			if (side.style.width === "200px") {
+			side.style.width = "0px";
 		} else {
-			if (event.target.tagName == "LI" && event.target.id) {
+			side.style.width = "200px";
+		}
+		} else if (event.target.id === "btn_nav") {
+			nav();
+		} else if (event.target.id === "btn_exit") {
+			logout();
+		} else if (event.target.id === "btn_save") {
+			modal.style.opacity = "1";
+			modal.style.display = "block";
+		} else if (event.target.id === "close_m" | event.target.id == "close") {
+			modal.style.opacity = "0";
+			setTimeout(function () {
+				modal.style.display = "none";
+			}, 600);
+		} else if (event.target.id === "save_m") {
+			save();
+		} else {
+			document.getElementById("mySidenav").style.width = "0";
+			if (event.target.tagName === "LI" && event.target.id) {
 				document.getElementById('wifi_id').value = event.target.id;
 				document.getElementById('wifi_pass').value = "";
 				document.getElementById('wifi_pass').focus();
