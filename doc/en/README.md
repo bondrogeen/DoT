@@ -90,7 +90,7 @@ All other files are transferred byte by byte (1024 bytes at a time), there are a
 
 ### 0.0.5 (2018-03-04)
 * (bondrogeen) Added a test firmware, added NodeMCU Flasher
-### 0.0.4 (2013-03-03)
+### 0.0.4 (2018-03-03)
 * (nedoskiv) Fix memory leak.
 * (bondrogeen) Changed the appearance, minor fixes css.
 ### 0.0.3 (2018-01-25)
