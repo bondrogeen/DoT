@@ -42,7 +42,7 @@ window.onload = function () {
 	}
 
 	function input(val) {
-		var arr = ["mqtt_time", "mqtt_server", "mqtt_port", "mqtt_login", "mqtt_pass"];
+		var arr = ["mqtt_time", "mqtt_host", "mqtt_port", "mqtt_login", "mqtt_pass"];
 		for (var i = 0; i < arr.length; i++) {
 			document.getElementById(arr[i]).disabled = val;
 			if (val) {
@@ -61,13 +61,13 @@ window.onload = function () {
 			init: "save"
 		};
 		var stop = false
-		var arr = ["wifi_id", "wifi_pass", "wifi_mode", "auth_pass", "auth_login", "auth", "mqtt_port", "mqtt_pass", "mqtt_server", "mqtt", "mqtt_login", "mqtt_time"];
+		var arr = ["wifi_id", "wifi_pass", "wifi_mode", "auth_pass", "auth_login", "auth", "mqtt_port", "mqtt_pass", "mqtt_host", "mqtt", "mqtt_login", "mqtt_time"];
 		arr.forEach(function (item, i, arr) {
 			if (item == "wifi_mode" || item == "auth" || item == "mqtt") {
 				data[item] = check_sel(item)
 			} else {
 				if (check_sel("mqtt") === "ON") {
-					if (item === "mqtt_time" || item === "mqtt_server" || item === "mqtt_port") {
+					if (item === "mqtt_time" || item === "mqtt_host" || item === "mqtt_port") {
 						if (id(item) !== "") {
 							document.getElementById(item).style.borderColor = "#bbb";
 						} else {
