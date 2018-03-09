@@ -63,7 +63,7 @@ window.onload = function () {
 		var stop = false
 		var arr = ["wifi_id", "wifi_pass", "wifi_mode", "auth_pass", "auth_login", "auth", "mqtt_port", "mqtt_pass", "mqtt_host", "mqtt", "mqtt_login", "mqtt_time"];
 		arr.forEach(function (item, i, arr) {
-			if (item == "wifi_mode" || item == "auth" || item == "mqtt") {
+			if (item === "wifi_mode" || item === "auth" || item === "mqtt") {
 				data[item] = check_sel(item)
 			} else {
 				if (check_sel("mqtt") === "ON") {
@@ -84,9 +84,9 @@ window.onload = function () {
 		});
 		if (stop) {
 			modal.style.display = "none";
-			return
+			return;
 		}
-		if (check_sel("wifi_mode") == "OFF") {
+		if (check_sel("wifi_mode") === "OFF") {
 			var w = confirm("Внимание!!! Wi-fi будет отключен, Вы точно этого хотите?");
 			if (!w) {
 				return
@@ -98,7 +98,7 @@ window.onload = function () {
 		}, 600);
 
 		send("web_control.lua", data, function (res) {
-			if (res = "true") {
+			if (res === "true") {
 				send("web_control.lua", {
 					init: "reboot"
 				}, function (res) {
