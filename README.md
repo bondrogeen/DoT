@@ -61,7 +61,7 @@
 Пример файл "test.lua"
 
 
-...lua   
+```lua   
    
 Local function arg_to_str(val)    
   local str=""    
@@ -75,7 +75,7 @@ return function (args)
  return arg_to_str(args)   
 end    
    
-... 
+```
    
 
 Параметры от форм (если они есть) будут переданы в таблицу **args**.
@@ -90,6 +90,8 @@ http://IP/test.lua?key=value&name=Roman
 
 ## Changelog
 
+### 0.0.6 (2018-03-12)
+* (bondrogeen) Fix authentication
 ### 0.0.5 (2018-03-04)
 * (bondrogeen) Added a test firmware, added NodeMCU Flasher
 ### 0.0.4 (2018-03-03)

@@ -59,7 +59,7 @@ Rather, this is the basic template for your projects with a web interface.
 
 Example file "test.lua"
    
-...lua
+```lua
    
 Local function arg_to_str(val)    
   local str=""    
@@ -73,7 +73,7 @@ return function (args)
  return arg_to_str(args)    
 end      
    
-... 
+``` 
    
 
 Parameters from forms (if any) will be passed to the table ** args **.
@@ -88,6 +88,8 @@ All other files are transferred byte by byte (1024 bytes at a time), there are a
 
 ## Changelog
 
+### 0.0.6 (2018-03-12)
+* (bondrogeen) Fix authentication
 ### 0.0.5 (2018-03-04)
 * (bondrogeen) Added a test firmware, added NodeMCU Flasher
 ### 0.0.4 (2018-03-03)
