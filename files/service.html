@@ -6,9 +6,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Web-server</title>
 	<link rel="stylesheet" href="style.css.gz" />
-<!--		<link href="nodemcu-css.css" rel="stylesheet">-->
+	<!--		<link href="nodemcu-css.css" rel="stylesheet">-->
 	<style>
-
 	</style>
 </head>
 
@@ -22,9 +21,9 @@
 	</div>
 	<div class="sideopen"><span onclick="openNav()">&equiv;</span></div>
 	<ul class="nav fix" id="myTopnav">
-		<li><a href="#" class="brand">Web-server</a></li>
+		<li><a href="index.html" class="brand">Web-server</a></li>
 		<li><a href="settings.html">Settings</a></li>
-		<li><a href="service.html">Service</a></li>
+		<li><a href="#">Service</a></li>
 		<li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
 		<li class="-icon"><a href="#" onclick="nav()">&equiv;</a></li>
 	</ul>
@@ -46,78 +45,41 @@
 
 			</div>
 			<div class="xs-12 sm-10 lg-9 ">
-			<h1>Main</h1>
+				<h1>Update the web-server.</h1>
 				<div class="row">
 					<div class="xs-12">
-						<table>
-							<thead>
-								<tr>
-									<th>ChipID</th>
-									<th>FlashID</th>
-									<th>FS Total</th>
-									<th>FS Used</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>
-										<?luareturn(string.format("%x",node.chipid()*256))?>
-									</td>
-									<td>
-										<?luareturn(string.format("%x",node.flashid()*256))?>
-									</td>
-									<td>
-										<?lua local x=file.fsinfo() return(x)?>
-									</td>
-									<td>
-										<?lua local _, x=file.fsinfo() return(x)?>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="xs-3">
-						<span> RAM : <?luareturn(node.heap())?></span>
-					</div>
-					<div class="xs-9">
-						<div class="progbar">
-							<div class="bar purple" style="width:<?luareturn(node.heap()*100/45000)?>%">
-								<div class="label">
-									<?luareturn(node.heap()*100/45000)?>%</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<h1>File list</h1>
-				<div class="row">
-					<div class="xs-8">
-						<button class="grey" onclick='document.getElementById("list").style.display = "block"; this.parentElement.style.display="none";'>Open</button>
-					</div>
-				</div>
-				<br>
-				<div id="list" style="display:none;" class="row">
-					<div class="xs-12">
-						<table>
-							<thead>
-								<tr>
-									<th>№</th>
-									<th>Name</th>
-									<th>size</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?lua local n=1 local buf="" for k,v in pairs(file.list()) do buf = buf.."<tr><td>"..n.."</td><td>"..k.."</td><td>"..v.."</td><tr>" n=n+1 end return(buf)?>
-							</tbody>
-						</table>
+						<div class="group"><button class="info" onclick="update();" id="btn_update">Update</button></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script>
+		function send(page, data, callback) {
+			var req = new XMLHttpRequest();
+			req.open("POST", page, true);
+			req.setRequestHeader('Content-Type', 'application/json');
+			req.addEventListener("load", function() {
+				if (req.status < 400) {
+					callback(req.responseText);
+				} else {
+					callback(req.status);
+				}
+			});
+			req.send(JSON.stringify(data));
+		}
+
+		function update(){
+			var data = {};
+			data.host = "web-server.codedevice.ru";
+			data.port = 80;
+			data.path = "/files/web-server/";
+			data.file = "index.php";
+			data.init = "upload";
+			send("web_get.lua", data, function(res){
+				alert(res);
+			});
+		}
 		function logout() {
 			document.cookie = "id=";
 			location.href = '/login.html';
@@ -135,11 +97,12 @@
 		function openNav() {
 			var side = document.getElementById("mySidenav")
 			if (side.style.width === "200px") {
-			side.style.width = "0px";
-		} else {
-			side.style.width = "200px";
+				side.style.width = "0px";
+			} else {
+				side.style.width = "200px";
+			}
 		}
-		}
+
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
 		}
