@@ -88,6 +88,9 @@ All other files are transferred byte by byte (1024 bytes at a time), there are a
 
 ## Changelog
 
+### 0.0.7 (2018-03-22)
+* (bondrogeen) Added update of web server files
+* (bondrogeen) Fixed bug web_file.lua
 ### 0.0.6 (2018-03-12)
 * (bondrogeen) Fix authentication
 ### 0.0.5 (2018-03-04)

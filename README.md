@@ -90,17 +90,20 @@ http://IP/test.lua?key=value&name=Roman
 
 ## Changelog
 
+### 0.0.7 (2018-03-22)
+* (bondrogeen) Добавил обновление файлов веб сервера
+* (bondrogeen) Исправил баг web_file.lua
 ### 0.0.6 (2018-03-12)
-* (bondrogeen) Fix authentication
+* (bondrogeen) Исправил баг в аутентификации
 ### 0.0.5 (2018-03-04)
-* (bondrogeen) Added a test firmware, added NodeMCU Flasher
+* (bondrogeen) Добавлено тестовое прошивку, добавлено NodeMCU Flasher.
 ### 0.0.4 (2018-03-03)
-* (nedoskiv) Fix memory leak.
-* (bondrogeen) Changed the appearance, minor fixes css.
+* (nedoskiv) Исправил утечку памяти.
+* (bondrogeen) Изменен внешний вид, мелкие исправления css.
 ### 0.0.3 (2018-01-25)
-* (bondrogeen) Rename web_server.lua to web.lua
+* (bondrogeen) Переименовал web_server.lua в web.lua
 ### 0.0.2 (2018-01-13)
-* (bondrogeen) Changed executeCode()
+* (bondrogeen) Изменил executeCode()
 ### 0.0.1 (2017-12-08)
 * (bondrogeen) init.
 

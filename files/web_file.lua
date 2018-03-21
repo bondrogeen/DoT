@@ -61,18 +61,17 @@ return function(conn,fn,args,cookie)
   local k, c = pcall(dofile(fn),args)
   conn:send(type(c)=="string"and c or"error")
   else
-  local data=0
+  local d=0
   local all=file.open(fn,"r")
    repeat
-    all:seek("set",data)
+    all:seek("set",d)
     line=all:read(1024)
     if line then
      conn:send(line)
-     data=data+1024
-     coroutine.yield()
-     collectgarbage()
+     d=d+1024
+     if line:len()==1024 then coroutine.yield()end
     end
-   until not string.len(line)
+   until not line
    all:close() 
    end  
   all,line,gzip,ftype,buf,data=nil
