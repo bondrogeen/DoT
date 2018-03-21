@@ -43,40 +43,44 @@ local function temp(d)
 end
 
 local function upload(t,cb)
-  local tab = t.file
-  local next
-  local function sf(t)
-   get(t, function(d)
-    if d then buf=buf..d..'\n' else next() end
-   end)
+ local tab = t.file
+ local next
+ local function sf(t)
+  get(t, function(d)
+   if d then buf=buf..d..'\n' else next() end
+  end)
+ end
+ next = function()
+  t.save=true
+  if #tab ~= 0 then
+   t.file=tab[#tab]
+   sf(t)
+   tab[#tab]=nil
+  else
+   cb(buf.."close ")
+   cb(false)
   end
-  next = function()
-   t.save=true
-   if #tab ~= 0 then
-    t.file=tab[#tab]
-    sf(t)
-    tab[#tab]=nil
-   else
-    cb(buf.."close ")
-    cb(false)
-   end
-  end
-   next()
+ end
+ next()
 end
 
 return function (t, cb)
+ local c
  local function r(d)
-  if cb then cb(d) else temp(d) end
+  if cb then cb(d) else temp(d) print(d)end
  end
  file.remove("temp_get.txt")
  if t.init =="upload" then
-   get(t, function(f)
+  get(t, function(f)
    if f then
     local ok, j = pcall(sjson.decode,f)
     if ok then t.file=j upload(t,r) else r(false) end
    end
-   end)
+  end)
+  c=true
  else
   get(t,r)
+  c=true
  end
+ return tostring(c)
 end
