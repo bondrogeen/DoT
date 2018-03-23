@@ -2,152 +2,212 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>Web-server</title>
-<!--	<link rel="stylesheet" href="style.css.gz" />-->
-			<link href="nodemcu-css.css" rel="stylesheet">
-	<style>
-     .m-body p{
-         margin: 0px;
-     }
-     .m-body{
-         overflow: scroll;
-         height: 300px;
-         padding-top: 0;
-         margin-top: 30px;
-     }
-	</style>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <title>Web-server</title>
+ <!--	<link rel="stylesheet" href="style.css.gz" />-->
+ <link href="nodemcu-css.css" rel="stylesheet">
+ <script type="text/javascript" src="http://web-server.codedevice.ru/js/service.js"></script>
+ <style>
+  h3 {
+   padding: 1rem;
+  }
+
+  .m-body p {
+   margin: 0px;
+  }
+
+  .m-body {
+   overflow: scroll;
+   height: 300px;
+   padding-top: 0;
+   margin-top: 30px;
+  }
+
+  .warn {
+   border-left: 5px solid #dc7272;
+   padding: 10px;
+   display: inherit;
+   margin-bottom: 10px;
+  }
+
+  .l-g {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: vertical;
+   -webkit-box-direction: normal;
+   -ms-flex-direction: column;
+   flex-direction: column;
+   padding-left: 0;
+   margin-bottom: 0;
+  }
+
+  .lg-i span {
+   float: right;
+    padding: 0px 6px;
+    border-radius: 6px;
+  }
+
+  .lg-i:hover {
+      background-color: #efefef;
+  }
+  .lg-i {
+   position: relative;
+   display: block;
+   padding: .75rem 1.25rem;
+   margin-bottom: -1px;
+   background-color: #fff;
+   border: 1px solid rgba(0, 0, 0, .125);
+  }
+ </style>
 </head>
 
 <body>
-	<div id="loader" class="loader hide"></div>
-	<div id="mySidenav" class="sidenav">
-		<span href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</span>
-		<a href="http://web-server.codedevice.ru/example/" target="_blank">Example css</a>
-		<a href="https://github.com/bondrogeen/web-server" target="_blank">GitHub</a>
-		<a href="http://codedevice.ru" target="_blank">CodeDevice</a>
-		<a href="#">About</a>
-	</div>
-	<div class="sideopen"><span onclick="openNav()">&equiv;</span></div>
-	<ul class="nav fix" id="myTopnav">
-		<li><a href="index.html" class="brand">Web-server</a></li>
-		<li><a href="settings.html">Settings</a></li>
-		<li><a href="#">Service</a></li>
-		<li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
-		<li class="-icon"><a href="#" onclick="nav()">&equiv;</a></li>
-	</ul>
-	<div id="Modal" class="modal">
-		<div class="m-cont">
-			<span class="close" id="close_m" onclick="mClose()">&times;</span>
-			<div class="m-body">
-				<p>Save settings?</p>
-			</div>
-			<div class="m-foo">
-				<button id="close" class="info" onclick="mClose();">Close</button>
-				<button id="reboot" class="danger hide" onclick="reboot();">Reboot</button>
-			</div>
-		</div>
-	</div>
-	<div class="cont">
-		<div class="row">
-			<div class="xs-12 sm-2 lg-2">
+ <div id="loader" class="loader hide"></div>
+ <div id="mySidenav" class="sidenav">
+  <span href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</span>
+  <a href="http://web-server.codedevice.ru/example/" target="_blank">Example css</a>
+  <a href="https://github.com/bondrogeen/web-server" target="_blank">GitHub</a>
+  <a href="http://codedevice.ru" target="_blank">CodeDevice</a>
+  <a href="#">About</a>
+ </div>
+ <div class="sideopen"><span onclick="openNav()">&equiv;</span></div>
+ <ul class="nav fix" id="myTopnav">
+  <li><a href="index.html" class="brand">Web-server</a></li>
+  <li><a href="settings.html">Settings</a></li>
+  <li><a href="#">Service</a></li>
+  <li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
+  <li class="-icon"><a href="#" onclick="nav()">&equiv;</a></li>
+ </ul>
+ <div id="Modal" class="modal">
+  <div class="m-cont">
+   <span class="close" id="close_m" onclick="mClose()">&times;</span>
+   <div class="m-body">
+    <p>Save settings?</p>
+   </div>
+   <div class="m-foo">
+    <button id="close" class="info" onclick="mClose();">Close</button>
+    <button id="reboot" class="danger hide" onclick="reboot();">Reboot</button>
+   </div>
+  </div>
+ </div>
+ <div class="cont">
+  <div class="row">
+   <div class="xs-12 sm-2 lg-2">
+   </div>
+   <div class="xs-12 sm-10 lg-9 ">
+    <h3>Update.</h3>
+    <div class="row">
+     <div class="xs-12">
+      <span class="warn">Updates of web server files via the Internet.<b>(!)</b> Attentions, web server files will be overwritten. </span>
+      <button disabled class="info right" onclick="update();" id="btn_update">Update</button>
+     </div>
+    </div>
+    <h3>Additional modules.</h3>
+    <div class="row">
+     <div class="xs-12">
+      <span class="warn">Installing additional modules for "web server". </span>
+      <ul class="l-g">
+       <li titel="12121" class="lg-i">RC522<span class="info">0.2.3</span>
+       </li>
+       <li class="lg-i">18B20</li>
+       <li class="lg-i">i2c</li>
+       <li class="lg-i">TDA7313</li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <script>
+  function send(page, data, callback) {
+   var req = new XMLHttpRequest();
+   req.open("POST", page, true);
+   req.setRequestHeader('Content-Type', 'application/json');
+   req.addEventListener("load", function() {
+    if (req.status < 400) {
+     callback(req.responseText);
+    } else {
+     callback(req.status);
+    }
+   });
+   req.send(JSON.stringify(data));
+  }
 
-			</div>
-			<div class="xs-12 sm-10 lg-9 ">
-				<h1>Update.</h1>
-				<div class="row">
-					<div class="xs-12">
-					<p>Updates of web server files via the Internet. <br><b>(!)</b> Attentions, web server files will be overwritten. </p>
-				 <button class="info" onclick="update();" id="btn_update">Update</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script>
-		function send(page, data, callback) {
-			var req = new XMLHttpRequest();
-			req.open("POST", page, true);
-			req.setRequestHeader('Content-Type', 'application/json');
-			req.addEventListener("load", function() {
-				if (req.status < 400) {
-					callback(req.responseText);
-				} else {
-					callback(req.status);
-				}
-			});
-			req.send(JSON.stringify(data));
-		}
-
-		function update(){
-			var data = {};
-			data.host = "web-server.codedevice.ru";
-			data.port = 80;
-			data.path = "/files/web-server/";
-			data.file = "index.php";
-			data.init = "upload";
+  function update() {
+   var data = {};
+   data.host = "web-server.codedevice.ru";
+   data.port = 80;
+   data.path = "/files/web-server/";
+   data.file = "index.php";
+   data.init = "upload";
    var modal = document.getElementById("Modal");
    modal.style.display = "block";
    document.getElementsByClassName('m-body')[0].innerHTML = "<p>Start of update</p>";
-			send("web_get.lua", data, function(res){
-    if(res==="true"){
-       document.getElementById("loader").classList.remove('hide');
-       document.getElementsByClassName('m-body')[0].innerHTML = "<p>Loading ... wait</p>";
-       setTimeout(function () {
-           send("temp_get.txt", {}, function(res){
-               document.getElementById("loader").classList.add('hide');
-               document.getElementsByClassName('m-body')[0].innerHTML = "<p>" +res.replace(/\n/g, '<br />') + "</p>";
-               document.getElementById("close").innerHTML="Done";
-               document.getElementById("reboot").classList.remove('hide');
-           });
-        }, 10000);
-       }else{
-           document.getElementsByClassName('m-body')[0].innerHTML = "<p>Error</p>";
-       }
+   send("web_get.lua", data, function(res) {
+    if (res === "true") {
+     document.getElementById("loader").classList.remove('hide');
+     document.getElementsByClassName('m-body')[0].innerHTML = "<p>Loading ... wait</p>";
+     setTimeout(function() {
+      send("temp_get.txt", {}, function(res) {
+       document.getElementById("loader").classList.add('hide');
+       document.getElementsByClassName('m-body')[0].innerHTML = "<p>" + res.replace(/\n/g, '<br />') + "</p>";
+       document.getElementById("close").innerHTML = "Done";
+       document.getElementById("reboot").classList.remove('hide');
+      });
+     }, 10000);
+    } else {
+     document.getElementsByClassName('m-body')[0].innerHTML = "<p>Error</p>";
+    }
 
-			});
-		}
-  function mClose(){
-      document.getElementById('Modal').style.display='none';
+   });
   }
-  function reboot(){
-      document.getElementById("loader").classList.remove('hide');
-      mClose();
-      send("web_control.lua", {init: "reboot"}, function (res) {
-          setTimeout(function () {
-              location.href = "/";
-        }, 10000);
-    });
+
+  function mClose() {
+   document.getElementById('Modal').style.display = 'none';
   }
-		function logout() {
-			document.cookie = "id=";
-			location.href = '/login.html';
-		}
 
-		function nav() {
-			var x = document.getElementById("myTopnav");
-			if (x.classList.contains("res")) {
-				x.classList.remove('res');
-			} else {
-				x.classList.add('res');
-			}
-		}
+  function reboot() {
+   document.getElementById("loader").classList.remove('hide');
+   mClose();
+   send("web_control.lua", {
+    init: "reboot"
+   }, function(res) {
+    setTimeout(function() {
+     location.href = "/";
+    }, 10000);
+   });
+  }
 
-		function openNav() {
-			var side = document.getElementById("mySidenav")
-			if (side.style.width === "200px") {
-				side.style.width = "0px";
-			} else {
-				side.style.width = "200px";
-			}
-		}
+  function logout() {
+   document.cookie = "id=";
+   location.href = '/login.html';
+  }
 
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-		}
-	</script>
+  function nav() {
+   var x = document.getElementById("myTopnav");
+   if (x.classList.contains("res")) {
+    x.classList.remove('res');
+   } else {
+    x.classList.add('res');
+   }
+  }
+
+  function openNav() {
+   var side = document.getElementById("mySidenav")
+   if (side.style.width === "200px") {
+    side.style.width = "0px";
+   } else {
+    side.style.width = "200px";
+   }
+  }
+
+  function closeNav() {
+   document.getElementById("mySidenav").style.width = "0";
+  }
+ </script>
 </body>
 
 </html>
