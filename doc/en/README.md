@@ -39,8 +39,8 @@ Rather, this is the basic template for your projects with a web interface.
 
 ## Installation
 
-1. The modules you need (crypto, file, gpio, net, node, sjson, tmr, uart, wifi) are optional. [Assemble the firmware] (https://nodemcu-build.com/)
-2. Download all [files] (https://github.com/bondrogeen/web-server/tree/master/files) to the module.
+1. The modules you need (crypto, file, gpio, net, node, sjson, tmr, uart, wifi). [Building the firmware](https://nodemcu-build.com/)
+2. Download all [files](https://github.com/bondrogeen/web-server/tree/master/files) to the module.
 3. Connect to the access point **Web server** and go to the address **192.168.4.1**.
 			
 ![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/web_server_login.jpg)
