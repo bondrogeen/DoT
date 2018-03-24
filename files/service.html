@@ -6,23 +6,30 @@
  <meta http-equiv="X-UA-Compatible" content="IE=edge">
  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
  <title>Web-server</title>
- <!--	<link rel="stylesheet" href="style.css.gz" />-->
- <link href="nodemcu-css.css" rel="stylesheet">
+ 	<link rel="stylesheet" href="style.css.gz" />
+<!-- <link href="nodemcu-css.css" rel="stylesheet">-->
  <script type="text/javascript" src="http://web-server.codedevice.ru/js/service.js"></script>
  <style>
   h3 {
    padding: 1rem;
   }
 
-  .m-body p {
+  p {
    margin: 0px;
   }
 
   .m-body {
    overflow: scroll;
    height: 300px;
-   padding-top: 0;
-   margin-top: 30px;
+   padding-top: 5px;
+   border: 1px solid #a0a0a0;
+   border-radius: 5px;
+   margin: 10px 5px;
+  }
+
+  .m-cont h3{
+   margin: 0;
+   padding: 0px 10px;
   }
 
   .warn {
@@ -84,10 +91,12 @@
  <div id="Modal" class="modal">
   <div class="m-cont">
    <span class="close" id="close_m" onclick="mClose()">&times;</span>
+   <h3 class="m-info">Update</h3>
    <div class="m-body">
-    <p>Save settings?</p>
+    <p id="m-text"></p>
    </div>
    <div class="m-foo">
+    <button id="start" class="info" onclick="startLoad();">Start</button>
     <button id="close" class="info" onclick="mClose();">Close</button>
     <button id="reboot" class="danger hide" onclick="reboot();">Reboot</button>
    </div>
@@ -101,20 +110,17 @@
     <h3>Update.</h3>
     <div class="row">
      <div class="xs-12">
-      <span class="warn">Updates of web server files via the Internet.<b>(!)</b> Attentions, web server files will be overwritten. </span>
+      <p>Updates of web server files via the Internet.</p>
+      <span class="warn"><b>(!)</b> Attentions, web server files will be overwritten. </span>
       <button disabled class="info right" onclick="update();" id="btn_update">Update</button>
      </div>
     </div>
     <h3>Additional modules.</h3>
     <div class="row">
      <div class="xs-12">
-      <span class="warn">Installing additional modules for "web server". </span>
+      <p>Installing additional modules for "web server". </p>
       <ul class="l-g">
-       <li titel="12121" class="lg-i">RC522<span class="info">0.2.3</span>
-       </li>
-       <li class="lg-i">18B20</li>
-       <li class="lg-i">i2c</li>
-       <li class="lg-i">TDA7313</li>
+       <li class="lg-i">Test<span class="info">0.2.3</span></li>
       </ul>
      </div>
     </div>
@@ -136,41 +142,61 @@
    req.send(JSON.stringify(data));
   }
 
-  function update() {
+  function id(n){
+   return document.getElementById(n)
+  }
+  function loading(d,callback){
    var data = {};
    data.host = "web-server.codedevice.ru";
    data.port = 80;
    data.path = "/files/web-server/";
    data.file = "index.php";
    data.init = "upload";
-   var modal = document.getElementById("Modal");
-   modal.style.display = "block";
-   document.getElementsByClassName('m-body')[0].innerHTML = "<p>Start of update</p>";
    send("web_get.lua", data, function(res) {
     if (res === "true") {
-     document.getElementById("loader").classList.remove('hide');
-     document.getElementsByClassName('m-body')[0].innerHTML = "<p>Loading ... wait</p>";
+     callback("load");
      setTimeout(function() {
       send("temp_get.txt", {}, function(res) {
-       document.getElementById("loader").classList.add('hide');
-       document.getElementsByClassName('m-body')[0].innerHTML = "<p>" + res.replace(/\n/g, '<br />') + "</p>";
-       document.getElementById("close").innerHTML = "Done";
-       document.getElementById("reboot").classList.remove('hide');
+       callback(res);
       });
-     }, 10000);
+     }, 15000);
     } else {
-     document.getElementsByClassName('m-body')[0].innerHTML = "<p>Error</p>";
+     callback(false);
     }
-
    });
   }
 
+  function startLoad(){
+   id("m-text").innerHTML = "Start of update <br/>";
+   loading("data",function(res){
+    if(res==="load"){
+     id("loader").classList.remove('hide');
+     id("m-text").innerHTML += "Loading ... wait<br>";
+    }else if (res){
+     id("loader").classList.add('hide');
+     id("start").classList.add('hide');
+     id("m-text").innerHTML += res.replace(/\n/g, '<br />');
+     id("close").innerHTML = "Done";
+     id("reboot").classList.remove('hide');
+    }else{
+     id("m-text").innerHTML += "Loading error<br/>";
+    }
+   });
+  }
+
+  function update() {
+   id("Modal").style.display = "block";
+  }
+
   function mClose() {
-   document.getElementById('Modal').style.display = 'none';
+   id('Modal').style.display = 'none';
+   id("close").innerHTML = "Close";
+   id("reboot").classList.add('hide');
+   id("start").classList.remove('hide');
   }
 
   function reboot() {
-   document.getElementById("loader").classList.remove('hide');
+   id("loader").classList.remove('hide');
    mClose();
    send("web_control.lua", {
     init: "reboot"
@@ -187,7 +213,7 @@
   }
 
   function nav() {
-   var x = document.getElementById("myTopnav");
+   var x = id("myTopnav");
    if (x.classList.contains("res")) {
     x.classList.remove('res');
    } else {
@@ -196,7 +222,7 @@
   }
 
   function openNav() {
-   var side = document.getElementById("mySidenav")
+   var side = id("mySidenav")
    if (side.style.width === "200px") {
     side.style.width = "0px";
    } else {
@@ -205,7 +231,7 @@
   }
 
   function closeNav() {
-   document.getElementById("mySidenav").style.width = "0";
+   id("mySidenav").style.width = "0";
   }
  </script>
 </body>
