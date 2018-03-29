@@ -10,8 +10,8 @@
   },
   "keywords": ["esp8266", "lua", "nodemcu", "webserver"],
   "author": {
-    name:"bondrogeen",
-    email:"bondrogeen@gmail.com"
+    "name":"bondrogeen",
+    "email":"bondrogeen@gmail.com"
   },
   "license": "MIT",
   "modules": ["crypto", "file", "gpio", "net", "node", "sjson", "tmr", "uart", "wifi"]
