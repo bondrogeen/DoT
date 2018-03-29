@@ -1,0 +1,18 @@
+{
+  "name": "web-server",
+  "type":"main",
+  "description": "Web server for NodeMCU firmware for ESP8266.",
+  "version": "0.1.1",
+  "homepage": "io.codedevice.ru",
+  "repository": {
+   "type": "git",
+   "url": "https://github.com/bondrogeen/web-server"
+  },
+  "keywords": ["esp8266", "lua", "nodemcu", "webserver"],
+  "author": {
+    name:"bondrogeen",
+    email:"bondrogeen@gmail.com"
+  },
+  "license": "MIT",
+  "modules": ["crypto", "file", "gpio", "net", "node", "sjson", "tmr", "uart", "wifi"]
+}

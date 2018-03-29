@@ -13,16 +13,17 @@
 <body>
 <div id="loader" class="loader hide"></div>
 	<div id="mySidenav" class="sidenav">
-		<span class="closebtn" id="closeNav">&times;</span>
+		<span class="close" id="closeNav">&times;</span>
+		<div class="in"></div>
 		<a href="http://web-server.codedevice.ru/example/" target="_blank">Example css</a>
 		<a href="https://github.com/bondrogeen/web-server" target="_blank">GitHub</a>
 		<a href="http://codedevice.ru" target="_blank">CodeDevice</a>
 		<a href="#">About</a>
 	</div>
-	<div class="sideopen"><span id="openNav">&equiv;</span></div>
-	<ul class="nav fix" id="myTopnav">
+<div class="sideopen warning"><a href="javascript:void(0)" id="openNav">&equiv;</a></div>
+	<ul class="nav fix warning" id="myTopnav">
 		<li><a href="index.html" class="brand">Web-server</a></li>
-		<li><a href="#">Settings</a></li>
+		<li><a href="#" class="active">Settings</a></li>
 		<li><a href="service.html">Service</a></li>
 		<li class="-exit"><a id="btn_exit" href="#">Exit</a></li>
 		<li class="-icon"><a href="#" id="btn_nav">&equiv;</a></li>
@@ -37,22 +38,22 @@
 	</div>
 	<div class="cont">
 		<div class="row">
-			<div class="xs-12 sm-2 lg-2">
+			<div class="s12 m2 l2">
 			</div>
-			<div class="xs-12 sm-10 lg-9">
+			<div class="s12 m10 l9">
 				<h1>Settings</h1>
 				<div class="row">
-					<div class="xs-12 sm-6 lg-6">
+					<div class="s12 m6 l6">
 						<h3>Wi-Fi :</h3>
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><select id="wifi_mode">
 <option <?lua return(s.wifi_mode=="OFF"and'selected'or'')?> value="OFF">OFF</option><option <?lua return(s.wifi_mode=="ST"and'selected'or'')?> value="ST">Wireless client</option><option <?lua return(s.wifi_mode=="AP"and'selected'or'')?> value="AP">Access point</option>
 </select></div>
 							</div>
 						</div>
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group">
 									<div class="search">
 										<input id="wifi_id" name="wifi_id" type="text" required=" " value="<?lua return(s.wifi_id)?>">
@@ -62,15 +63,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><input id="wifi_pass" type="password" required="" value="<?lua return(s.wifi_pass)?>"><label for="wifi_pass">Password</label></div>
 							</div>
 						</div>
 					</div>
-					<div class="xs-12 sm-6 lg-6">
+					<div class="s12 m6 l6">
 						<h3>Authentication :</h3>
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><select id="auth">
 <option <?lua return(s.auth=="OFF"and'selected'or'')?> value="OFF">OFF</option>
 <option <?lua return(s.auth=="ON"and'selected'or'')?> value="ON">ON</option></select>
@@ -78,26 +79,26 @@
 							</div>
 						</div>
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><input id="auth_login" type="text" required="" value="<?lua return(s.auth_login)?>"><label for="auth_login">Login</label></div>
 							</div>
 						</div>
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><input id="auth_pass" type="password" required="" value="<?lua return(s.auth_pass)?>"><label for="auth_pass">Password</label></div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="xs-12">
+					<div class="s12">
 						<h3>MQTT :</h3>
 					</div>
 				</div>
 				<div class="row">
-					<div class="xs-12 sm-6 lg-6">
+					<div class="s12 m6 l6">
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><select id="mqtt">
 <option <?lua return(s.mqtt=="OFF"and'selected'or'')?> value="OFF">OFF</option>
 <option <?lua return(s.mqtt=="ON"and'selected'or'')?> value="ON">ON</option>
@@ -105,27 +106,27 @@
 							</div>
 						</div>
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><input id="mqtt_login" type="text" required="" value="<?lua return(s.mqtt_login)?>"><label for="mqtt_login">Login</label></div>
 							</div>
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><input id="mqtt_pass" type="password" required="" value="<?lua return(s.mqtt_pass)?>"><label for="mqtt_pass">Password</label></div>
 							</div>
 						</div>
 					</div>
-					<div class="xs-12 sm-6 lg-6">
+					<div class="s12 m6 l6">
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><input id="mqtt_time" type="text" required="" value="<?lua return(s.mqtt_time)?>"><label for="mqtt_time">Period(s)</label></div>
 							</div>
 						</div>
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><input id="mqtt_host" type="text" required="" value="<?lua return(s.mqtt_host)?>"><label for="mqtt_server">Server</label></div>
 							</div>
 						</div>
 						<div class="row center">
-							<div class="xs-12 sm-10">
+							<div class="s12 m10">
 								<div class="group"><input id="mqtt_port" type="text" required="" value="<?lua return(s.mqtt_port)?>">
 									<label for="mqtt_port">Port</label></div>
 							</div>
@@ -133,12 +134,12 @@
 					</div>
 				</div><br><br>
 				<div class="row end">
-					<div class="xs-12 sm-10">
+					<div class="s12 m10">
 						<div class="group"><button class="info" style="margin-right: 2em;" id="btn_save">Save</button></div>
 					</div>
 				</div><br>
 				<div class="row">
-					<div class="xs-12 end"></div>
+					<div class="s12 end"></div>
 				</div>
 			</div>
 		</div>

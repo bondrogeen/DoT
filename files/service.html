@@ -8,7 +8,7 @@
  <title>Web-server</title>
  	<link rel="stylesheet" href="style.css.gz" />
 <!-- <link href="nodemcu-css.css" rel="stylesheet">-->
- <script type="text/javascript" src="http://web-server.codedevice.ru/js/service.js"></script>
+ <script type="text/javascript" src="http://git.codedevice.ru/js/service.js"></script>
  <style>
   h3 {
    padding: 1rem;
@@ -38,53 +38,24 @@
    display: inherit;
    margin-bottom: 10px;
   }
-
-  .l-g {
-   display: -webkit-box;
-   display: -ms-flexbox;
-   display: flex;
-   -webkit-box-orient: vertical;
-   -webkit-box-direction: normal;
-   -ms-flex-direction: column;
-   flex-direction: column;
-   padding-left: 0;
-   margin-bottom: 0;
-  }
-
-  .lg-i span {
-   float: right;
-    padding: 0px 6px;
-    border-radius: 6px;
-  }
-
-  .lg-i:hover {
-      background-color: #efefef;
-  }
-  .lg-i {
-   position: relative;
-   display: block;
-   padding: .75rem 1.25rem;
-   margin-bottom: -1px;
-   background-color: #fff;
-   border: 1px solid rgba(0, 0, 0, .125);
-  }
  </style>
 </head>
 
 <body>
  <div id="loader" class="loader hide"></div>
  <div id="mySidenav" class="sidenav">
-  <span href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</span>
+  <span href="javascript:void(0)" class="close" onclick="closeNav()">&times;</span>
+  <div class="in"></div>
   <a href="http://web-server.codedevice.ru/example/" target="_blank">Example css</a>
   <a href="https://github.com/bondrogeen/web-server" target="_blank">GitHub</a>
   <a href="http://codedevice.ru" target="_blank">CodeDevice</a>
   <a href="#">About</a>
  </div>
- <div class="sideopen"><span onclick="openNav()">&equiv;</span></div>
- <ul class="nav fix" id="myTopnav">
+ <div class="sideopen warning"><a href="javascript:void(0)" onclick="openNav()">&equiv;</a></div>
+ <ul class="nav fix warning" id="myTopnav">
   <li><a href="index.html" class="brand">Web-server</a></li>
   <li><a href="settings.html">Settings</a></li>
-  <li><a href="#">Service</a></li>
+  <li><a href="#" class="active">Service</a></li>
   <li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
   <li class="-icon"><a href="#" onclick="nav()">&equiv;</a></li>
  </ul>
@@ -104,23 +75,23 @@
  </div>
  <div class="cont">
   <div class="row">
-   <div class="xs-12 sm-2 lg-2">
+   <div class="s12 m2 l2">
    </div>
-   <div class="xs-12 sm-10 lg-9 ">
+   <div class="s12 m10 l8">
     <h3>Update.</h3>
     <div class="row">
-     <div class="xs-12">
+     <div class="s12">
       <p>Updates of web server files via the Internet.</p>
       <span class="warn"><b>(!)</b> Attentions, web server files will be overwritten. </span>
       <button disabled class="info right" onclick="update();" id="btn_update">Update</button>
      </div>
     </div>
-    <h3>Additional modules.</h3>
+    <h3>Modules.</h3>
     <div class="row">
-     <div class="xs-12">
+     <div class="s12">
       <p>Installing additional modules for "web server". </p>
-      <ul class="l-g">
-       <li class="lg-i">Test<span class="info">0.2.3</span></li>
+      <ul id="modules" class="l-g">
+<!--       <li class="lg-i">Test<span class="info">0.2.3</span></li>-->
       </ul>
      </div>
     </div>
@@ -147,7 +118,7 @@
   }
   function loading(d,callback){
    var data = {};
-   data.host = "web-server.codedevice.ru";
+   data.host = "git.codedevice.ru";
    data.port = 80;
    data.path = "/files/web-server/";
    data.file = "index.php";

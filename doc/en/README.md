@@ -88,6 +88,8 @@ All other files are transferred byte by byte (1024 bytes at a time), there are a
 
 ## Changelog
 
+### 0.1.0 (2018-03-26)
+* (bondrogeen) Significantly changed the markup classes (before .xs-12 now .s12 ). Changed the appearance. 
 ### 0.0.7 (2018-03-22)
 * (bondrogeen) Added update of web server files
 * (bondrogeen) Fixed bug web_file.lua
