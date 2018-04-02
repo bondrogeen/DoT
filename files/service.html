@@ -27,9 +27,9 @@
    margin: 15px 20px;
   }
 
-  .m-cont h3{
+  .m-head h3{
    margin: 0;
-   padding: 0px 10px;
+   padding: 0px 30px;
   }
 
   .warn {
@@ -61,13 +61,15 @@
  </ul>
  <div id="Modal" class="modal">
   <div class="m-cont">
-   <span class="close" id="close_m" onclick="mClose()">&times;</span>
-   <h3 class="m-info">Update</h3>
+   <div class="m-head">
+      <span class="close" id="close_m" onclick="mClose()">&times;</span>
+      <h3 class="m-info">Update</h3>
+   </div>
    <div class="m-body">
     <p id="m-text"></p>
    </div>
    <div class="m-foo">
-    <button id="start" class="info" onclick="startLoad();">Start</button>
+    <button id="start" class="info" onclick="startLoad('web-server');">Start</button>
     <button id="close" class="info" onclick="mClose();">Close</button>
     <button id="reboot" class="danger hide" onclick="reboot();">Reboot</button>
    </div>
@@ -112,7 +114,7 @@
    var data = {};
    data.host = "git.codedevice.ru";
    data.port = 80;
-   data.path = "/files/web-server/";
+   data.path = "/files/"+d+"/";
    data.file = "index.php";
    data.init = "upload";
    send("web_get.lua", data, function(res) {
@@ -129,9 +131,9 @@
    });
   }
 
-  function startLoad(){
+  function startLoad(name){
    id("m-text").innerHTML = "Start of update <br/>";
-   loading("data",function(res){
+   loading(name,function(res){
     if(res==="load"){
      id("loader").classList.remove('hide');
      id("m-text").innerHTML += "Loading ... wait<br>";

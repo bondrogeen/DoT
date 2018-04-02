@@ -2,150 +2,107 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>Web-server</title>
-	<link rel="stylesheet" href="style.css.gz" />
-<!--		<link href="nodemcu-css.css" rel="stylesheet">-->
-	<style>
-
-	</style>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <title>Web-server</title>
+ <link rel="stylesheet" href="style.css.gz" />
+ <!--		<link href="nodemcu-css.css" rel="stylesheet">-->
+ <style>
+ </style>
 </head>
 
 <body>
-	<div id="mySidenav" class="sidenav">
-		<span href="javascript:void(0)" class="close" onclick="closeNav()">&times;</span>
-		<div class="in"></div>
-		<a href="http://web-server.codedevice.ru/example/" target="_blank">Example css</a>
-		<a href="https://github.com/bondrogeen/web-server" target="_blank">GitHub</a>
-		<a href="http://codedevice.ru" target="_blank">CodeDevice</a>
-		<a href="#">About</a>
-	</div>
-	<div class="sideopen warning"><a onclick="openNav()">&equiv;</a></div>
-	<ul class="nav fix warning" id="myTopnav">
-		<li><a href="#" class="brand active">Web-server</a></li>
-		<li><a href="settings.html">Settings</a></li>
-		<li><a href="service.html">Service</a></li>
-		<li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
-		<li class="-icon"><a href="#" onclick="nav()">&equiv;</a></li>
-	</ul>
-	<div id="Modal" class="modal">
-		<div class="m-cont">
-			<span class="close" id="close_m">&times;</span>
-			<div class="m-body">
-				<p>Save settings?</p>
-			</div>
-			<div class="m-foo">
-				<button id="save_m" class="success">Yes</button>
-				<button id="close" class="danger">No</button>
-			</div>
-		</div>
-	</div>
-	<div class="cont">
-		<div class="row">
-			<div class="s12 m2 l2">
+ <div id="mySidenav" class="sidenav">
+  <span href="javascript:void(0)" class="close" onclick="closeNav()">&times;</span>
+  <div class="in"></div>
+  <a href="http://web-server.codedevice.ru/example/" target="_blank">Example css</a>
+  <a href="https://github.com/bondrogeen/web-server" target="_blank">GitHub</a>
+  <a href="http://codedevice.ru" target="_blank">CodeDevice</a>
+  <a href="#">About</a>
+ </div>
+ <div class="sideopen warning"><a onclick="openNav()">&equiv;</a></div>
+ <ul class="nav fix warning" id="myTopnav">
+  <li><a href="#" class="brand active">Web-server</a></li>
+  <li><a href="settings.html">Settings</a></li>
+  <li><a href="service.html">Service</a></li>
+  <li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
+  <li class="-icon"><a href="#" onclick="nav()">&equiv;</a></li>
+ </ul>
+ <div id="Modal" class="modal">
+  <div class="m-cont">
+   <span class="close" id="close_m">&times;</span>
+   <div class="m-body">
+    <p>Save settings?</p>
+   </div>
+   <div class="m-foo">
+    <button id="save_m" class="success">Yes</button>
+    <button id="close" class="danger">No</button>
+   </div>
+  </div>
+ </div>
+ <div class="cont">
+  <div class="row">
+   <div class="s12 m2 l2">
 
-			</div>
-			<div class="s12 m10 l-9 ">
-			<h1>Main</h1>
-				<div class="row">
-					<div class="s12">
-						<table>
-							<thead>
-								<tr>
-									<th>ChipID</th>
-									<th>FlashID</th>
-									<th>FS Total</th>
-									<th>FS Used</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>
-										<?luareturn(string.format("%x",node.chipid()*256))?>
-									</td>
-									<td>
-										<?luareturn(string.format("%x",node.flashid()*256))?>
-									</td>
-									<td>
-										<?lua local x=file.fsinfo() return(x)?>
-									</td>
-									<td>
-										<?lua local _, x=file.fsinfo() return(x)?>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="s3">
-						<span> RAM : <?luareturn(node.heap())?></span>
-					</div>
-					<div class="s9">
-						<div class="progbar">
-							<div class="bar purple" style="width:<?luareturn(node.heap()*100/45000)?>%">
-								<div class="label">
-									<?luareturn(node.heap()*100/45000)?>%</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<h1>File list</h1>
-				<div class="row">
-					<div class="s8">
-						<button class="grey" onclick='document.getElementById("list").style.display = "block"; this.parentElement.style.display="none";'>Open</button>
-					</div>
-				</div>
-				<br>
-				<div id="list" style="display:none;" class="row">
-					<div class="s12">
-						<table>
-							<thead>
-								<tr>
-									<th>№</th>
-									<th>Name</th>
-									<th>size</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?lua local n=1 local buf="" for k,v in pairs(file.list()) do buf = buf.."<tr><td>"..n.."</td><td>"..k.."</td><td>"..v.."</td><tr>" n=n+1 end return(buf)?>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script>
-		function logout() {
-			document.cookie = "id=";
-			location.href = '/login.html';
-		}
+   </div>
+   <div class="s12 m10 l-9 ">
+    <h1>Main</h1>
+    <div id="modules" class="row">
+     <div class="s12 m4 l4">
+      <div class="card hover">
+       <div class="card-image"></div>
+       <div class="card-content"><span class="card-title activator">web-server <i class="right">&times;</i></span>
+        <p>ChipID
+         <?luareturn(string.format("%x",node.chipid()*256))?>
+        </p>
+        <p>FlashID
+         <?luareturn(string.format("%x",node.flashid()*256))?>
+        </p>
+        <p>FS Total
+         <?lua local x=file.fsinfo() return(x)?>
+        </p>
+        <p>FS Used
+         <?lua local _, x=file.fsinfo() return(x)?>
+        </p>
+       </div>
+       <div class="card-reveal"><span class="card-title activator">&times;</span>
+        <p>Web server for NodeMCU firmware for ESP8266.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <script>
+  function logout() {
+   document.cookie = "id=";
+   location.href = '/login.html';
+  }
 
-		function nav() {
-			var x = document.getElementById("myTopnav");
-			if (x.classList.contains("res")) {
-				x.classList.remove('res');
-			} else {
-				x.classList.add('res');
-			}
-		}
+  function nav() {
+   var x = document.getElementById("myTopnav");
+   if (x.classList.contains("res")) {
+    x.classList.remove('res');
+   } else {
+    x.classList.add('res');
+   }
+  }
 
-		function openNav() {
-			var side = document.getElementById("mySidenav")
-			if (side.style.width === "200px") {
-			side.style.width = "0px";
-		} else {
-			side.style.width = "200px";
-		}
-		}
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-		}
-	</script>
+  function openNav() {
+   var side = document.getElementById("mySidenav")
+   if (side.style.width === "200px") {
+    side.style.width = "0px";
+   } else {
+    side.style.width = "200px";
+   }
+  }
+
+  function closeNav() {
+   document.getElementById("mySidenav").style.width = "0";
+  }
+ </script>
 </body>
 
 </html>

@@ -13,7 +13,7 @@ srv:listen(80,function(conn)
      local b,res=coroutine.resume(cr[cn],conn,req.uri.file,req.uri.args,req.cookie)
     end
    elseif req and req.method=="POST"then
-    dofile("web_file.lua")(conn,req.uri.file,req.getRequestData(payload),req.cookie)
+    dofile("web_file.lua")(conn,req.uri.file,req.getReq(payload),req.cookie)
    end
    print(node.heap())
   end)
