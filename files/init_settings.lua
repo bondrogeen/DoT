@@ -10,12 +10,6 @@ s={
 wifi_id = "Web Server",
 wifi_pass = "",
 wifi_mode = "AP",
-mqtt_port = "",
-mqtt_pass = "",
-mqtt_host = "",
-mqtt = "OFF",
-mqtt_login = "",
-mqtt_time = "",
 auth="ON",
 auth_login="admin",
 auth_pass="0000"
@@ -36,14 +30,14 @@ end
 local function init(n)
 local j
 if file.open(n..".init","r") then
-_,j=pcall(sjson.decode,file.read('\n'))
+_,j=pcall(sjson.decode,file.read())
 end
 return j
 end
 
-local function run()
+local function run(t)
 for i,v in ipairs(list())do
-local n,t=v:match("(.*).run")
+local n,t=v:match(t and"(.*).netrun"or"(.*).run")
 t=n and init(n)
 if n and t then n,t=pcall(dofile(v),t)
 return t
@@ -63,7 +57,7 @@ end
 return function(t)
 local r
 if type(t)=="table" then
-if t.run then r=run()end
+if t.run then r=run(t.net)end
 if t.list then r=table.concat(list(),",")end
 if t.init then r=init(t.init)end
 if t.save then r=save(t)end

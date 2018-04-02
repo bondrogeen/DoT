@@ -9,6 +9,9 @@
  <link rel="stylesheet" href="style.css.gz" />
  <!--		<link href="nodemcu-css.css" rel="stylesheet">-->
  <style>
+  .card .card-image {
+    height: 50px;
+  }
  </style>
 </head>
 
@@ -49,33 +52,74 @@
    <div class="s12 m10 l-9 ">
     <h1>Main</h1>
     <div id="modules" class="row">
-     <div class="s12 m4 l4">
-      <div class="card hover">
-       <div class="card-image"></div>
-       <div class="card-content"><span class="card-title activator">web-server <i class="right">&times;</i></span>
-        <p>ChipID
-         <?luareturn(string.format("%x",node.chipid()*256))?>
-        </p>
-        <p>FlashID
-         <?luareturn(string.format("%x",node.flashid()*256))?>
-        </p>
-        <p>FS Total
-         <?lua local x=file.fsinfo() return(x)?>
-        </p>
-        <p>FS Used
-         <?lua local _, x=file.fsinfo() return(x)?>
-        </p>
-       </div>
-       <div class="card-reveal"><span class="card-title activator">&times;</span>
-        <p>Web server for NodeMCU firmware for ESP8266.</p>
-       </div>
-      </div>
-     </div>
+
     </div>
    </div>
   </div>
  </div>
  <script>
+
+  function send(page, data, callback) {
+		var req = new XMLHttpRequest();
+		req.open("POST", page, true);
+		req.setRequestHeader('Content-Type', 'application/json');
+		req.addEventListener("load", function () {
+			if (req.status < 400) {
+				callback(req.responseText);
+			} else {
+				callback(req.status);
+			}
+		});
+		req.send(JSON.stringify(data));
+	}
+
+  function loadInfo(arr){
+   send(arr.shift(), {}, function(res){
+    console.log(res);
+    var info
+    try {
+        info = JSON.parse(res);
+    } catch(e) {
+        console.log(e);
+     return
+    }
+    var div = document.createElement('div');
+    div.className = "s12 m4 l4";
+    div.innerHTML =
+      '<div class="card hover">'+
+       '<div class="card-image warning"></div>'+
+       '<div class="card-content"><span class="card-title activator">'+info.name+'<i class="right">&equiv;</i></span>'+
+        '<p><a href="'+info.homepage.Main+'">Learn more</a></p>'+
+       '</div>'+
+       '<div class="card-reveal"><span class="card-title activator">&times;</span>'+
+       '<p>'+info.description+'</p>'+
+       '</div>'+
+      '</div>'
+
+  modules.appendChild(div)
+
+    if (arr.length !== 0){
+     loadInfo(arr)
+    }
+   });
+
+  }
+
+  send("init_settings.lua", {"list":true}, function(res){
+//   console.log(res);
+   var arr = res.split(',');
+   var list =[];
+   arr.forEach(function(item, i, arr) {
+    if(item.indexOf(".info")!==-1){
+         console.log( i + " : " + item);
+        list.push(item);
+       }
+    });
+   loadInfo(list);
+  });
+
+
+
   function logout() {
    document.cookie = "id=";
    location.href = '/login.html';
