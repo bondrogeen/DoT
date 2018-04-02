@@ -3,9 +3,8 @@
   "type":"main",
   "description": "Web server for NodeMCU firmware for ESP8266.",
   "version": "0.1.1",
-  "homepage": {
-  "Main":"index.html"
-  },
+  "homepage": "io.codedevice.ru",
+  "page":"index.html",
   "img":"https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/logo.jpg",
   "repository": {
    "type": "git",
