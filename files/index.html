@@ -12,6 +12,12 @@
   .card .card-image {
     height: 50px;
   }
+  .card .card-reveal p{
+   margin: 0;
+  }
+  .card .card-content {
+    min-height: 250px;
+}
  </style>
 </head>
 
@@ -72,6 +78,18 @@
 		});
 		req.send(JSON.stringify(data));
 	}
+function openCard(id){
+ var x = document.getElementById(id);
+ var rev=document.getElementById("rev"+id)
+ rev.style.display = "block";
+ rev.style.transform = "translateY(-100%)";
+}
+  function closeCard(id){
+ var x = document.getElementById(id);
+ var rev=document.getElementById("rev"+id)
+ rev.style.display = "none";
+ rev.style.transform = "translateY(0)";
+}
 
   function loadInfo(arr){
    send(arr.shift(), {}, function(res){
@@ -85,13 +103,16 @@
     }
     var div = document.createElement('div');
     div.className = "s12 m4 l4";
+    div.id = info.name;
     div.innerHTML =
       '<div class="card hover">'+
        '<div class="card-image warning"></div>'+
-       '<div class="card-content"><span class="card-title activator">'+info.name+'<i class="right">&equiv;</i></span>'+
-        '<p><a href="'+info.homepage.Main+'">Learn more</a></p>'+
+       '<div class="card-content"><span class="card-title activator">'+info.name+'<i onclick="openCard(\''+info.name+'\')" class="right">&equiv;</i></span>'+
+        '<p>ver:'+info.version+'</p>'+
+        '<p>Page : <a href="'+info.page+'">/'+info.page+'</a></p>'+
+        '<p><a href="'+info.repository.url+'">GitHub</a></p>'+
        '</div>'+
-       '<div class="card-reveal"><span class="card-title activator">&times;</span>'+
+       '<div id="rev'+info.name+'"class="card-reveal"><span onclick="closeCard(\''+info.name+'\')" class="close">&times;</span>'+
        '<p>'+info.description+'</p>'+
        '</div>'+
       '</div>'
