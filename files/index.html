@@ -10,14 +10,16 @@
  <!--		<link href="nodemcu-css.css" rel="stylesheet">-->
  <style>
   .card .card-image {
-    height: 50px;
+   height: 50px;
   }
-  .card .card-reveal p{
+
+  .card .card-reveal p {
    margin: 0;
   }
+
   .card .card-content {
-    min-height: 250px;
-}
+   min-height: 250px;
+  }
  </style>
 </head>
 
@@ -64,78 +66,94 @@
   </div>
  </div>
  <script>
-
   function send(page, data, callback) {
-		var req = new XMLHttpRequest();
-		req.open("POST", page, true);
-		req.setRequestHeader('Content-Type', 'application/json');
-		req.addEventListener("load", function () {
-			if (req.status < 400) {
-				callback(req.responseText);
-			} else {
-				callback(req.status);
-			}
-		});
-		req.send(JSON.stringify(data));
-	}
-function openCard(id){
- var x = document.getElementById(id);
- var rev=document.getElementById("rev"+id)
- rev.style.display = "block";
- rev.style.transform = "translateY(-100%)";
-}
-  function closeCard(id){
- var x = document.getElementById(id);
- var rev=document.getElementById("rev"+id)
- rev.style.display = "none";
- rev.style.transform = "translateY(0)";
-}
+   var req = new XMLHttpRequest();
+   req.open("POST", page, true);
+   req.setRequestHeader('Content-Type', 'application/json');
+   req.addEventListener("load", function() {
+    if (req.status < 400) {
+     callback(req.responseText);
+    } else {
+     callback(req.status);
+    }
+   });
+   req.send(JSON.stringify(data));
+  }
 
-  function loadInfo(arr){
-   send(arr.shift(), {}, function(res){
+  function openCard(id) {
+   var x = document.getElementById(id);
+   var rev = document.getElementById("rev" + id)
+   rev.style.display = "block";
+   rev.style.transform = "translateY(-100%)";
+  }
+
+  function closeCard(id) {
+   var x = document.getElementById(id);
+   var rev = document.getElementById("rev" + id)
+   rev.style.display = "none";
+   rev.style.transform = "translateY(0)";
+  }
+
+  function page(t) {
+   var temp = ''
+   if (typeof(t) === 'object') {
+    t.forEach(function(item, i, arr) {
+     temp += '<p>Page : <a target="_blank" href="' + item + '">/' + item + '</a></p>'
+    });
+    temp
+   } else {
+    temp = '<p>Page : <a target="_blank" href="' + t + '">/' + t + '</a></p>'
+   }
+   return temp;
+  }
+
+  function loadInfo(arr) {
+   send(arr.shift(), {}, function(res) {
     console.log(res);
     var info
     try {
-        info = JSON.parse(res);
-    } catch(e) {
-        console.log(e);
+     info = JSON.parse(res);
+    } catch (e) {
+     console.log(e);
      return
     }
     var div = document.createElement('div');
     div.className = "s12 m4 l4";
     div.id = info.name;
     div.innerHTML =
-      '<div class="card hover">'+
-       '<div class="card-image warning"></div>'+
-       '<div class="card-content"><span class="card-title activator">'+info.name+'<i onclick="openCard(\''+info.name+'\')" class="right">&equiv;</i></span>'+
-        '<p>ver:'+info.version+'</p>'+
-        '<p>Page : <a href="'+info.page+'">/'+info.page+'</a></p>'+
-        '<p><a href="'+info.repository.url+'">GitHub</a></p>'+
-       '</div>'+
-       '<div id="rev'+info.name+'"class="card-reveal"><span onclick="closeCard(\''+info.name+'\')" class="close">&times;</span>'+
-       '<p>'+info.description+'</p>'+
-       '</div>'+
-      '</div>'
+     '<div class="card hover">' +
+     '<div class="card-image warning"></div>' +
+     '<div class="card-content"><span class="card-title activator">' + info.name + '<i onclick="openCard(\'' + info.name + '\')" class="right">&equiv;</i></span>' +
+     '<p>ver:' + info.version + '</p>' +
+     page(info.page) +
+     '<p><a href="' + info.repository.url + '">GitHub</a></p>' +
+     '</div>' +
+     '<div id="rev' + info.name + '"class="card-reveal"><span onclick="closeCard(\'' + info.name + '\')" class="close">&times;</span>' +
+     '<p>' + info.description + '</p>' +
+     '</div>' +
+     '</div>'
 
-  modules.appendChild(div)
+    modules.appendChild(div)
 
-    if (arr.length !== 0){
+    if (arr.length !== 0) {
      loadInfo(arr)
     }
    });
 
   }
 
-  send("init_settings.lua", {"list":true}, function(res){
-//   console.log(res);
+  send("init_settings.lua", {
+   "list": true
+  }, function(res) {
+   //   console.log(res);
    var arr = res.split(',');
-   var list =[];
+   var list = [];
    arr.forEach(function(item, i, arr) {
-    if(item.indexOf(".info")!==-1){
-         console.log( i + " : " + item);
-        list.push(item);
-       }
-    });
+    if (item.indexOf(".info") !== -1) {
+     console.log(i + " : " + item);
+     list.push(item);
+    }
+   });
    loadInfo(list);
   });
 
