@@ -10,15 +10,36 @@
  <!--		<link href="nodemcu-css.css" rel="stylesheet">-->
  <style>
   .card .card-image {
-   height: 50px;
+   background: url(http://git.codedevice.ru/img/new.jpg) center center / cover no-repeat;
+   height: 200px;
+   border-bottom: 1px solid
   }
 
   .card .card-reveal p {
    margin: 0;
   }
-
+  .b{
+       font-weight: 700;
+  }
+  .git,.vers,.btnInfo,.sett{
+   position: absolute;
+  }
+  .btnInfo{
+   right: 23px;
+   bottom: 50px;
+   font-size: 3rem;
+   cursor: pointer;
+  }
+  .git,.vers{
+   right: 23px;
+   bottom: 23px;
+  }
+  .sett{
+   bottom: 23px;
+   left: 23px;
+  }
   .card .card-content {
-   min-height: 250px;
+
   }
  </style>
 </head>
@@ -95,15 +116,16 @@
   }
 
   function page(t) {
-   var temp = ''
+   var temp = '<p>'
    if (typeof(t) === 'object') {
     t.forEach(function(item, i, arr) {
-     temp += '<p>Page : <a target="_blank" href="' + item + '">/' + item + '</a></p>'
+     temp += '<a title="/' + item + '" target="_blank" href="' + item + '">link </a>'
     });
     temp
    } else {
-    temp = '<p>Page : <a target="_blank" href="' + t + '">/' + t + '</a></p>'
+    temp += '<a title="/' + t + '" target="_blank" href="' + t + '">link</a>'
    }
+   temp+='</p>'
    return temp;
   }
 
@@ -122,14 +144,17 @@
     div.id = info.name;
     div.innerHTML =
      '<div class="card hover">' +
-     '<div class="card-image warning"></div>' +
-     '<div class="card-content"><span class="card-title activator">' + info.name + '<i onclick="openCard(\'' + info.name + '\')" class="right">&equiv;</i></span>' +
-     '<p>ver:' + info.version + '</p>' +
+     '<div class="card-image"'+ ( info.img ? 'style="background: url('+info.img+') center center / cover no-repeat;"' : '') + '></div>' +
+     '<div class="card-content"><span title="Module name" class="card-title">' + info.name + '</span>' +
+     '<i class="btnInfo" onclick="openCard(\'' + info.name + '\')">&equiv;</i>'+
+     '<span class="vers b" title="Installed version">'+info.version+'</span>' +
      page(info.page) +
-     '<p><a href="' + info.repository.url + '">GitHub</a></p>' +
      '</div>' +
      '<div id="rev' + info.name + '"class="card-reveal"><span onclick="closeCard(\'' + info.name + '\')" class="close">&times;</span>' +
-     '<p>' + info.description + '</p>' +
+     '<p><b>Description : </b>' + info.description + '</p>' +
+     '<p><b>Modules : </b>' + info.modules.join(", ") + '</p>' +
+     '<span class="git b"><a target="_blank" href="' + info.repository.url + '">GitHub</a></span>' +
+     '<span class="sett b"><a target="_blank" href="module.html?module=' + info.name + '">setup</a></span>' +
      '</div>' +
      '</div>'
 
