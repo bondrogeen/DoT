@@ -9,6 +9,44 @@
  <link rel="stylesheet" href="style.css.gz" />
  <!--		<link href="nodemcu-css.css" rel="stylesheet">-->
  <style>
+  .card .card-image {
+   background: url(http://git.codedevice.ru/img/new.jpg) center center / cover no-repeat;
+   height: 200px;
+   border-bottom: 1px solid
+  }
+
+  .card .card-reveal p {
+   margin: 0;
+  }
+
+  .b {
+   font-weight: 700;
+  }
+
+
+  .vers,
+  .btnInfo {
+   position: absolute;
+  }
+
+
+  .btnInfo {
+   right: 23px;
+   top: 200px;
+   cursor: pointer;
+  }
+
+  .vers {
+   right: 10px;
+   bottom: 5px;
+  }
+
+  /*
+  .sett {
+   bottom: 23px;
+   left: 23px;
+  }
+*/
  </style>
 </head>
 
@@ -34,15 +72,29 @@
    <div class="s12 m2 l2">
 
    </div>
-   <div class="s12 m10 l-9 ">
+   <div class="s12 m5 l-4 ">
+    <h1>Info</h1>
+    <div id="info" class="row">
+
+    </div>
+   </div>
+   <div class="s12 m5 l-4 ">
     <h1>Settings</h1>
     <div id="modules" class="row">
 
+    </div>
+    <div class="row">
+     <div class="s12 group">
+      <button class="right" title="Save settings" onclick="save();">Save</button>
+      <button class="right" title="Restore settings to default" onclick="def();">Default</button>
+     </div>
     </div>
    </div>
   </div>
  </div>
  <script>
+  var settings = {};
+
   function send(page, data, callback) {
    var req = new XMLHttpRequest();
    req.open("POST", page, true);
@@ -57,81 +109,134 @@
    req.send(JSON.stringify(data));
   }
 
-  function text(key, val) {
+  function loadStorage(name) {
+   return JSON.parse(localStorage.getItem(name));
+  }
+
+  function text(obj, val) {
    var div = document.createElement('div');
-   div.className = "s12 m4 l4";
-//   div.id = info.name;
+   div.className = "s6";
    div.innerHTML =
     '<div class="group">' +
-    '<input id="' + key + '" type="text" required="" value="' + val + '">'+
-   '<label for="' + key + '">' + key + '</label>' +
+    '<input id="' + obj.key + '" type="text" required="" value="' + val + '">' +
+    '<label for="' + obj.key + '">' + obj.key + '</label>' +
     '</div>'
    modules.appendChild(div)
   }
 
-  function number(key, val) {
+  function select(obj, val) {
+   var temp = "";
    var div = document.createElement('div');
-   div.className = "s12 m4 l4";
-//   div.id = info.name;
-   div.innerHTML =
-    '<div class="group">' +
-    '<input id="' + key + '" type="number" required="" value="' + val + '">'+
-   '<label for="' + key + '">' + key + '</label>' +
-    '</div>'
+   div.className = "s6";
+   temp = '  <div class="group"><select id="' + obj.key + '" name="' + obj.key + '">'
+   obj.values.forEach(function(item, i, arr) {
+    if (item === val) {
+     temp += '<option selected value="' + item + '">' + item + '</option>'
+    } else {
+     temp += '<option value="' + item + '">' + item + '</option>'
+    }
+   })
+   temp +=
+    '</select><span>' + obj.name + '</span></div>'
+   div.innerHTML = temp
    modules.appendChild(div)
   }
 
-  function checkbox(key, val) {
+  function number(obj, val) {
    var div = document.createElement('div');
-   div.className = "s12 m4 l4";
-//   div.id = info.name;
+   div.className = "s6";
    div.innerHTML =
     '<div class="group">' +
-    '<input ' + (val ? "checked " : "") + 'type="checkbox" class="checkbox" id="' + key + '" />' +
-    '<label for="' + key + '">' + key + '</label>' +
-    '</div>'
+    '<input id="' + obj.key + '" title="min=' + obj.min + ', max=' + obj.max + '" type="number" min="' + obj.min + '" max="' + obj.max + '" required="" value="' + val + '">' +
+    '<label for="' + obj.key + '">' + obj.name + '</label></div>'
    modules.appendChild(div)
+  }
+
+  function checkbox(obj) {
+   return '<div class="group btnInfo">' +
+    '<input ' + (obj.info.run ? "checked " : "") + 'type="checkbox" class="checkbox" id="run" />' +
+    '<label for="run"></label></div>';
+  }
+
+  function page(t) {
+   var temp = '<p>'
+   if (typeof(t) === 'object') {
+    t.forEach(function(item, i, arr) {
+     temp += '<a title="/' + item + '" target="_blank" href="' + item + '">link </a>'
+    });
+   } else {
+    temp += '<a title="/' + t + '" target="_blank" href="' + t + '">link</a>'
+   }
+   temp += '</p>'
+   return temp;
+  }
+
+  function render(obj) {
+   var div = document.createElement('div');
+   div.className = "s12";
+   div.innerHTML =
+    '<div class="card hover">' +
+    '<div class="card-image"' + (obj.info.img ? 'style="background: url(' + obj.info.img + ') center center / cover no-repeat;"' : '') + '></div>' +
+    '<div class="card-content"><span title="Module name" class="card-title">' + obj.info.name + '</span>' +
+    checkbox(obj) +
+    '<span class="vers" title="Installed version">version <b>' + obj.info.version + '</b></span>' +
+    page(obj.info.page) +
+    '<p><b>Description : </b>' + obj.info.description + '</p>' +
+    '<p><b>Modules : </b>' + obj.info.modules.join(", ") + '</p>' +
+    '<span class="git b"><a target="_blank" href="' + obj.info.repository.url + '">GitHub</a></span>' +
+    '</div>' +
+    '</div>'
+   info.appendChild(div)
   }
 
   window.onload = function() { //onLoad запустится при загрузке сайта
-   var url_string = window.location.href
-   var url = new URL(url_string);
+   var url = new URL(window.location.href);
    var param = url.searchParams.get("module");
    if (param) {
-    var info;
     send(param + ".init", {}, function(res) {
-     console.log(res);
      if (res) {
       try {
-       info = JSON.parse(res);
+       settings.init = JSON.parse(res);
       } catch (e) {
        console.log(e);
        return
       }
-
-      for (var key in info) {
-       var val = info[key];
-       if (typeof(val) === "number") {
-number(key, val)
-       } else if (typeof(val) === "string") {
-text(key, val)
-       } else if (typeof(val) === "boolean") {
-checkbox(key, val)
+      settings.info = loadStorage(param + ".info");
+      render(settings);
+      for (var key in settings.init) {
+       var obj = settings.info.native[key];
+       var val = settings.init[key];
+       obj.key = key;
+       if (key === "run") continue;
+       if (obj.type === "number") {
+        number(obj, val)
+       } else if (obj.type === "select") {
+        select(obj, val)
+       } else {
+        text(obj, val)
        }
-       console.log("key : " + key + "  value : " + val);
       }
-
-
      }
     });
-
-
    }
    console.log(param);
   };
 
+  function save() {
+   var temp = {}
+   for (var key in settings.init) {
+    temp[key] = +document.getElementById(key).value
+   }
+   console.log(temp);
+  }
 
-
+  function def() {
+   var temp = {}
+   for (var key in settings.info.native) {
+    document.getElementById(key).value = settings.info.native[key].val
+   }
+   console.log(temp);
+  }
 
   function logout() {
    document.cookie = "id=";

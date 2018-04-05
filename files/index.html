@@ -18,29 +18,37 @@
   .card .card-reveal p {
    margin: 0;
   }
-  .b{
-       font-weight: 700;
+
+  .b {
+   font-weight: 700;
   }
-  .git,.vers,.btnInfo,.sett{
+
+  .git,
+  .vers,
+  .btnInfo,
+  .sett {
    position: absolute;
   }
-  .btnInfo{
+
+  .btnInfo {
    right: 23px;
    bottom: 50px;
    font-size: 3rem;
    cursor: pointer;
   }
-  .git,.vers{
+
+  .git,
+  .vers {
    right: 23px;
    bottom: 23px;
   }
-  .sett{
+
+  .sett {
    bottom: 23px;
    left: 23px;
   }
-  .card .card-content {
 
-  }
+  .card .card-content {}
  </style>
 </head>
 
@@ -124,64 +132,90 @@
    } else {
     temp += '<a title="/' + t + '" target="_blank" href="' + t + '">link</a>'
    }
-   temp+='</p>'
+   temp += '</p>'
    return temp;
   }
 
+  function saveStorage(name, obj) {
+   localStorage.setItem(name, JSON.stringify(obj));
+  }
+
+  function loadStorage(name) {
+   return JSON.parse(localStorage.getItem(name));
+  }
+
+  function render(info) {
+   var div = document.createElement('div');
+   div.className = "s12 m4 l4";
+   div.id = info.name;
+   div.innerHTML =
+    '<div class="card hover">' +
+    '<div class="card-image"' + (info.img ? 'style="background: url(' + info.img + ') center center / cover no-repeat;"' : '') + '></div>' +
+    '<div class="card-content"><span title="Module name" class="card-title">' + info.name + '</span>' +
+    '<i class="btnInfo" onclick="openCard(\'' + info.name + '\')">&equiv;</i>' +
+    '<span class="vers b" title="Installed version">' + info.version + '</span>' +
+    page(info.page) +
+    '</div>' +
+    '<div id="rev' + info.name + '"class="card-reveal"><span onclick="closeCard(\'' + info.name + '\')" class="close">&times;</span>' +
+    '<p><b>Description : </b>' + info.description + '</p>' +
+    '<p><b>Modules : </b>' + info.modules.join(", ") + '</p>' +
+    '<span class="git b"><a target="_blank" href="' + info.repository.url + '">GitHub</a></span>' +
+    '<span class="sett b"><a target="_blank" href="module.html?module=' + info.name + '">setup</a></span>' +
+    '</div>' +
+    '</div>'
+
+   modules.appendChild(div)
+  }
+
   function loadInfo(arr) {
-   send(arr.shift(), {}, function(res) {
+   var name = arr.shift()
+   if (name) {
+    console.log(true);
+    send(name, {}, function(res) {
     console.log(res);
     var info
     try {
      info = JSON.parse(res);
+     saveStorage(name, info)
+     render(info)
     } catch (e) {
      console.log(e);
      return
     }
-    var div = document.createElement('div');
-    div.className = "s12 m4 l4";
-    div.id = info.name;
-    div.innerHTML =
-     '<div class="card hover">' +
-     '<div class="card-image"'+ ( info.img ? 'style="background: url('+info.img+') center center / cover no-repeat;"' : '') + '></div>' +
-     '<div class="card-content"><span title="Module name" class="card-title">' + info.name + '</span>' +
-     '<i class="btnInfo" onclick="openCard(\'' + info.name + '\')">&equiv;</i>'+
-     '<span class="vers b" title="Installed version">'+info.version+'</span>' +
-     page(info.page) +
-     '</div>' +
-     '<div id="rev' + info.name + '"class="card-reveal"><span onclick="closeCard(\'' + info.name + '\')" class="close">&times;</span>' +
-     '<p><b>Description : </b>' + info.description + '</p>' +
-     '<p><b>Modules : </b>' + info.modules.join(", ") + '</p>' +
-     '<span class="git b"><a target="_blank" href="' + info.repository.url + '">GitHub</a></span>' +
-     '<span class="sett b"><a target="_blank" href="module.html?module=' + info.name + '">setup</a></span>' +
-     '</div>' +
-     '</div>'
-
-    modules.appendChild(div)
 
     if (arr.length !== 0) {
-     loadInfo(arr)
+      loadInfo(arr)
     }
+   });
+   }
+  }
+
+  window.onload = function() {
+   for ( var i = 0, len = localStorage.length; i < len; ++i ) {
+    console.log( localStorage.key( i ));
+   }
+   send("init_settings.lua", {
+    "com": "list"
+   }, function(res) {
+    //   console.log(res);
+    var arr = res.split(',');
+    var list = [];
+    arr.forEach(function(item, i, arr) {
+     if (item.indexOf(".info") !== -1) {
+//      console.log(i + " : " + item);
+//      console.log(localStorage.getItem(item));
+      if (localStorage.getItem(item)) {
+       render(loadStorage(item));
+      }else{
+       list.push(item);
+      }
+     }
+    });
+
+    loadInfo(list);
    });
 
   }
-
-  send("init_settings.lua", {
-   "list": true
-  }, function(res) {
-   //   console.log(res);
-   var arr = res.split(',');
-   var list = [];
-   arr.forEach(function(item, i, arr) {
-    if (item.indexOf(".info") !== -1) {
-     console.log(i + " : " + item);
-     list.push(item);
-    }
-   });
-   loadInfo(list);
-  });
-
-
 
   function logout() {
    document.cookie = "id=";
