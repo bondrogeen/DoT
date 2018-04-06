@@ -23,12 +23,14 @@
    font-weight: 700;
   }
 
+  input:invalid {
+   border: 1px solid red;
+  }
 
   .vers,
   .btnInfo {
    position: absolute;
   }
-
 
   .btnInfo {
    right: 23px;
@@ -40,13 +42,6 @@
    right: 10px;
    bottom: 5px;
   }
-
-  /*
-  .sett {
-   bottom: 23px;
-   left: 23px;
-  }
-*/
  </style>
 </head>
 
@@ -154,7 +149,7 @@
 
   function checkbox(obj) {
    return '<div class="group btnInfo">' +
-    '<input ' + (obj.info.run ? "checked " : "") + 'type="checkbox" class="checkbox" id="run" />' +
+    '<input ' + (obj.init.run ? "checked " : "") + 'type="checkbox" id="run" />' +
     '<label for="run"></label></div>';
   }
 
@@ -189,7 +184,7 @@
    info.appendChild(div)
   }
 
-  window.onload = function() { //onLoad запустится при загрузке сайта
+  window.onload = function() {
    var url = new URL(window.location.href);
    var param = url.searchParams.get("module");
    if (param) {
@@ -197,6 +192,7 @@
      if (res) {
       try {
        settings.init = JSON.parse(res);
+              console.log(settings.init);
       } catch (e) {
        console.log(e);
        return
@@ -206,6 +202,9 @@
       for (var key in settings.init) {
        var obj = settings.info.native[key];
        var val = settings.init[key];
+
+       //       console.log(obj);
+       //       console.log(val);
        obj.key = key;
        if (key === "run") continue;
        if (obj.type === "number") {
@@ -222,20 +221,56 @@
    console.log(param);
   };
 
+  function validate(n) {
+   var id = document.getElementById(n);
+   var val = id.value;
+   if (val.length === 0) return false;
+   if (id.type === "number") {
+    var min = +id.getAttribute('min');
+    var max = +id.getAttribute('max');
+    if (val < min || val > max) return false;
+   }
+   return true;
+  }
+
   function save() {
-   var temp = {}
+   var temp = {};
+   var valid = true;
    for (var key in settings.init) {
-    temp[key] = +document.getElementById(key).value
+    var id = document.getElementById(key);
+    if (!validate(key)) {
+     alert("Error in input field : '" + settings.info.native[key].name + "'");
+     valid = false;
+    }
+    if (id.type === "checkbox") {
+     temp[key] = id.checked;
+    } else if (id.type === "number") {
+     temp[key] = +id.value;
+    } else if (id.type === "select-one") {
+     temp[key] = isNaN(+id.value) ? id.value : +id.value;
+    } else {
+     temp[key] = id.value;
+    }
+
+   }
+   if (valid) {
+    temp.com="save";
+    temp.Fname=settings.info.name;
+    send("init_settings.lua", temp, function(res) {
+     console.log(res);
+    });
    }
    console.log(temp);
   }
 
   function def() {
-   var temp = {}
    for (var key in settings.info.native) {
-    document.getElementById(key).value = settings.info.native[key].val
+    if (document.getElementById(key).type === "checkbox") {
+     document.getElementById(key).checked = settings.info.native[key].val
+    } else {
+     document.getElementById(key).value = settings.info.native[key].val
+    }
    }
-   console.log(temp);
   }
 
   function logout() {
