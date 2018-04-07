@@ -28,7 +28,8 @@
   }
 
   .vers,
-  .btnInfo {
+  .btnInfo,
+  .tia,.run{
    position: absolute;
   }
 
@@ -41,6 +42,18 @@
   .vers {
    right: 10px;
    bottom: 5px;
+  }
+  .run{
+    border: 12px solid red;
+    border-left: 12px solid red;
+    right: 110px;
+    top: 232px;
+    cursor: pointer;
+  }
+  .tia{
+    border: 12px solid transparent;
+    border-left: 20px solid #7ed321;
+    right: 102px;
   }
  </style>
 </head>
@@ -65,19 +78,24 @@
  <div class="cont">
   <div class="row">
    <div class="s12 m2 l2">
-
+<div class="row">
+ <div class="s12">
+  <ul id="list" class="l-g"></ul>
+ </div>
+</div>
    </div>
    <div class="s12 m5 l-4 ">
     <h1>Info</h1>
-    <div id="info" class="row">
-
+    <div id="info" class="row"></div>
+        <div class="row">
+     <div class="s12 group">
+      <button class="right danger" title="Remove module" onclick="del();">Delete</button>
+     </div>
     </div>
    </div>
-   <div class="s12 m5 l-4 ">
+   <div class="s12 m5 l-4">
     <h1>Settings</h1>
-    <div id="modules" class="row">
-
-    </div>
+    <div id="modules" class="row"></div>
     <div class="row">
      <div class="s12 group">
       <button class="right" title="Save settings" onclick="save();">Save</button>
@@ -147,9 +165,17 @@
    modules.appendChild(div)
   }
 
+  function listA(val) {
+   var a = document.createElement('a');
+   a.href="module.html?module="+val;
+   a.style.color="black"
+   a.innerHTML ='<li class="lg-i">'+val+'</li>'
+   list.appendChild(a);
+  }
+
   function checkbox(obj) {
    return '<div class="group btnInfo">' +
-    '<input ' + (obj.init.run ? "checked " : "") + 'type="checkbox" id="run" />' +
+    '<input title="autostart module" ' + (obj.init.run ? "checked " : "") + 'type="checkbox" onchange="run(this.checked);" id="run" />' +
     '<label for="run"></label></div>';
   }
 
@@ -173,6 +199,7 @@
     '<div class="card hover">' +
     '<div class="card-image"' + (obj.info.img ? 'style="background: url(' + obj.info.img + ') center center / cover no-repeat;"' : '') + '></div>' +
     '<div class="card-content"><span title="Module name" class="card-title">' + obj.info.name + '</span>' +
+    '<div class="tia run"></div>'+
     checkbox(obj) +
     '<span class="vers" title="Installed version">version <b>' + obj.info.version + '</b></span>' +
     page(obj.info.page) +
@@ -185,6 +212,15 @@
   }
 
   window.onload = function() {
+//   console.log(localStorage.key);
+   for (i = 0; i < localStorage.length; i++) {
+    var myKey = localStorage.key(i);
+    if(myKey=="web.info")continue;
+    myKey=myKey.split(".")
+    console.log(myKey);
+    listA(myKey[0])
+}
+
    var url = new URL(window.location.href);
    var param = url.searchParams.get("module");
    if (param) {
@@ -202,9 +238,6 @@
       for (var key in settings.init) {
        var obj = settings.info.native[key];
        var val = settings.init[key];
-
-       //       console.log(obj);
-       //       console.log(val);
        obj.key = key;
        if (key === "run") continue;
        if (obj.type === "number") {
@@ -254,9 +287,8 @@
 
    }
    if (valid) {
-    temp.com="save";
-    temp.Fname=settings.info.name;
-    send("init_settings.lua", temp, function(res) {
+    temp.Fname=settings.info.name+".init";
+    send("init_settings.lua", {save:temp}, function(res) {
      console.log(res);
     });
    }
@@ -276,6 +308,26 @@
   function logout() {
    document.cookie = "id=";
    location.href = '/login.html';
+  }
+
+  function del() {
+
+  send("init_settings.lua", {del:{name:settings.info.name}}, function(res) {
+   console.log(res);
+   if (res){
+    localStorage.removeItem(settings.info.name+"info");
+
+       }
+  });
+  }
+
+  function run(val) {
+   console.log(settings.info.name);
+   if (val) {
+  send("init_settings.lua", {run:{name:settings.info.name}}, function(res) {
+   console.log(res);
+  });
+   }
   }
 
   function nav() {

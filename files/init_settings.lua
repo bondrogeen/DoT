@@ -19,41 +19,40 @@ end
  return s
 end
 
-local function list()
-local t={}
-for k,v in pairs(file.list())do
- t[#t+1]=k
-end
-return t
+local function str(t)
+local o,j
+if type(t)=="table"then
+o,j=pcall(sjson.encode,t)
+else j=tostring(t)end
+return j
 end
 
 local function init(n)
-local j
-if file.open(n..".init","r") then
-_,j=pcall(sjson.decode,file.read())
+local o,j
+if file.open(n,"r") then
+o,j=pcall(sjson.decode,file.read())
 file.close()
 end
 return j
 end
 
-local function autorun(t)
+local function run(t)
 local n,f
-for i,v in ipairs(list())do
- n,f=v:match(t.net and "(.*).netrun"or "(.*).run")
- f=n and init(n)
- if n and f then n,f=pcall(dofile(v),f)end
+for k,v in pairs(file.list())do
+if k:match(t.ext and "(.*)%."..t.ext or t.name.."%.[rn][ue][nt]$")then
+n=init(k:match("(.*)%.")..".init")
+n.run=t.name and true or n.run
+n,f=pcall(dofile(k),n)
+end
 end
 return f
 end
 
-local function run(t)
-local f,d=t.Fname,init(t.Fname)
-f= t.net and f..".netrun"or f..".run"
-if d and f then
- d.run=true
- f,d=pcall(dofile(f),d)
- end
- return d
+local function del(t)
+if type(t)=="table" then
+for i,v in pairs(t)do print(v)file.remove(v)end
+else file.remove(t)end
+return t
 end
 
 local function save(t)
@@ -63,7 +62,8 @@ if s then
   s[k]=t[k]==nil and v or t[k]
  end
  o,j=pcall(sjson.encode,s)
- if o and file.open(t.Fname..".init","w")then
+  print(j)
+ if o and file.open(t.Fname,"w")then
   file.write(j)
   file.close()
  end
@@ -71,23 +71,14 @@ end
 return o
 end
 
-local function str(t)
-local o,j
- if type(t)=="table"then
- o,j=pcall(sjson.encode,t)
- else
- j=tostring(t)
- end
- return j
-end
-
 return function(t)
 local r
 if type(t)=="table"then
-if t.com=="run"then r=t.Fname and run(t) or autorun(t)end
-if t.com=="list"then r=table.concat(list(),",")end
-if t.com=="init"then r=init(t.Fname)end
-if t.com=="save"then r=save(t)end
+if t.run then r=run(t.run)end
+if t.list then r=file.list()end
+if t.init then r=init(t.init)end
+if t.save then r=save(t.save)end
+if t.del then r=del(t.del)end
 r=str(r)
 else r=def(t) end
 return r

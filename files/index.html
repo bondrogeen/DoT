@@ -39,16 +39,18 @@
 
   .git,
   .vers {
-   right: 23px;
+   right: 25px;
    bottom: 23px;
   }
 
   .sett {
-   bottom: 23px;
-   left: 23px;
+   bottom: 25px;
+   right: 75px;
   }
 
-  .card .card-content {}
+  .card .card-content {
+       min-height: 115px;
+  }
  </style>
 </head>
 
@@ -102,7 +104,7 @@
     if (req.status < 400) {
      callback(req.responseText);
     } else {
-     callback(req.status);
+     callback(false);
     }
    });
    req.send(JSON.stringify(data));
@@ -146,25 +148,38 @@
 
   function render(info) {
    var div = document.createElement('div');
-   div.className = "s12 m4 l4";
+   var temp = '';
+   div.className = "s12 m6 l4";
    div.id = info.name;
-   div.innerHTML =
+   temp +=
     '<div class="card hover">' +
     '<div class="card-image"' + (info.img ? 'style="background: url(' + info.img + ') center center / cover no-repeat;"' : '') + '></div>' +
     '<div class="card-content"><span title="Module name" class="card-title">' + info.name + '</span>' +
     '<i class="btnInfo" onclick="openCard(\'' + info.name + '\')">&equiv;</i>' +
-    '<span class="vers b" title="Installed version">' + info.version + '</span>' +
-    page(info.page) +
+    '<span class="vers b" title="Installed version">' + info.version + '</span>'
+   if (info.name !== "web-server") {
+    temp += '<span class="sett b"><a target="_blank" href="module.html?module=' + info.name + '">setup</a></span>' + page(info.page)
+   }
+   temp +=
     '</div>' +
     '<div id="rev' + info.name + '"class="card-reveal"><span onclick="closeCard(\'' + info.name + '\')" class="close">&times;</span>' +
     '<p><b>Description : </b>' + info.description + '</p>' +
     '<p><b>Modules : </b>' + info.modules.join(", ") + '</p>' +
     '<span class="git b"><a target="_blank" href="' + info.repository.url + '">GitHub</a></span>' +
-    '<span class="sett b"><a target="_blank" href="module.html?module=' + info.name + '">setup</a></span>' +
     '</div>' +
     '</div>'
-
+   div.innerHTML = temp;
    modules.appendChild(div)
+  }
+
+  function pars(d) {
+   try {
+    return JSON.parse(d);
+   } catch (e) {
+    console.error(e);
+    return false;
+   }
+
   }
 
   function loadInfo(arr) {
@@ -172,47 +187,48 @@
    if (name) {
     console.log(true);
     send(name, {}, function(res) {
-    console.log(res);
-    var info
-    try {
-     info = JSON.parse(res);
-     saveStorage(name, info)
-     render(info)
-    } catch (e) {
-     console.log(e);
-     return
-    }
-
-    if (arr.length !== 0) {
-      loadInfo(arr)
-    }
-   });
+     console.log(res);
+     if (res) {
+      var info
+      info = pars(res);
+      if (info) {
+       saveStorage(name, info)
+       render(info)
+      }
+      if (arr.length !== 0) {
+       loadInfo(arr)
+      }
+     } else {
+      console.error("Error")
+     }
+    });
    }
   }
 
   window.onload = function() {
-   for ( var i = 0, len = localStorage.length; i < len; ++i ) {
-    console.log( localStorage.key( i ));
+   for (var i = 0, len = localStorage.length; i < len; ++i) {
+    console.log(localStorage.key(i));
    }
    send("init_settings.lua", {
-    "com": "list"
+    "list": true
    }, function(res) {
-    //   console.log(res);
-    var arr = res.split(',');
-    var list = [];
-    arr.forEach(function(item, i, arr) {
-     if (item.indexOf(".info") !== -1) {
-//      console.log(i + " : " + item);
-//      console.log(localStorage.getItem(item));
-      if (localStorage.getItem(item)) {
-       render(loadStorage(item));
-      }else{
-       list.push(item);
+    console.log(res);
+    if (res) {
+     var data = pars(res);
+     if (data) {
+      var list = [];
+      for (var key in data) {
+       if (key.indexOf(".info") !== -1) {
+        if (localStorage.getItem(key)) {
+         render(loadStorage(key));
+        } else {
+         list.push(key);
+        }
+       }
       }
+      loadInfo(list);
      }
-    });
-
-    loadInfo(list);
+    }
    });
 
   }
