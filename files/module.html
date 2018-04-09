@@ -29,7 +29,8 @@
 
   .vers,
   .btnInfo,
-  .tia,.run{
+  .tia,
+  .run {
    position: absolute;
   }
 
@@ -43,22 +44,25 @@
    right: 10px;
    bottom: 5px;
   }
-  .run{
-    border: 12px solid red;
-    border-left: 12px solid red;
-    right: 110px;
-    top: 232px;
-    cursor: pointer;
+
+  .run {
+   border: 12px solid red;
+   border-left: 12px solid red;
+   right: 110px;
+   top: 232px;
+   cursor: pointer;
   }
-  .tia{
-    border: 12px solid transparent;
-    border-left: 20px solid #7ed321;
-    right: 102px;
+
+  .tia {
+   border: 12px solid transparent;
+   border-left: 20px solid #7ed321;
+   right: 102px;
   }
  </style>
 </head>
 
 <body>
+ <div id="loader" class="loader hide"></div>
  <div id="mySidenav" class="sidenav">
   <span href="javascript:void(0)" class="close" onclick="closeNav()">&times;</span>
   <div class="in"></div>
@@ -78,16 +82,16 @@
  <div class="cont">
   <div class="row">
    <div class="s12 m2 l2">
-<div class="row">
- <div class="s12">
-  <ul id="list" class="l-g"></ul>
- </div>
-</div>
+    <div class="row">
+     <div class="s12">
+      <ul id="list" class="l-g"></ul>
+     </div>
+    </div>
    </div>
    <div class="s12 m5 l-4 ">
     <h1>Info</h1>
     <div id="info" class="row"></div>
-        <div class="row">
+    <div class="row">
      <div class="s12 group">
       <button class="right danger" title="Remove module" onclick="del();">Delete</button>
      </div>
@@ -105,253 +109,8 @@
    </div>
   </div>
  </div>
- <script>
-  var settings = {};
-
-  function send(page, data, callback) {
-   var req = new XMLHttpRequest();
-   req.open("POST", page, true);
-   req.setRequestHeader('Content-Type', 'application/json');
-   req.addEventListener("load", function() {
-    if (req.status < 400) {
-     callback(req.responseText);
-    } else {
-     callback(false);
-    }
-   });
-   req.send(JSON.stringify(data));
-  }
-
-  function loadStorage(name) {
-   return JSON.parse(localStorage.getItem(name));
-  }
-
-  function text(obj, val) {
-   var div = document.createElement('div');
-   div.className = "s6";
-   div.innerHTML =
-    '<div class="group">' +
-    '<input id="' + obj.key + '" type="text" required="" value="' + val + '">' +
-    '<label for="' + obj.key + '">' + obj.key + '</label>' +
-    '</div>'
-   modules.appendChild(div)
-  }
-
-  function select(obj, val) {
-   var temp = "";
-   var div = document.createElement('div');
-   div.className = "s6";
-   temp = '  <div class="group"><select id="' + obj.key + '" name="' + obj.key + '">'
-   obj.values.forEach(function(item, i, arr) {
-    if (item === val) {
-     temp += '<option selected value="' + item + '">' + item + '</option>'
-    } else {
-     temp += '<option value="' + item + '">' + item + '</option>'
-    }
-   })
-   temp +=
-    '</select><span>' + obj.name + '</span></div>'
-   div.innerHTML = temp
-   modules.appendChild(div)
-  }
-
-  function number(obj, val) {
-   var div = document.createElement('div');
-   div.className = "s6";
-   div.innerHTML =
-    '<div class="group">' +
-    '<input id="' + obj.key + '" title="min=' + obj.min + ', max=' + obj.max + '" type="number" min="' + obj.min + '" max="' + obj.max + '" required="" value="' + val + '">' +
-    '<label for="' + obj.key + '">' + obj.name + '</label></div>'
-   modules.appendChild(div)
-  }
-
-  function listA(val) {
-   var a = document.createElement('a');
-   a.href="module.html?module="+val;
-   a.style.color="black"
-   a.innerHTML ='<li class="lg-i">'+val+'</li>'
-   list.appendChild(a);
-  }
-
-  function checkbox(obj) {
-   return '<div class="group btnInfo">' +
-    '<input title="autostart module" ' + (obj.init.run ? "checked " : "") + 'type="checkbox" onchange="run(this.checked);" id="run" />' +
-    '<label for="run"></label></div>';
-  }
-
-  function page(t) {
-   var temp = '<p>'
-   if (typeof(t) === 'object') {
-    t.forEach(function(item, i, arr) {
-     temp += '<a title="/' + item + '" target="_blank" href="' + item + '">link </a>'
-    });
-   } else {
-    temp += '<a title="/' + t + '" target="_blank" href="' + t + '">link</a>'
-   }
-   temp += '</p>'
-   return temp;
-  }
-
-  function render(obj) {
-   var div = document.createElement('div');
-   div.className = "s12";
-   div.innerHTML =
-    '<div class="card hover">' +
-    '<div class="card-image"' + (obj.info.img ? 'style="background: url(' + obj.info.img + ') center center / cover no-repeat;"' : '') + '></div>' +
-    '<div class="card-content"><span title="Module name" class="card-title">' + obj.info.name + '</span>' +
-    '<div class="tia run"></div>'+
-    checkbox(obj) +
-    '<span class="vers" title="Installed version">version <b>' + obj.info.version + '</b></span>' +
-    page(obj.info.page) +
-    '<p><b>Description : </b>' + obj.info.description + '</p>' +
-    '<p><b>Modules : </b>' + obj.info.modules.join(", ") + '</p>' +
-    '<span class="git b"><a target="_blank" href="' + obj.info.repository.url + '">GitHub</a></span>' +
-    '</div>' +
-    '</div>'
-   info.appendChild(div)
-  }
-
-  window.onload = function() {
-//   console.log(localStorage.key);
-   for (i = 0; i < localStorage.length; i++) {
-    var myKey = localStorage.key(i);
-    if(myKey=="web.info")continue;
-    myKey=myKey.split(".")
-    console.log(myKey);
-    listA(myKey[0])
-}
-
-   var url = new URL(window.location.href);
-   var param = url.searchParams.get("module");
-   if (param) {
-    send(param + ".init", {}, function(res) {
-     if (res) {
-      try {
-       settings.init = JSON.parse(res);
-              console.log(settings.init);
-      } catch (e) {
-       console.log(e);
-       return
-      }
-      settings.info = loadStorage(param + ".info");
-      render(settings);
-      for (var key in settings.init) {
-       var obj = settings.info.native[key];
-       var val = settings.init[key];
-       obj.key = key;
-       if (key === "run") continue;
-       if (obj.type === "number") {
-        number(obj, val)
-       } else if (obj.type === "select") {
-        select(obj, val)
-       } else {
-        text(obj, val)
-       }
-      }
-     }
-    });
-   }
-   console.log(param);
-  };
-
-  function validate(n) {
-   var id = document.getElementById(n);
-   var val = id.value;
-   if (val.length === 0) return false;
-   if (id.type === "number") {
-    var min = +id.getAttribute('min');
-    var max = +id.getAttribute('max');
-    if (val < min || val > max) return false;
-   }
-   return true;
-  }
-
-  function save() {
-   var temp = {};
-   var valid = true;
-   for (var key in settings.init) {
-    var id = document.getElementById(key);
-    if (!validate(key)) {
-     alert("Error in input field : '" + settings.info.native[key].name + "'");
-     valid = false;
-    }
-    if (id.type === "checkbox") {
-     temp[key] = id.checked;
-    } else if (id.type === "number") {
-     temp[key] = +id.value;
-    } else if (id.type === "select-one") {
-     temp[key] = isNaN(+id.value) ? id.value : +id.value;
-    } else {
-     temp[key] = id.value;
-    }
-
-   }
-   if (valid) {
-    temp.Fname=settings.info.name+".init";
-    send("init_settings.lua", {save:temp}, function(res) {
-     console.log(res);
-    });
-   }
-   console.log(temp);
-  }
-
-  function def() {
-   for (var key in settings.info.native) {
-    if (document.getElementById(key).type === "checkbox") {
-     document.getElementById(key).checked = settings.info.native[key].val
-    } else {
-     document.getElementById(key).value = settings.info.native[key].val
-    }
-   }
-  }
-
-  function logout() {
-   document.cookie = "id=";
-   location.href = '/login.html';
-  }
-
-  function del() {
-
-  send("init_settings.lua", {del:{name:settings.info.name}}, function(res) {
-   console.log(res);
-   if (res){
-    localStorage.removeItem(settings.info.name+"info");
-
-       }
-  });
-  }
-
-  function run(val) {
-   console.log(settings.info.name);
-   if (val) {
-  send("init_settings.lua", {run:{name:settings.info.name}}, function(res) {
-   console.log(res);
-  });
-   }
-  }
-
-  function nav() {
-   var x = document.getElementById("myTopnav");
-   if (x.classList.contains("res")) {
-    x.classList.remove('res');
-   } else {
-    x.classList.add('res');
-   }
-  }
-
-  function openNav() {
-   var side = document.getElementById("mySidenav")
-   if (side.style.width === "200px") {
-    side.style.width = "0px";
-   } else {
-    side.style.width = "200px";
-   }
-  }
-
-  function closeNav() {
-   document.getElementById("mySidenav").style.width = "0";
-  }
- </script>
+<script src="module.js"></script>
+<!--<script src="module.js.gz"></script>-->
 </body>
 
 </html>

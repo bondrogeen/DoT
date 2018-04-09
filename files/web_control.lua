@@ -19,7 +19,7 @@ local function auth(arg)
 end
 local function save(tab)
 for k,v in pairs(tab) do
-s[k] = (tonumber(v) and k ~= "auth_pass") and tonumber(v) or v
+s[k] = (tonumber(v)and not k:match("_pass$")) and tonumber(v)or v
  end
  return write_to_file(s,"setting.json")
 end

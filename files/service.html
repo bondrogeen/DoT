@@ -78,6 +78,7 @@
  <div id="cont" class="cont">
   <div class="row">
    <div class="s12 of-m2 m10 of-l2 l8">
+<!--
     <div class="row">
     <h3>Update.</h3>
      <div class="s12">
@@ -86,6 +87,7 @@
       <button disabled class="info right" onclick="update();" id="btn_update">Update</button>
      </div>
     </div>
+-->
     <h3>Modules</h3>
     <div id="modules" class="row">
     </div>
@@ -101,7 +103,7 @@
     if (req.status < 400) {
      callback(req.responseText);
     } else {
-     callback(req.status);
+     callback(false);
     }
    });
    req.send(JSON.stringify(data));
@@ -123,6 +125,7 @@
      setTimeout(function() {
       send("temp_get.txt", {}, function(res) {
        callback(res);
+       localStorage.clear();
       });
      }, 15000);
     } else {

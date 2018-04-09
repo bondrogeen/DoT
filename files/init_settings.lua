@@ -49,6 +49,7 @@ return f
 end
 
 local function del(t)
+ print(str(t))
 if type(t)=="table" then
 for i,v in pairs(t)do print(v)file.remove(v)end
 else file.remove(t)end

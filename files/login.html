@@ -2,138 +2,156 @@
 <html lang="ru">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>Login</title>
-	<link href="style.css.gz" rel="stylesheet">
-	<style>
-		label {
-			color: black;
-		}
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <title>Login</title>
+ <link href="style.css.gz" rel="stylesheet">
+ <style>
+  label {
+   color: black;
+  }
 
-		input[type="text"]:focus~label,
-		input[type="text"]:valid~label,
-		input[type="password"]:focus~label,
-		input[type="password"]:valid~label {
-			color: aliceblue;
-		}
+  input[type="text"]:focus~label,
+  input[type="text"]:valid~label,
+  input[type="password"]:focus~label,
+  input[type="password"]:valid~label {
+   color: aliceblue;
+  }
 
-		.alert {
-			position: fixed;
-			top: 0;
-			width: 95%;
-		}
-		h1{
-			color: aliceblue;
-			padding-top: 30px;
-		}
-		.cont {
-			padding-left: 3em;
-			padding-right: 3em;
-			margin-top: 10em;
-			min-width: 450px;
-			max-width: 450px;
-			border-radius: 10px;
-		}
-		.login:hover{
-			 box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
-		}
-		.login{
-			background: #9152f8;
+  .alert {
+   position: fixed;
+   top: 0;
+   width: 95%;
+  }
+
+  h1 {
+   color: aliceblue;
+   padding-top: 30px;
+  }
+
+  .cont {
+   padding-left: 3em;
+   padding-right: 3em;
+   margin-top: 10em;
+   min-width: 450px;
+   max-width: 450px;
+   border-radius: 10px;
+  }
+
+  .login:hover {
+   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+  }
+
+  .login {
+   background: #9152f8;
    background: -webkit-linear-gradient(top, #7579ff, #b224ef);
-			transition: 0.5s;
-		}
-		small:hover{
-			color: #000000cc;
-			cursor: pointer;
-		}
-		small{
-			padding-left: 10px;
+   transition: 0.5s;
+  }
+
+  small:hover {
+   color: #000000cc;
+   cursor: pointer;
+  }
+
+  small {
+   padding-left: 10px;
    color: white;
-		}
-		button{
-			font-weight: 700;
-		 opacity: 0.9 !important;
-		}
-	</style>
+  }
+
+  button {
+   font-weight: 700;
+   opacity: 0.9 !important;
+  }
+ </style>
 </head>
 
 <body>
-	<div id="alert" class="alert danger" style="display: none;">
-		<span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
-		<strong>Warning! </strong> Not a valid username or password.
-	</div>
-	<div class="cont center login">
-		<h1>Login</h1>
-		<div class="row">
-			<div class="s12">
-				<div class="group">
-					<input type="text" id="login" name="login" required=" " value="">
-					<label for="login">LOGIN</label>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="s12">
-				<div class="group">
-					<input type="password" name="pass" id="pass" required=" " value="">
-					<label for="pass">PASSWORD</label>
-				</div>
-			</div>
-		</div>
-		<div class="row start">
-			<div class="s12 ">
-				<small onclick="def()">default login "admin" password "0000"</small>
-			</div>
-		</div>
-		<div class="row end">
-			<div class="s6">
-				<div class="group">
-					<button onclick="login()" id="myBtn">LOGIN</button>
-				</div>
-			</div>
-		</div>
-		<br>
-	</div>
-	<script>
-		document.getElementsByName('pass')[0].focus();
-		function send(page, date, callback) {
-			var req = new XMLHttpRequest();
-			req.open("POST", page, true);
-			req.setRequestHeader('Content-Type', 'application/json');
-			req.addEventListener("load", function() {
-				if (req.status < 400) {
-					callback(req.responseText)
-				} else {
-					callback(req.status)
-				}
-			});
-			req.send(JSON.stringify(date));
-		}
+ <div id="alert" class="alert danger" style="display: none;">
+  <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+  <strong>Warning! </strong> Not a valid username or password.
+ </div>
+ <div class="cont center login">
+  <h1>Login</h1>
+  <div class="row">
+   <div class="s12">
+    <div class="group">
+     <input type="text" id="login" name="login" required=" " value="">
+     <label for="login">LOGIN</label>
+    </div>
+   </div>
+  </div>
+  <div class="row">
+   <div class="s12">
+    <div class="group">
+     <input type="password" name="pass" id="pass" required=" " value="">
+     <label for="pass">PASSWORD</label>
+    </div>
+   </div>
+  </div>
+  <div class="row start">
+   <div class="s12 ">
+    <small onclick="def()">default login "admin" password "0000"</small>
+   </div>
+  </div>
+  <div class="row end">
+   <div class="s6">
+    <div class="group">
+     <button onclick="login()" id="myBtn">LOGIN</button>
+    </div>
+   </div>
+  </div>
+  <br>
+ </div>
+ <script>
+  document.getElementsByName('pass')[0].focus();
 
-		function name(val) {
-			return document.getElementById(val).value
-		}
-  function def(){
-			document.getElementById('login').value = "admin";
-			document.getElementById('pass').value = "0000";
-		}
-		function login() {
-			document.getElementById('alert').style.display = "none";
-			var data = {};
-			data.init = "auth";
-			data.login = name("login");
-			data.pass = name("pass");
-			send("web_control.lua", data, function(res) {
-				if (res == "false") {
-					document.getElementById('alert').style.display = "inline";
-				} else {
-					document.cookie = "id=" + res;
-					location.href = '/';
-				}
-			})
-		}
-	</script>
+  function send(page, date, callback) {
+   var req = new XMLHttpRequest();
+   req.open("POST", page, true);
+   req.setRequestHeader('Content-Type', 'application/json');
+   req.addEventListener("load", function() {
+    if (req.status < 400) {
+     callback(req.responseText)
+    } else {
+     callback(req.status)
+    }
+   });
+   req.send(JSON.stringify(date));
+  }
+
+  function name(val) {
+   return document.getElementById(val).value
+  }
+
+  function def() {
+   document.getElementById('login').value = "admin";
+   document.getElementById('pass').value = "0000";
+  }
+
+  function login() {
+   document.getElementById('alert').style.display = "none";
+   var data = {};
+   data.init = "auth";
+   data.login = name("login");
+   data.pass = name("pass");
+   send("web_control.lua", data, function(res) {
+    if (res == "false") {
+     document.getElementById('alert').style.display = "inline";
+    } else {
+     document.cookie = "id=" + res;
+     location.href = '/';
+    }
+   })
+  }
+
+  document.onkeyup = function(e) {
+   e = e || window.event;
+   if (e.keyCode === 13) {
+    login();
+   }
+   return false;
+  }
+ </script>
 </body>
 
 </html>
