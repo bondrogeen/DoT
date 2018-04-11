@@ -196,10 +196,10 @@ function def() {
   } else if (item.type === "select") {
    var s = document.getElementById(item.id);
    for (var i = 0; i < s.options.length; i++) {
-    if (s.options[i].value === item.val) {
+    s.options[i].selected = false;
+
+    if (s.options[i].value == item.val) {
      s.options[i].selected = true;
-    } else {
-     s.options[i].selected = false;
     }
    }
   } else {
