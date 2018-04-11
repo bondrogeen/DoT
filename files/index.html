@@ -39,17 +39,17 @@
 
   .git,
   .vers {
-   right: 25px;
-   bottom: 23px;
+   right: 20px;
+   bottom: 5px;
   }
 
   .sett {
-   bottom: 25px;
-   right: 75px;
+   bottom: 30px;
+   right: 20px;
   }
 
   .card .card-content {
-       min-height: 115px;
+   min-height: 115px;
   }
  </style>
 </head>
@@ -58,9 +58,9 @@
  <div id="mySidenav" class="sidenav">
   <span href="javascript:void(0)" class="close" onclick="closeNav()">&times;</span>
   <div class="in"></div>
-		<a href="http://dot.codedevice.ru/example/" target="_blank">Example css</a>
-		<a href="https://github.com/bondrogeen/DoT" target="_blank">GitHub</a>
-		<a href="http://dot.codedevice.ru" target="_blank">DoT</a>
+  <a href="http://dot.codedevice.ru/example/" target="_blank">Example css</a>
+  <a href="https://github.com/bondrogeen/DoT" target="_blank">GitHub</a>
+  <a href="http://dot.codedevice.ru" target="_blank">DoT</a>
  </div>
  <div class="sideopen warning"><a onclick="openNav()">&equiv;</a></div>
  <ul class="nav fix warning" id="myTopnav">
@@ -70,15 +70,15 @@
   <li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
   <li class="-icon"><a href="#" onclick="nav()">&equiv;</a></li>
  </ul>
- <div id="Modal" class="modal">
+ <div id="Modal" class="modal hide">
   <div class="m-cont">
-   <span class="close" id="close_m">&times;</span>
+   <span class="close" onclick="modclose();">&times;</span>
    <div class="m-body">
     <p>Save settings?</p>
    </div>
    <div class="m-foo">
-    <button id="save_m" class="success">Yes</button>
-    <button id="close" class="danger">No</button>
+    <button class="success">Yes</button>
+    <button class="danger">No</button>
    </div>
   </div>
  </div>
@@ -157,7 +157,7 @@
     '<div class="card-content"><span title="Module name" class="card-title">' + info.name + '</span>' +
     '<i class="btnInfo" onclick="openCard(\'' + info.name + '\')">&equiv;</i>' +
     '<span class="vers b" title="Installed version">' + info.version + '</span>'
-   if (info.name !== "web-server") {
+   if (info.name !== "main") {
     temp += '<span class="sett b"><a target="_blank" href="plugin.html?plugin=' + info.name + '">SETUP</a></span>' + page(info.page)
    }
    temp +=

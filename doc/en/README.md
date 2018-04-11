@@ -24,6 +24,8 @@ Template for your projects with a web interface.
 
 ## Changelog
 
+### 0.1.4 (2018-04-11)
+* (bondrogeen) Changed the configuration settings.
 ### 0.1.3 (2018-04-09)
 * (bondrogeen) fixed the problem with the digital password wi-fi.
 ### 0.1.0 (2018-03-26)

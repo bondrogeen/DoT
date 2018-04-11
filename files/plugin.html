@@ -78,6 +78,18 @@
   <li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
   <li class="-icon"><a href="#" onclick="nav()">&equiv;</a></li>
  </ul>
+ <div id="Modal" class="modal hide">
+  <div class="m-cont">
+   <span class="close" onclick="modClose();">&times;</span>
+   <div class="m-body">
+    <p>Restart devices?</p>
+   </div>
+   <div class="m-foo">
+    <button onclick="reboot(false);" class="success">Yes</button>
+    <button onclick="modClose();" class="danger">No</button>
+   </div>
+  </div>
+ </div>
  <div class="cont">
   <div class="row">
    <div class="s12 m2 l2">
@@ -101,7 +113,7 @@
     <div id="plugin" class="row"></div>
     <div class="row">
      <div class="s12 group">
-      <button class="right" title="Save settings" onclick="save();">Save</button>
+      <button id="saveInfo" class="right" title="Save settings" onclick="save();">Save</button>
       <button class="right" title="Restore settings to default" onclick="def();">Default</button>
      </div>
     </div>
