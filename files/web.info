@@ -8,9 +8,8 @@
   "img":"https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/logo.jpg",
   "repository": {
    "type": "git",
-   "url": "https://github.com/bondrogeen/web-server"
+   "url": "https://github.com/bondrogeen/DoT"
   },
-  "keywords": ["esp8266", "lua", "nodemcu", "webserver"],
   "author": {
     "name":"bondrogeen",
     "email":"bondrogeen@gmail.com"
