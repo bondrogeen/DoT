@@ -38,7 +38,6 @@ return function(conn,fn,args,cookie)
   conn:send(header("404 Not Found","text/html"))
   conn:send("<h1>Page not found</h1>") return
  end
- print(args)
  if ftype=="html"and not args.fget then
   arg=args
   local buf=""
