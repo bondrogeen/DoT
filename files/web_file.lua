@@ -38,7 +38,8 @@ return function(conn,fn,args,cookie)
   conn:send(header("404 Not Found","text/html"))
   conn:send("<h1>Page not found</h1>") return
  end
- if ftype=="html"then
+ print(args)
+ if ftype=="html"and not args.fget then
   arg=args
   local buf=""
   repeat
@@ -57,7 +58,7 @@ return function(conn,fn,args,cookie)
    end
   until not line
   fd:close() fd=nil arg=nil
-  elseif ftype=="lua"then
+  elseif ftype=="lua"and not args.fget then
   local k, c = pcall(dofile(fn),args)
   conn:send(type(c)=="string"and c or"error")
   else
