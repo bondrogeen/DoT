@@ -241,24 +241,6 @@ function logout() {
  location.href = '/login.html';
 }
 
-function nav() {
- var x = document.getElementById("myTopnav");
- if (x.classList.contains("res")) {
-  x.classList.remove('res');
- } else {
-  x.classList.add('res');
- }
-}
-
-function openNav() {
- var side = document.getElementById("mySidenav")
- if (side.style.width === "200px") {
-  side.style.width = "0px";
- } else {
-  side.style.width = "200px";
- }
-}
-
 function reboot(d) {
  if (d) {
   document.getElementById("Modal").style.display="block";
@@ -277,8 +259,4 @@ function reboot(d) {
 
 function modClose() {
  document.getElementById("Modal").style.display="none";
-}
-
-function closeNav() {
- document.getElementById("mySidenav").style.width = "0";
 }
