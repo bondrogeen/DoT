@@ -58,7 +58,7 @@
   <li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
   <li class="-icon"><a href="#" onclick="document.getElementById('topNav').classList.toggle('res');">&equiv;</a></li>
  </ul>
- <div id="Modal" class="modal">
+ <div id="Modal" class="modal hide">
   <div class="m-cont">
    <div class="m-head">
       <span class="close" id="close_m" onclick="mClose()">&times;</span>
@@ -152,11 +152,11 @@
   }
 
   function update() {
-   id("Modal").style.display = "block";
+   id('Modal').classList.remove('hide');
   }
 
   function mClose() {
-   id('Modal').style.display = 'none';
+   id('Modal').classList.add('hide');
    id("close").innerHTML = "Close";
    id("reboot").classList.add('hide');
    id("start").classList.remove('hide');

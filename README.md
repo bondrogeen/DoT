@@ -18,16 +18,18 @@
 			
 4. Вводим логин (admin) и пароль (0000).
 			
-![Logo](doc/image/web_server_index_page.jpg)
-			
 5. Переходим в **Настройки**.
 			
 ![Logo](doc/image/web_server_settings_page.jpg)
 
 6. Подключаемся к вашей wi-fi сети 
 
+![Logo](doc/image/web_server_index_page.jpg)
+
 ## Changelog
 
+### 0.1.5 (2018-04-14)
+* (bondrogeen) Мелкие исправления.
 ### 0.1.4 (2018-04-11)
 * (bondrogeen) Изменил построение настроек.
 ### 0.1.3 (2018-04-09)

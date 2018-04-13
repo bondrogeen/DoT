@@ -11,19 +11,19 @@ Template for your projects with a web interface.
 ![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/web_server_login.jpg)
 			
 4. Enter the login (admin) and password (0000).
-			
-![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/web_server_index_page.jpg)
-			
+						
 5. Go to **Settings**.
 			
 ![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/web_server_settings_page.jpg)
 
 6. Connect to your wi-fi network
 
-
+![Logo](https://raw.githubusercontent.com/bondrogeen/web-server/master/doc/image/web_server_index_page.jpg)
 
 ## Changelog
 
+### 0.1.5 (2018-04-14)
+* (bondrogeen) Minor corrections.
 ### 0.1.4 (2018-04-11)
 * (bondrogeen) Changed the configuration settings.
 ### 0.1.3 (2018-04-09)
