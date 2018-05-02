@@ -18,7 +18,9 @@ wifi.sta.config(cfg)
 wifi.eventmon.register(wifi.eventmon.STA_CONNECTED,function(T)
 if(not srv_init)then dofile('web.lua')end
 dofile("init_settings.lua")({run={ext="net"}})
-tmr.create(0):alarm(3000,tmr.ALARM_SINGLE,function()print("IP:"..wifi.sta.getip())end)
+local mytimer = tmr.create()
+mytimer:register(3000, tmr.ALARM_SINGLE,function (t) print("IP:"..wifi.sta.getip()) t:unregister()end)
+mytimer:start()
 end)
 end
 end
