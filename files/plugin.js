@@ -28,6 +28,27 @@ function listLink() {
  }
 }
 
+function loadURl(src) {
+ var load;
+ if (src.indexOf(".js") != -1) {
+  load = document.createElement('script');
+  load.src = src;
+  load.async = false;
+ } else {
+  load = document.createElement("link");
+  load.setAttribute("rel", "stylesheet");
+  load.setAttribute("type", "text/css");
+  load.setAttribute("href", src);
+ }
+ document.head.appendChild(load);
+ load.onload = function () {
+  document.getElementById("loader").classList.add('hide');
+ };
+ load.onerror = function () {
+  //    next();
+ };
+}
+
 function card(obj) {
  var temp =
   '<div class="card hover">' +
@@ -77,6 +98,13 @@ window.onload = function () {
     }
     load(settings);
     create(card(settings), "info", "s12");
+    if (settings.info.script) {
+     setTimeout(function () {
+      loadURl(settings.info.script);
+     }, 2000);
+    } else {
+     document.getElementById("loader").classList.add('hide');
+    }
    }
   });
  }
@@ -243,13 +271,13 @@ function logout() {
 
 function reboot(d) {
  if (d) {
-  document.getElementById("Modal").style.display="block";
+  document.getElementById("Modal").style.display = "block";
  } else {
   document.getElementById("loader").classList.remove('hide');
   send("web_control.lua", {
    init: "reboot"
   }, function (res) {
-   document.getElementById("Modal").style.display="none";
+   document.getElementById("Modal").style.display = "none";
    setTimeout(function () {
     location.href = "/";
    }, 10000);
@@ -258,5 +286,5 @@ function reboot(d) {
 }
 
 function modClose() {
- document.getElementById("Modal").style.display="none";
+ document.getElementById("Modal").style.display = "none";
 }
