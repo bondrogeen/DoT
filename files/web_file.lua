@@ -8,6 +8,11 @@ local ex={
   jpeg = "image/jpeg",
   jpg = "image/jpeg"
 }
+local function str(t)
+local o,j
+if type(t)=="table"then o,j=pcall(sjson.encode,t)else j=tostring(t).." "end
+return j
+end
 local op="web_control.luastyle.css.gzlogin.html"
 local function executeCode (s,p)
  for v in s:gmatch(p) do
@@ -59,7 +64,7 @@ return function(conn,fn,args,cookie)
   fd:close() fd=nil arg=nil
   elseif ftype=="lua"and not args.fget then
   local k, c = pcall(dofile(fn),args)
-  conn:send(type(c)=="string"and c or"error")
+  conn:send(str(c))
   else
   local d=0
   local all=file.open(fn,"r")

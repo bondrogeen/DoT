@@ -22,6 +22,8 @@ Template for your projects with a web interface.
 
 ## Changelog
 
+### 0.1.8 (2018-06-01)
+* (bondrogeen) Translates a table into JSON from lua scripts for GET or POST requests.
 ### 0.1.6 (2018-05-02)
 * (bondrogeen) Changed the pin number for the default settings. Now it's a GPIO2 pin (4).
 ### 0.1.5 (2018-04-14)
