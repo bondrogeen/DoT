@@ -10,7 +10,7 @@ local ex={
 }
 local function str(t)
 local o,j
-if type(t)=="table"then o,j=pcall(sjson.encode,t)else j=tostring(t).." "end
+if type(t)=="table"then o,j=pcall(sjson.encode,t)else j=tostring(t)end
 return j
 end
 local op="web_control.luastyle.css.gzlogin.html"

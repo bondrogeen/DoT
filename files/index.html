@@ -36,7 +36,9 @@
    font-size: 3rem;
    cursor: pointer;
   }
-
+  .sideopen{
+   cursor: pointer;
+  }
   .git,
   .vers {
    right: 20px;
@@ -65,7 +67,7 @@
  </div>
  <div class="sideopen warning"><a onclick="document.getElementById('sideNav').classList.toggle('open');">&equiv;</a></div>
  <ul class="nav fix warning" id="topNav">
-  <li><a href="#" class="brand">DOT</a></li>
+  <li><a href="index.html" class="brand">DOT</a></li>
   <li><a href="settings.html">Settings</a></li>
   <li><a href="service.html">Service</a></li>
   <li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li>
@@ -159,7 +161,7 @@
     '<i class="btnInfo" onclick="openCard(\'' + info.name + '\')">&equiv;</i>' +
     '<span class="vers b" title="Installed version">' + info.version + '</span>'
    if (info.name !== "main") {
-    temp += '<span class="sett b"><a target="_blank" href="plugin.html?plugin=' + info.name + '">SETUP</a></span>' + page(info.page)
+    temp += '<span class="sett b"><a href="plugin.html?plugin=' + info.name + '">SETUP</a></span>' + page(info.page)
    }
    temp +=
     '</div>' +

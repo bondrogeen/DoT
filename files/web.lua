@@ -4,9 +4,10 @@ srv:listen(80,function(conn)
   local cn
   conn:on("receive", function(conn,payload)
    local req = dofile("web_request.lua")(payload)
-   cn=req.uri.file
-   cr[cn]=nil
-   if req then cr[cn]=coroutine.create(dofile("web_file.lua"))end
+   if req then
+    cn=req.uri.file
+    cr[cn]=nil
+    cr[cn]=coroutine.create(dofile("web_file.lua"))end
    if req and req.method=="GET"then
     coroutine.resume(cr[cn],conn,req.uri.file,req.uri.args,req.cookie)
    elseif req and req.method=="POST"then

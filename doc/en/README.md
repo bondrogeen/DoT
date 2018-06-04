@@ -22,6 +22,8 @@ Template for your projects with a web interface.
 
 ## Changelog
 
+### 0.2.0 (2018-06-01)
+* (bondrogeen) Minor edits.
 ### 0.1.8 (2018-06-01)
 * (bondrogeen) Translates a table into JSON from lua scripts for GET or POST requests.
 ### 0.1.6 (2018-05-02)

@@ -119,6 +119,7 @@
    data.file = "index.php";
    data.init = "upload";
    send("web_get.lua", data, function(res) {
+    console.log(res);
     if (res === "true") {
      callback("load");
      setTimeout(function() {
