@@ -8,6 +8,9 @@ Template for your projects with a web interface.
 2. Download all [files](https://github.com/bondrogeen/web-server/tree/master/files) to the module.
 3. Connect to the access point **Web server** and go to the address **192.168.4.1**.
 			
+   	
+[YouTube](https://www.youtube.com/watch?v=ZlZd6Yuta10)
+   
 ![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/web_server_login.jpg)
 			
 4. Enter the login (admin) and password (0000).
