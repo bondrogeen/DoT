@@ -4,29 +4,29 @@
 
 
 
-[English](https://github.com/bondrogeen/web-server/blob/master/doc/en/README.md)
+[English](https://github.com/bondrogeen/DoT/tree/master/doc/en)
 
 
 
 ## Установка
 
 1. Необходимые модули ("crypto", "file", "gpio", "net", "node", "sjson", "tmr", "uart", "wifi") далее на ваше усмотрение. [Собрать прошивку](https://nodemcu-build.com/)
-2. Загрузить все [файлы](https://github.com/bondrogeen/web-server/tree/master/files) в модуль.
+2. Загрузить все [файлы](https://github.com/bondrogeen/dot/tree/master/files) в модуль.
 3. Подключиться к точке доступа **Web server** и перейти по адресу **192.168.4.1**.
 	
 [YouTube](https://www.youtube.com/watch?v=ZlZd6Yuta10)
       
-![Logo](doc/image/web_server_login.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/web_server_login.jpg)
 			
 4. Вводим логин (admin) и пароль (0000).
 			
 5. Переходим в **Настройки**.
 			
-![Logo](doc/image/web_server_settings_page.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/web_server_settings_page.jpg)
 
 6. Подключаемся к вашей wi-fi сети 
 
-![Logo](doc/image/web_server_index_page.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/web_server_service_page.jpg)
 
 ## Changelog
 
