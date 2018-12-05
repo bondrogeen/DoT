@@ -13,10 +13,10 @@ end
 local function getReq(payload)
  local requestData
  return function()
-  if requestData then return requestData else 
+  if requestData then return requestData else
    local mimeType=payload:match("Content%-Type: ([%w/-]+)")
    local bodyStart=payload:find("\r\n\r\n",1,true)
-   local body=payload:sub(bodyStart,#payload) 
+   local body=payload:sub(bodyStart,#payload)
    payload=nil
    collectgarbage()
    if mimeType=="application/json"then
@@ -24,9 +24,9 @@ local function getReq(payload)
    requestData = ok and j or {}
    elseif mimeType=="application/x-www-form-urlencoded" then
     requestData=parse(body,"%s*&?([^=]+=[^&]*)")
-   else        
+   else
     requestData={}
-   end   
+   end
    return requestData
   end
  end

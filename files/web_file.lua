@@ -77,8 +77,8 @@ return function(conn,fn,args,cookie)
      if line:len()==1024 then coroutine.yield()end
     end
    until not line
-   all:close() 
-   end  
+   all:close()
+   end
   all,line,gzip,ftype,buf,data=nil
 end
 
