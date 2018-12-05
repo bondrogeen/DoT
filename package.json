@@ -1,0 +1,38 @@
+{
+  "name": "dot-nodemcu",
+  "version": "0.2.0",
+  "description": "Webserver for NodeMCU lua.",
+  "main": "gulpfile.js",
+  "directories": {
+    "doc": "doc",
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bondrogeen/DoT.git"
+  },
+  "keywords": [
+    "nodemcu",
+    "webserver",
+    "lua"
+  ],
+  "dependencies": {
+    "gulp": "^3.8.11",
+    "gulp-watch": "^4.1.1",
+    "gulp-util": "^3.0.8",
+    "gulp-uglify": "^3.0.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-gzip": "^1.4.2",
+    "gulp-rigger": "^0.5.8"
+  },
+  "author": "bondrogeen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bondrogeen/DoT/issues"
+  },
+  "homepage": "https://github.com/bondrogeen/DoT#readme"
+}
