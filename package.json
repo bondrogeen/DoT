@@ -27,6 +27,9 @@
     "gulp-cssmin": "^0.2.0",
     "gulp-rename": "^1.4.0",
     "gulp-gzip": "^1.4.2",
+    "gulp-luaminify": "0.0.1",
+    "gulp-replace": "1.0.0",
+    "gulp-htmlmin": "5.0.1",
     "gulp-rigger": "^0.5.8"
   },
   "author": "bondrogeen",

@@ -1108,10 +1108,6 @@ tr:hover {
  border-right: 2px solid #0000004f
 }
 
-.open {
- width: 200px
-}
-
 .sidenav .in {
  height: 54px
 }
@@ -1124,17 +1120,6 @@ tr:hover {
  display: block;
  transition: .3s;
  white-space: nowrap
-}
-
-.sideopen a {
- position: fixed;
- top: 0;
- width: 40px;
- padding-left: 10px;
- font-size: 3.3rem;
- z-index: 6;
- color: inherit;
- background-color: inherit
 }
 
 .l-g {
@@ -1203,9 +1188,7 @@ tr:hover {
 }
 
 .card {
-
-
-      position: relative;
+    position: relative;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;

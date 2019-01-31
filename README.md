@@ -1,4 +1,6 @@
-# DoT
+ # DoT  (development)
+ 
+ 
  
 Шаблон для ваших проектов с веб интерфейсом.
 
@@ -30,6 +32,8 @@
 
 ## Changelog
 
+### 0.2.1 (2018-06-01) 
+* (bondrogeen) Code optimization (development)
 ### 0.2.0 (2018-06-01)
 * (bondrogeen) Мелкие правки. 
 ### 0.1.8 (2018-06-01)

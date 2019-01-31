@@ -2,28 +2,15 @@
 <html lang="en">
 <head>
  //= template/head.html
- <title>Settings page</title>
+ <title>Settings</title>
 	<style>
 	</style>
 </head>
 
 <body>
-<div id="loader" class="loader hide"></div>
-	<div id="mySidenav" class="sidenav">
-		<span class="close" id="closeNav">&times;</span>
-		<div class="in"></div>
-		<a href="http://dot.codedevice.ru/example/" target="_blank">Example css</a>
-		<a href="https://github.com/bondrogeen/DoT" target="_blank">GitHub</a>
-		<a href="http://dot.codedevice.ru" target="_blank">DOT</a>
-	</div>
-<div class="sideopen warning"><a href="javascript:void(0)" id="openNav">&equiv;</a></div>
-	<ul class="nav fix warning" id="myTopnav">
-		<li><a href="index.html" class="brand">DOT</a></li>
-		<li><a href="#" class="active">Settings</a></li>
-		<li><a href="service.html">Service</a></li>
-		<li class="-exit"><a id="btn_exit" href="#">Exit</a></li>
-		<li class="-icon"><a href="#" id="btn_nav">&equiv;</a></li>
-	</ul>
+
+//= template/header.html
+
 	<div id="Modal" class="modal hide">
 		<div class="m-cont"><span class="close" id="close_m">&times;</span>
 			<div class="m-body">
@@ -43,8 +30,9 @@
 						<h3>Wi-Fi :</h3>
 						<div class="row center">
 							<div class="s12 m10">
-								<div class="group"><select id="wifi_mode">
-<option <?lua return(s.wifi_mode=="OFF"and'selected'or'')?> value="OFF">OFF</option><option <?lua return(s.wifi_mode=="ST"and'selected'or'')?> value="ST">Wireless client</option><option <?lua return(s.wifi_mode=="AP"and'selected'or'')?> value="AP">Access point</option>
+								<div class="group"><select id="mode">
+<option <?lua return(_s.mode and'selected'or'')?> value="ST">Wireless client</option>
+<option <?lua return(not _s.mode and'selected'or'')?> value="AP">Access point</option>
 </select></div>
 							</div>
 						</div>
@@ -52,15 +40,15 @@
 							<div class="s12 m10">
 								<div class="group">
 									<div class="search">
-										<input id="wifi_id" name="wifi_id" type="text" required=" " value="<?lua return(s.wifi_id)?>">
-										<label for="wifi_id">Name (SSID):</label><input id="search" type="submit" value="Search">
+										<input id="ssid" name="ssid" type="text" required=" " value="<?lua return(_s.ssid)?>">
+										<label for="ssid">Name (SSID):</label><input id="search" type="submit" value="Search">
 										<ul id="list" style="display:none;">
 										</ul>
 									</div>
 								</div>
 							</div>
 							<div class="s12 m10">
-								<div class="group"><input id="wifi_pass" type="password" required="" value="<?lua return(s.wifi_pass)?>"><label for="wifi_pass">Password</label></div>
+								<div class="group"><input id="pwd" type="password" required="" value="<?lua return(_s.pwd)?>"><label for="pwd">Password</label></div>
 							</div>
 						</div>
 					</div>
@@ -69,19 +57,19 @@
 						<div class="row center">
 							<div class="s12 m10">
 								<div class="group"><select id="auth">
-<option <?lua return(s.auth=="OFF"and'selected'or'')?> value="OFF">OFF</option>
-<option <?lua return(s.auth=="ON"and'selected'or'')?> value="ON">ON</option></select>
+<option <?lua return(not _s.auth and'selected'or'')?> value="OFF">OFF</option>
+<option <?lua return(_s.auth and'selected'or'')?> value="ON">ON</option></select>
 								</div>
 							</div>
 						</div>
 						<div class="row center">
 							<div class="s12 m10">
-								<div class="group"><input id="auth_login" type="text" required="" value="<?lua return(s.auth_login)?>"><label for="auth_login">Login</label></div>
+								<div class="group"><input id="login" type="text" required="" value="<?lua return(_s.auth_login)?>"><label for="auth_login">Login</label></div>
 							</div>
 						</div>
 						<div class="row center">
 							<div class="s12 m10">
-								<div class="group"><input id="auth_pass" type="password" required="" value="<?lua return(s.auth_pass)?>"><label for="auth_pass">Password</label></div>
+								<div class="group"><input id="pass" type="password" required="" value="<?lua return(_s.auth_pass)?>"><label for="auth_pass">Password</label></div>
 							</div>
 						</div>
 					</div>

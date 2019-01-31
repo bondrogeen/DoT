@@ -2,105 +2,107 @@
 <html lang="ru">
 
 <head>
- //= template/head.html
- <title>Login</title>
- <style>
-  small:hover {
-   color: #000000cc;
-   cursor: pointer;
-  }
+  //= template/head.html
+  <title>Login</title>
+  <style>
+    small:hover {
+      color: #000000cc;
+      cursor: pointer;
+    }
 
-  small {
-   padding-top: 1rem;
-   float: right;
-  }
+    small {
+      padding-top: 1rem;
+      float: right;
+    }
 
-  button {
-   width: 100%;
-  }
+    button {
+      width: 100%;
+    }
 
- </style>
+  </style>
 </head>
 
 <body>
 
- <div class="cont">
-  <div class="row">
-   <div class="card s12 m4 of-m4 p-6">
-    <h1 class="center">Login</h1>
+  <div class="cont">
+    <div class="row">
+      <div class="card s12 m4 of-m4 p-6">
+        <h1 class="center">Login</h1>
 
-    <div class="group">
-     <input type="text" id="login" name="login" required=" " value="">
-     <label for="login">LOGIN</label>
+        <div class="group">
+          <input type="text" id="login" name="login" required=" " value="">
+          <label for="login">LOGIN</label>
+        </div>
+
+        <div class="group">
+          <input type="password" name="pass" id="pass" required=" " value="">
+          <label for="pass">PASSWORD</label>
+        </div>
+
+        <div>
+          <small onclick="def()">*Default login "<b>admin</b>" password "<b>0000</b>"</small>
+        </div>
+
+        <div class="group">
+          <button class="info" onclick="login()" id="myBtn">Sing in</button>
+        </div>
+
+      </div>
     </div>
-
-    <div class="group">
-     <input type="password" name="pass" id="pass" required=" " value="">
-     <label for="pass">PASSWORD</label>
-    </div>
-
-    <div>
-     <small onclick="def()">default login "admin" password "0000"</small>
-    </div>
-
-    <div class="group">
-     <button class="info" onclick="login()" id="myBtn">LOGIN</button>
-    </div>
-
-   </div>
   </div>
- </div>
- <script>
-  document.getElementsByName('pass')[0].focus();
+  <script>
+    document.getElementsByName('pass')[0].focus();
 
-  function send(page, date, callback) {
-   var req = new XMLHttpRequest();
-   req.open("POST", page, true);
-   req.setRequestHeader('Content-Type', 'application/json');
-   req.addEventListener("load", function() {
-    if (req.status < 400) {
-     callback(req.responseText)
-    } else {
-     callback(req.status)
+    function send(page, date, callback) {
+      var req = new XMLHttpRequest();
+      req.open("POST", page, true);
+      req.setRequestHeader('Content-Type', 'application/json');
+      req.addEventListener("load", function() {
+        if (req.status < 400) {
+          callback(req.responseText)
+        } else {
+          callback(req.status)
+        }
+      });
+      req.send(JSON.stringify(date));
     }
-   });
-   req.send(JSON.stringify(date));
-  }
 
-  function name(val) {
-   return document.getElementById(val).value
-  }
-
-  function def() {
-   document.getElementById('login').value = "admin";
-   document.getElementById('pass').value = "0000";
-  }
-
-  function login() {
-   var data = {};
-   data.init = "auth";
-   data.login = name("login");
-   data.pass = name("pass");
-   send("web_control.lua", data, function(res) {
-    if (res == "false") {
-     document.getElementById('login').validity.valid = false;
-
-    } else {
-     document.cookie = "id=" + res;
-     location.href = '/';
+    function name(val) {
+      return document.getElementById(val).value
     }
-   })
-  }
 
-  document.onkeyup = function(e) {
-   e = e || window.event;
-   if (e.keyCode === 13) {
-    login();
-   }
-   return false;
-  }
+    function def() {
+      document.getElementById('login').value = "admin";
+      document.getElementById('pass').value = "0000";
+    }
 
- </script>
+    function login() {
+      var data = {};
+      data.login = name("login");
+      data.pass = name("pass");
+      send("web_control.lua", {
+        auth: data
+      }, function(res) {
+        console.log(res)
+        if (res == "false") {
+          document.getElementById('login').validity.valid = false;
+        } else {
+          document.cookie = "id=" + res;
+          document.cookie = "ids=" + res;
+          location.href = '/';
+        }
+      })
+    }
+
+    document.onkeyup = function(e) {
+      e = e || window.event;
+      if (e.keyCode === 13) {
+        login();
+      }
+      return false;
+    }
+
+  </script>
 </body>
 
 </html>

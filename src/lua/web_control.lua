@@ -1,47 +1,35 @@
-local function write_to_file(s,f)
- local ok, json = pcall(sjson.encode, s)
-  if ok then
-   if file.open(f, "w") then
-    file.write(json)
-    file.close()
-   end
-   print(json)
-   return "true"
- else
-  return "false"
- end
+
+local function saveToFile(fileName,data)
+  local r = file.open(fileName, "w") and data
+  if r then
+     file.write(data)
+     file.close()
+  end
+  return r
 end
-local function cry(l,p)
-return crypto.toBase64(crypto.mask(l..p,s.token))
-end
+
 local function auth(arg)
- return cry(arg.login,arg.pass)==cry(s.auth_login,s.auth_pass) and cry(arg.login,arg.pass) or "false"
+  local access = (arg.login == _s.login and arg.pass == _s.pass)
+  return access and _s.token
 end
-local function save(tab)
-for k,v in pairs(tab) do
-s[k] = (tonumber(v)and not k:match("_pass$")) and tonumber(v)or v
- end
- return write_to_file(s,"setting.json")
+
+local function listap(list)
+  status, result = pcall(sjson.encode, list)
+  saveToFile("get_network.json", result)
 end
-local function listap(t)
-local d = {}
-local i = {}
- for k,v in pairs(t) do
-  d.am, d.ri, d.bd, d.cl = v:match("([^,]+),([^,]+),([^,]+),([^,]+)")
-  d.sd=k
-  i[#i+1]=d
-  d={}
- end
- write_to_file(i,"get_network.json")
+
+local function reboot()
+  tmr.create():alarm(2000, tmr.ALARM_SINGLE, function()
+    print("reboot")
+    node.restart()
+  end)
+  return true
 end
-return function (tab)
-local r="false"
- if tab.init=="save"then tab.init=nil r=save(tab)
- elseif tab.init=="scan" then wifi.sta.getap(listap) r="true"
- elseif tab.init=="reboot" then
-  tmr.create():alarm(2000, tmr.ALARM_SINGLE, function()print("reboot")node.restart()end)
- elseif tab.init=="get" then
-  if (file.open("get_network.json","r")) then r = file.read('\n') file.close()end
- elseif tab.init=="auth" then r=auth(tab) end
- return r
+
+return function (t)
+  local r
+  if t.scan then r=true wifi.sta.getap(listap) end
+  if t.auth then r=auth(t.auth)end
+  if t.reboot then r=reboot()end
+  return r
 end
