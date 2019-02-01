@@ -72,11 +72,11 @@ window.onload = function () {
 
     arr.forEach(function (item, i, arr) {
 
-      if (item === "mode" || item === "auth") {
-        var val = check_sel(item);
-
-        data[item] = val;
-      } else {
+      if (item === "mode") {
+        data[item] = +check_sel(item);
+      } else if (item === "auth"){
+        data[item] = check_sel(item) == "true";
+      }else {
         var x = $(item).value;
         if (x || x !== '') data[item] = x;
       }
@@ -84,12 +84,13 @@ window.onload = function () {
     });
 
 
-    if (check_sel("mode") === 0) {
+    if (+check_sel("mode") === 0) {
       if (!confirm("Attention !!! Wi-Fi will be disabled, do you really want it?")) return;
     }
 
     console.log(data);
-    $('modal').classList.add = "hide";
+
+    $('modal').classList.add("hide");
 
 
     //  send("web_control.lua", data, function (res) {
@@ -163,16 +164,13 @@ window.onload = function () {
 
   loadSettings();
   document.body.addEventListener("click", function (event) {
-    var modal = document.getElementById('modal');
-
-    console.log(modal.classList)
 
     var id = event.target.id;
     if (id === "search") scan();
     if (id === "btn_exit") logout();
     if (id === "save_m") save();
-    if (id === "btn_save") modal.classList.remove("hide");
-    if (id === "close" || id === "close_m") modal.classList.add("hide");
+    if (id === "btn_save") $('modal').classList.remove("hide");
+    if (id === "close" || id === "close_m") $('modal').classList.add("hide");
 
     if (event.target.tagName === "LI") {
       var a = $('list');
