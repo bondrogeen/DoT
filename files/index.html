@@ -1,1 +1,146 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta http-equiv="Content-Language" content="en"><meta name="msapplication-TileColor" content="#2d89ef"><meta name="theme-color" content="#4188c9"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta charset="UTF-8"><link href="style.css.gz" rel="stylesheet"><title>DoT</title><style>.card .card-image{background:url(http://git.codedevice.ru/img/new.jpg) center center/cover no-repeat;height:200px;border-bottom:1px solid}.card .card-reveal p{margin:0}.b{font-weight:700}.btnInfo,.git,.sett,.vers{position:absolute}.btnInfo{right:23px;bottom:50px;font-size:3rem;cursor:pointer}.sideopen{cursor:pointer}.git,.vers{right:20px;bottom:5px}.sett{bottom:30px;right:20px}.card .card-content{min-height:115px}</style></head><body><div id="loader" class="loader hide"></div><div id="sideNav" class="sidenav"><span href="javascript:void(0)" class="close" onclick='document.getElementById("sideNav").classList.toggle("open")'>&times;</span><div class="in"></div><a href="http://dot.codedevice.ru/example/" target="_blank">Example css</a> <a href="https://github.com/bondrogeen/dot" target="_blank">GitHub</a> <a href="http://dot.codedevice.ru" target="_blank">DOT</a></div><ul class="nav fix info" id="topNav"><li><a href="index.html" class="brand">DOT</a></li><li><a href="settings.html">Settings</a></li><li><a href="service.html">Service</a></li><li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li><li class="-icon"><a href="#" onclick='document.getElementById("topNav").classList.toggle("res")'>&equiv;</a></li></ul><div id="Modal" class="modal hide"><div class="m-cont"><span class="close" onclick="modclose()">&times;</span><div class="m-body"><p>Save settings?</p></div><div class="m-foo"><button class="success">Yes</button> <button class="danger">No</button></div></div></div><div class="cont"><div class="row"><div class="s12 m2 l2"></div><div class="s12 m10 l-9"><h1>Main</h1><div id="modules" class="row"></div></div></div></div><script>function send(e,n,t){var a=new XMLHttpRequest;a.open("POST",e,!0),a.setRequestHeader("Content-Type","application/json"),a.addEventListener("load",function(){a.status<400?t(a.responseText):t(!1)}),a.send(JSON.stringify(n))}function openCard(e){document.getElementById(e);var n=document.getElementById("rev"+e);n.style.display="block",n.style.transform="translateY(-100%)"}function closeCard(e){document.getElementById(e);var n=document.getElementById("rev"+e);n.style.display="none",n.style.transform="translateY(0)"}function page(e){var a="<p>";return"object"==typeof e?e.forEach(function(e,n,t){a+='<a title="/'+e+'" target="_blank" href="'+e+'">link </a>'}):a+='<a title="/'+e+'" target="_blank" href="'+e+'">link</a>',a+="</p>"}function saveStorage(e,n){localStorage.setItem(e,JSON.stringify(n))}function loadStorage(e){return JSON.parse(localStorage.getItem(e))}function render(e){var n=document.createElement("div"),t="";n.className="s12 m6 l4",n.id=e.name,t+='<div class="card hover"><div class="card-image"'+(e.img?'style="background: url('+e.img+') center center / cover no-repeat;"':"")+'></div><div class="card-content"><span title="Module name" class="card-title">'+e.name+'</span><i class="btnInfo" onclick="openCard(\''+e.name+'\')">&equiv;</i><span class="vers b" title="Installed version">'+e.version+"</span>","main"!==e.name&&(t+='<span class="sett b"><a href="plugin.html?plugin='+e.name+'">SETUP</a></span>'+page(e.page)),t+='</div><div id="rev'+e.name+'"class="card-reveal"><span onclick="closeCard(\''+e.name+'\')" class="close">&times;</span><p><b>Description : </b>'+e.description+"</p><p><b>Modules : </b>"+e.modules.join(", ")+'</p><span class="git b"><a target="_blank" href="'+e.repository.url+'">GitHub</a></span></div></div>',n.innerHTML=t,modules.appendChild(n)}function pars(e){try{return JSON.parse(e)}catch(e){return console.error(e),!1}}function loadInfo(t){var a=t.shift();a&&(console.log(!0),send(a,{},function(e){var n;(console.log(e),e)?((n=pars(e))&&(saveStorage(a,n),render(n)),0!==t.length&&loadInfo(t)):console.error("Error")}))}function logout(){document.cookie="id=",location.href="/login.html"}window.onload=function(){for(var e=0,n=localStorage.length;e<n;++e)console.log(localStorage.key(e));send("init_settings.lua",{list:!0},function(e){if(console.log(e),e){var n=pars(e);if(n){var t=[];for(var a in n)-1!==a.indexOf(".info")&&(localStorage.getItem(a)?render(loadStorage(a)):t.push(a));loadInfo(t)}}})}</script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta http-equiv="Content-Language" content="en"><meta name="msapplication-TileColor" content="#2d89ef"><meta name="theme-color" content="#4188c9"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta charset="UTF-8"><link href="style.css.gz" rel="stylesheet"><title>DoT</title><style>.card .card-image{background:url(http://git.codedevice.ru/img/new.jpg) center center/cover no-repeat;height:200px;border-bottom:1px solid}.card .card-reveal p{margin:0}.b{font-weight:700}.btnInfo,.git,.sett,.vers{position:absolute}.btnInfo{right:23px;bottom:50px;font-size:3rem;cursor:pointer}.sideopen{cursor:pointer}.git,.vers{right:20px;bottom:5px}.sett{bottom:30px;right:20px}.card .card-content{min-height:115px}</style></head><body><div id="loader" class="loader"></div><ul class="nav fix info" id="navbar"><li><a href="index.html" class="brand">DOT</a></li><li><a href="settings.html">Settings</a></li><li><a href="service.html">Service</a></li><li class="-exit"><a href="#" id="btn_exit" onclick="logout()">Exit</a></li><li class="-icon"><a href="#" onclick='document.getElementById("navbar").classList.toggle("res")'>&equiv;</a></li></ul><div id="Modal" class="modal hide"><div class="m-cont"><span class="close" onclick="modclose()">&times;</span><div class="m-body"><p>Save settings?</p></div><div class="m-foo"><button class="success">Yes</button> <button class="danger">No</button></div></div></div><div class="cont"><div class="row"><div class="s12 m2 l2"></div><div class="s12 m10 l-9"><h1>Main</h1><div id="modules" class="row"></div></div></div></div><script>function $(val) {
+      return document.getElementById(val);
+    }
+
+    function send(page, data, callback) {
+      var req = new XMLHttpRequest();
+      req.open("POST", page, true);
+      req.setRequestHeader('Content-Type', 'application/json');
+      req.addEventListener("load", function() {
+        if (req.status < 400) {
+          callback(req.responseText);
+        } else {
+          callback(false);
+        }
+      });
+      req.send(JSON.stringify(data));
+    }
+
+    function openCard(id) {
+      var x = document.getElementById(id);
+      var rev = document.getElementById("rev" + id)
+      rev.style.display = "block";
+      rev.style.transform = "translateY(-100%)";
+    }
+
+    function closeCard(id) {
+      var x = document.getElementById(id);
+      var rev = document.getElementById("rev" + id)
+      rev.style.display = "none";
+      rev.style.transform = "translateY(0)";
+    }
+
+    function page(t) {
+      var temp = '<p>'
+      if (typeof(t) === 'object') {
+        t.forEach(function(item, i, arr) {
+          temp += '<a title="/' + item + '" target="_blank" href="' + item + '">link </a>'
+        });
+        temp
+      } else {
+        temp += '<a title="/' + t + '" target="_blank" href="' + t + '">link</a>'
+      }
+      temp += '</p>'
+      return temp;
+    }
+
+    function saveStorage(name, obj) {
+      localStorage.setItem(name, JSON.stringify(obj));
+    }
+
+    function loadStorage(name) {
+      return JSON.parse(localStorage.getItem(name));
+    }
+
+    function render(info) {
+      var div = document.createElement('div');
+      var temp = '';
+      div.className = "s12 m6 l4";
+      div.id = info.name;
+      temp +=
+        '<div class="card hover">' +
+        '<div class="card-image"' + (info.img ? 'style="background: url(' + info.img + ') center center / cover no-repeat;"' : '') + '></div>' +
+        '<div class="card-content"><span title="Module name" class="card-title">' + info.name + '</span>' +
+        '<i class="btnInfo" onclick="openCard(\'' + info.name + '\')">&equiv;</i>' +
+        '<span class="vers b" title="Installed version">' + info.version + '</span>'
+      if (info.name !== "main") {
+        temp += '<span class="sett b"><a href="plugin.html?plugin=' + info.name + '">SETUP</a></span>' + page(info.page)
+      }
+      temp +=
+        '</div>' +
+        '<div id="rev' + info.name + '"class="card-reveal"><span onclick="closeCard(\'' + info.name + '\')" class="close">&times;</span>' +
+        '<p><b>Description : </b>' + info.description + '</p>' +
+        '<p><b>Modules : </b>' + info.modules.join(", ") + '</p>' +
+        '<span class="git b"><a target="_blank" href="' + info.repository.url + '">GitHub</a></span>' +
+        '</div>' +
+        '</div>'
+      div.innerHTML = temp;
+      modules.appendChild(div)
+    }
+
+    function pars(d) {
+      try {
+        return JSON.parse(d);
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+
+    }
+
+    function loadInfo(arr) {
+      var name = arr.shift()
+      if (name) {
+        console.log(true);
+        send(name, {}, function(res) {
+          console.log(res);
+          if (res) {
+            var info
+            info = pars(res);
+            if (info) {
+              saveStorage(name, info)
+              render(info)
+            }
+            if (arr.length !== 0) {
+              loadInfo(arr)
+            }
+          } else {
+            console.error("Error")
+          }
+        });
+      }
+    }
+
+    window.onload = function() {
+      document.getElementById.
+      for(var i = 0, len = localStorage.length; i < len; ++i) {
+        console.log(localStorage.key(i));
+      }
+      send("init_settings.lua", {
+        "list": true
+      }, function(res) {
+        console.log(res);
+        if (res) {
+          var data = pars(res);
+          if (data) {
+            var list = [];
+            for (var key in data) {
+              if (key.indexOf(".info") !== -1) {
+                if (localStorage.getItem(key)) {
+                  render(loadStorage(key));
+                } else {
+                  list.push(key);
+                }
+              }
+            }
+            loadInfo(list);
+          }
+        }
+      });
+
+    }
+
+    function logout() {
+      document.cookie = "id=";
+      location.href = '/login.html';
+    }</script></body></html>
