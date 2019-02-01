@@ -19,17 +19,18 @@ end
 
 local function getReq(payload)
   local requestData = {}
-    local mimeType = payload:match("Content%-Type: ([%w/-]+)")
-    local body = payload:sub( payload:find("\r\n\r\n", 1, true), #payload)
-    payload=nil
-    collectgarbage()
-    if mimeType == "application/json" then
-      local ok, j = pcall(sjson.decode, body)
-      requestData = ok and j or {}
-    elseif mimeType == "application/x-www-form-urlencoded" then
-      requestData = parse(body, "%s*&?([^=]+=[^&]*)")
-    end
-    return requestData
+  local mimeType = payload:match("Content%-Type: ([%w/-]+)")
+  local body = payload:sub( payload:find("\r\n\r\n", 1, true), #payload)
+  print(body)
+  payload=nil
+  collectgarbage()
+  if mimeType == "application/json" then
+    local ok, j = pcall(sjson.decode, body)
+    requestData = ok and j or {}
+  elseif mimeType == "application/x-www-form-urlencoded" then
+    requestData = parse(body, "%s*&?([^=]+=[^&]*)")
+  end
+  return requestData
 end
 
 return function (req)

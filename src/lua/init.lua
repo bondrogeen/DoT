@@ -1,5 +1,5 @@
 gpio.mode(4, gpio.INPUT)
-_s=dofile("init_settings.lua")(gpio.read(4))
+_s=dofile("init_settings.lua")({def=gpio.read(4)})
 node.setcpufreq(node.CPU160MHZ)
 dofile("init_wifi.lua")(_s)
 local mytimer = tmr.create()

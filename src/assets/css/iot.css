@@ -651,7 +651,7 @@ button:disabled {
 }
 
 button:hover {
- opacity: .7;
+ opacity: .8;
  border-color: #888;
  outline: 0
 }
@@ -1004,37 +1004,30 @@ tr:hover {
 }
 
 .danger {
- border-color: #f44336!important;
  background-color: #f44336!important
 }
 
 .success {
- border-color: #7ed321!important;
  background-color: #7ed321!important
 }
 
 .info {
- border-color: #2196f3!important;
  background-color: #2196f3!important
 }
 
 .warning {
- border-color: #ff9800!important;
  background-color: #ff9800!important
 }
 
 .purple {
- border-color: #ce08ce!important;
  background-color: #ce08ce!important
 }
 
 .primary {
- border-color: #33c3f0!important;
  background-color: #33c3f0!important
 }
 
 .grey {
- border-color: #ccc!important;
  background-color: #ddd!important
 }
 

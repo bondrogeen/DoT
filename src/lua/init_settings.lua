@@ -70,8 +70,7 @@ return function(t)
     if t.init then r=init(t.init)end
     if t.save then r=save(t.save)end
     if t.del then r=del(t.del)end
-  else
-    r=def(t)
+    if t.def then r=def(t)end
   end
   return r
 end

@@ -1,28 +1,53 @@
 window.onload = function () {
-  var modal = document.getElementById('Modal');
   var int;
   var scanStart;
+  var settings;
 
   function send(page, data, callback) {
     var req = new XMLHttpRequest();
     req.open("POST", page, true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.addEventListener("load", function () {
-      if (req.status < 400) {
-        callback(req.responseText);
-      } else {
-        callback(req.status);
-      }
+      if (callback)(req.status === 200) ? callback(req.responseText) : callback(false)
     });
     req.send(JSON.stringify(data));
   }
 
-  function id(val) {
-    return document.getElementById(val).value
+  function parse(text) {
+    try {
+      return JSON.parse(text);
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function $(val) {
+    return document.getElementById(val);
+  }
+
+  function loadSettings() {
+    send("init_settings.lua", {
+      def: 0
+    }, function (res) {
+      $('loader').classList.add('hide');
+      var data = parse(res);
+      console.log(data);
+      if (!data) {
+        console.log("Error load settings.");
+      } else {
+        settings = data;
+        $('pwd').value = data.pwd;
+        $('ssid').value = data.ssid;
+        $('login').value = data.login;
+        $('pass').value = data.pass;
+        $('mode').value = data.mode;
+        $('auth').value = (data.auth === true);
+      }
+    });
   }
 
   function check_sel(val) {
-    var s = document.getElementById(val);
+    var s = $(val);
     for (var i = 0; i < s.options.length; i++) {
       if (s.options[i].selected) {
         return s.options[i].value
@@ -36,47 +61,53 @@ window.onload = function () {
   }
 
   function save() {
-    document.getElementById('loader').classList.remove('hide')
+
+    $('loader').classList.remove('hide')
+
     var data = {
-      init: "save"
+      save: true
     };
-    var stop = false
+
     var arr = ["ssid", "pwd", "mode", "pass", "login", "auth"];
+
     arr.forEach(function (item, i, arr) {
+
       if (item === "mode" || item === "auth") {
-        data[item] = check_sel(item)
+        var val = check_sel(item);
+
+        data[item] = val;
       } else {
-        var x = id(item)
+        var x = $(item).value;
         if (x || x !== '') data[item] = x;
       }
-    });
-    if (stop) {
-      modal.style.display = "none";
-      return;
-    }
-    if (check_sel("mode") === "OFF") {
-      var w = confirm("Внимание!!! Wi-fi будет отключен, Вы точно этого хотите?");
-      if (!w) {
-        return
-      }
-    }
-    modal.style.opacity = "0";
-    setTimeout(function () {
-      modal.style.display = "none";
-    }, 600);
 
-    send("web_control.lua", data, function (res) {
-      if (res === "true") {
-        send("web_control.lua", {
-          init: "reboot"
-        }, function (res) {
-          setTimeout(function () {
-            location.href = "/";
-          }, 10000);
-        });
-      }
-    })
+    });
+
+
+    if (check_sel("mode") === 0) {
+      if (!confirm("Attention !!! Wi-Fi will be disabled, do you really want it?")) return;
+    }
+
+    console.log(data);
+    $('modal').classList.add = "hide";
+
+
+    //  send("web_control.lua", data, function (res) {
+    //    if (res === "true") {
+    //      send("web_control.lua", {
+    //        init: "reboot"
+    //      }, function (res) {
+    //        setTimeout(function () {
+    //          location.href = "/";
+    //        }, 10000);
+    //      });
+    //    }
+    //  });
+
+
   }
+
+
   var x = ["|", "(|", "((|", "(((|", "((((|"];
   var y = 0;
 
@@ -97,23 +128,23 @@ window.onload = function () {
       }, function (res) {});
 
       setTimeout(function () {
-        var a = document.getElementById('list');
+
         send("get_network.json", {}, function (res) {
           scanStart = false;
           if (res) {
             //            console.log(res)
             clearInterval(int);
             y = 0;
-            document.getElementById('search').value = "Search...";
+            $('search').value = "Search...";
             try {
               var j = JSON.parse(res);
               console.log(j)
 
               var i = 1;
-              var buf='';
+              var buf = '';
               for (key in j) {
                 var data = j[key].split(",")
-                 buf += '<li id="' + key + '"><b>' + key + '</b> rssi : ' + data[1] + ' channel : ' + data[3] + '</li>';
+                buf += '<li id="' + key + '"><b>' + key + '</b> rssi : ' + data[1] + ' channel : ' + data[3] + '</li>';
                 i++;
               }
               a.innerHTML = buf;
@@ -128,33 +159,28 @@ window.onload = function () {
     }
   }
 
+
+
+  loadSettings();
   document.body.addEventListener("click", function (event) {
-    var a = document.getElementById('list');
-    if (event.target.id === "search") {
-      scan();
-    } else if (event.target.id === "openNav") {
-      document.getElementById('mySidenav').classList.toggle('open');
-    } else if (event.target.id === "btn_nav") {
-      document.getElementById("myTopnav").classList.toggle('res');
-    } else if (event.target.id === "btn_exit") {
-      logout();
-    } else if (event.target.id === "btn_save") {
-      modal.style.opacity = "1";
-      modal.style.display = "block";
-    } else if (event.target.id === "close_m" | event.target.id == "close") {
-      modal.style.opacity = "0";
-      setTimeout(function () {
-        modal.style.display = "none";
-      }, 600);
-    } else if (event.target.id === "save_m") {
-      save();
-    } else {
-      document.getElementById("mySidenav").classList.remove("open");
-      if (event.target.tagName === "LI" && event.target.id) {
-        document.getElementById('ssid').value = event.target.id;
-        document.getElementById('pwd').value = "";
-        document.getElementById('pwd').focus();
-        document.getElementById('mode').options[1].selected = 'true'
+    var modal = document.getElementById('modal');
+
+    console.log(modal.classList)
+
+    var id = event.target.id;
+    if (id === "search") scan();
+    if (id === "btn_exit") logout();
+    if (id === "save_m") save();
+    if (id === "btn_save") modal.classList.remove("hide");
+    if (id === "close" || id === "close_m") modal.classList.add("hide");
+
+    if (event.target.tagName === "LI") {
+      var a = $('list');
+      if (id) {
+        $('ssid').value = id;
+        $('pwd').value = "";
+        $('pwd').focus();
+        $('mode').value = '3';
       }
       a.style.display = 'none';
     }

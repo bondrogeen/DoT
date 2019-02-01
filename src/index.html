@@ -58,9 +58,9 @@
 
 <body>
 
-//= template/header.html
+  //= template/header.html
 
-   <div id="Modal" class="modal hide">
+  <div id="Modal" class="modal hide">
     <div class="m-cont">
       <span class="close" onclick="modclose();">&times;</span>
       <div class="m-body">
@@ -86,6 +86,10 @@
     </div>
   </div>
   <script>
+    function $(val) {
+      return document.getElementById(val);
+    }
+
     function send(page, data, callback) {
       var req = new XMLHttpRequest();
       req.open("POST", page, true);
@@ -196,7 +200,8 @@
     }
 
     window.onload = function() {
-      for (var i = 0, len = localStorage.length; i < len; ++i) {
+      document.getElementById.
+      for(var i = 0, len = localStorage.length; i < len; ++i) {
         console.log(localStorage.key(i));
       }
       send("init_settings.lua", {
