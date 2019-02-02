@@ -1310,3 +1310,24 @@ tr:hover {
 .p-9 {
   padding: 6rem !important;
 }
+
+.footer {
+  background: #fff;
+  border-top: 1px solid rgba(0,40,100,.12);
+  font-size: 1.25rem;
+  color: #9aa0ac;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+.footer a {
+  color: #6e7687;
+  font-size: 1.3rem;
+}
+.footer li {
+  display: inline!important;
+}

@@ -32,7 +32,7 @@
 
 ## Changelog
 
-### 0.2.1 (2018-06-01) 
+### 0.2.1 (2019-01-31) 
 * (bondrogeen) Code optimization (development)
 ### 0.2.0 (2018-06-01)
 * (bondrogeen) Мелкие правки. 

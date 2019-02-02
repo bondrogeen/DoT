@@ -27,7 +27,7 @@ window.onload = function () {
 
   function loadSettings() {
     send("init_settings.lua", {
-      def: 0
+      def: 1
     }, function (res) {
       $('loader').classList.add('hide');
       var data = parse(res);
@@ -61,51 +61,38 @@ window.onload = function () {
   }
 
   function save() {
-
-    $('loader').classList.remove('hide')
-
     var data = {
-      save: true
+      Fname: "setting.json"
     };
-
     var arr = ["ssid", "pwd", "mode", "pass", "login", "auth"];
-
     arr.forEach(function (item, i, arr) {
-
       if (item === "mode") {
         data[item] = +check_sel(item);
-      } else if (item === "auth"){
+      } else if (item === "auth") {
         data[item] = check_sel(item) == "true";
-      }else {
+      } else {
         var x = $(item).value;
         if (x || x !== '') data[item] = x;
       }
-
     });
-
-
     if (+check_sel("mode") === 0) {
       if (!confirm("Attention !!! Wi-Fi will be disabled, do you really want it?")) return;
     }
-
-    console.log(data);
-
+    $('loader').classList.remove('hide')
     $('modal').classList.add("hide");
-
-
-    //  send("web_control.lua", data, function (res) {
-    //    if (res === "true") {
-    //      send("web_control.lua", {
-    //        init: "reboot"
-    //      }, function (res) {
-    //        setTimeout(function () {
-    //          location.href = "/";
-    //        }, 10000);
-    //      });
-    //    }
-    //  });
-
-
+    send("init_settings.lua", {
+      save: data
+    }, function (res) {
+      if (res === "true") {
+        send("web_control.lua", {
+          reboot: true
+        }, function (res) {
+          setTimeout(function () {
+            location.href = "/";
+          }, 10000);
+        });
+      }
+    });
   }
 
 
@@ -127,20 +114,15 @@ window.onload = function () {
       send("web_control.lua", {
         scan: true
       }, function (res) {});
-
       setTimeout(function () {
-
         send("get_network.json", {}, function (res) {
           scanStart = false;
           if (res) {
-            //            console.log(res)
             clearInterval(int);
             y = 0;
             $('search').value = "Search...";
             try {
               var j = JSON.parse(res);
-              console.log(j)
-
               var i = 1;
               var buf = '';
               for (key in j) {
@@ -148,11 +130,11 @@ window.onload = function () {
                 buf += '<li id="' + key + '"><b>' + key + '</b> rssi : ' + data[1] + ' channel : ' + data[3] + '</li>';
                 i++;
               }
-              a.innerHTML = buf;
+              $('list').innerHTML = buf;
             } catch (e) {
-              a.innerHTML = '<li>No networks found</li>';
+              $('list').innerHTML = '<li>No networks found</li>';
             }
-            a.style.display = 'block';
+            $('list').style.display = 'block';
           }
 
         });
@@ -164,21 +146,19 @@ window.onload = function () {
 
   loadSettings();
   document.body.addEventListener("click", function (event) {
-
     var id = event.target.id;
     if (id === "search") scan();
     if (id === "btn_exit") logout();
     if (id === "save_m") save();
     if (id === "btn_save") $('modal').classList.remove("hide");
     if (id === "close" || id === "close_m") $('modal').classList.add("hide");
-
     if (event.target.tagName === "LI") {
       var a = $('list');
       if (id) {
         $('ssid').value = id;
         $('pwd').value = "";
         $('pwd').focus();
-        $('mode').value = '3';
+        $('mode').value = "1";
       }
       a.style.display = 'none';
     }

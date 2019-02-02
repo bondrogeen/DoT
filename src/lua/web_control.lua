@@ -15,6 +15,7 @@ end
 
 local function listap(list)
   status, result = pcall(sjson.encode, list)
+  print(result)
   saveToFile("get_network.json", result)
 end
 
@@ -28,8 +29,11 @@ end
 
 return function (t)
   local r
-  if t.scan then r=true wifi.sta.getap(listap) end
-  if t.auth then r=auth(t.auth)end
-  if t.reboot then r=reboot()end
+  if t.scan then
+    r = true
+    wifi.sta.getap(listap)
+  end
+  if t.auth then r = auth(t.auth)end
+  if t.reboot then r = reboot()end
   return r
 end
