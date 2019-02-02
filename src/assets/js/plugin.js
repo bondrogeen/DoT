@@ -84,6 +84,7 @@ function create(html, id, c) {
 
 window.onload = function () {
   listLink();
+  document.getElementById('loader').classList.add('hide');
   var url = new URL(window.location.href);
   var param = url.searchParams.get("plugin");
   if (param) {

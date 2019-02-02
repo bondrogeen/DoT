@@ -31,9 +31,7 @@ window.onload = function () {
     }, function (res) {
       $('loader').classList.add('hide');
       var data = parse(res);
-      console.log(data);
       if (!data) {
-        console.log("Error load settings.");
       } else {
         settings = data;
         $('pwd').value = data.pwd;

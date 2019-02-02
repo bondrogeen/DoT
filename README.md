@@ -14,7 +14,7 @@
 
 1. Необходимые модули ("crypto", "file", "gpio", "net", "node", "sjson", "tmr", "uart", "wifi") далее на ваше усмотрение. [Собрать прошивку](https://nodemcu-build.com/)
 2. Загрузить все [файлы](https://github.com/bondrogeen/dot/tree/master/files) в модуль.
-3. Подключиться к точке доступа **Web server** и перейти по адресу **192.168.4.1**.
+3. Подключиться к точке доступа **DoT-XXXXXX** и перейти по адресу **192.168.4.1**.
 	
 [YouTube](https://www.youtube.com/watch?v=ZlZd6Yuta10)
       
