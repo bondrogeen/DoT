@@ -3,67 +3,72 @@
 
 <head>
 
- //= template/head.html
+  //= template/head.html
 
- <title>Service</title>
+  <title>Service</title>
 
- <script type="text/javascript" src="http://git.codedevice.ru/js/service.js"></script>
- <style>
-  h3 {
-   padding: 1rem;
-  }
+  <script type="text/javascript" src="http://git.codedevice.ru/js/service.js"></script>
+  <style>
+    h3 {
+      padding: 1rem;
+    }
 
-  p {
-   margin: 0px;
-  }
+    p {
+      margin: 0px;
+    }
 
-  .m-body {
-   overflow: scroll;
-   height: 300px;
-   padding-top: 5px;
-   border: 1px solid #a0a0a0;
-   border-radius: 5px;
-   margin: 15px 20px;
-  }
+    .m-body {
+      overflow: scroll;
+      height: 300px;
+      padding-top: 5px;
+      border: 1px solid #a0a0a0;
+      border-radius: 5px;
+      margin: 15px 20px;
+    }
 
-  .m-head h3{
-   margin: 0;
-   padding: 0px 30px;
-  }
+    .m-head h3 {
+      margin: 0;
+      padding: 0px 30px;
+    }
 
-  .warn {
-   border-left: 5px solid #dc7272;
-   padding: 10px;
-   display: inherit;
-   margin-bottom: 10px;
-  }
- </style>
+    .warn {
+      border-left: 5px solid #dc7272;
+      padding: 10px;
+      display: inherit;
+      margin-bottom: 10px;
+    }
+
+    .card .card-content .card-title {
+      font-size: 2rem;
+    }
+
+  </style>
 </head>
 
 <body>
 
-//= template/header.html
+  //= template/header.html
 
- <div id="Modal" class="modal hide">
-  <div class="m-cont">
-   <div class="m-head">
-      <span class="close" id="close_m" onclick="mClose()">&times;</span>
-      <h3 class="m-info">Update</h3>
-   </div>
-   <div class="m-body">
-    <p id="m-text"></p>
-   </div>
-   <div class="m-foo">
-    <button id="start" class="info" onclick="startLoad('web-server');">Start</button>
-    <button id="close" class="info" onclick="mClose();">Close</button>
-    <button id="reboot" class="danger hide" onclick="reboot();">Reboot</button>
-   </div>
+  <div id="Modal" class="modal hide">
+    <div class="m-cont">
+      <div class="m-head">
+        <span class="close" id="close_m" onclick="mClose()">&times;</span>
+        <h3 class="m-info">Update</h3>
+      </div>
+      <div class="m-body">
+        <p id="m-text"></p>
+      </div>
+      <div class="m-foo">
+        <button id="start" class="info" onclick="startLoad('web-server');">Start</button>
+        <button id="close" class="info" onclick="mClose();">Close</button>
+        <button id="reboot" class="danger hide" onclick="reboot();">Reboot</button>
+      </div>
+    </div>
   </div>
- </div>
- <div id="cont" class="cont">
-  <div class="row">
-   <div class="s12 of-m2 m10 of-l2 l8">
-<!--
+  <div id="cont" class="cont">
+    <div class="row">
+      <div class="s12 of-m2 m10 of-l2 l8">
+        <!--
     <div class="row">
     <h3>Update.</h3>
      <div class="s12">
@@ -73,102 +78,100 @@
      </div>
     </div>
 -->
-    <h3>Plugins</h3>
-    <div id="plugins" class="row">
+        <h3>Plugins</h3>
+        <div id="plugins" class="row">
+        </div>
+      </div>
     </div>
-   </div>
   </div>
- </div>
- //= template/footer.html
- <script>
-  function send(page, data, callback) {
-   var req = new XMLHttpRequest();
-   req.open("POST", page, true);
-   req.setRequestHeader('Content-Type', 'application/json');
-   req.addEventListener("load", function() {
-    if (req.status < 400) {
-     callback(req.responseText);
-    } else {
-     callback(false);
-    }
-   });
-   req.send(JSON.stringify(data));
-  }
-
-  function id(n){
-   return document.getElementById(n)
-  }
-  function loading(d,callback){
-   var data = {};
-   data.host = "git.codedevice.ru";
-   data.port = 80;
-   data.path = "/files/"+d+"/";
-   data.file = "index.php";
-   data.init = "upload";
-   send("web_get.lua", data, function(res) {
-    console.log(res);
-    if (res === "true") {
-     callback("load");
-     setTimeout(function() {
-      send("temp_get.txt", {}, function(res) {
-       callback(res);
-       localStorage.clear();
+  //= template/footer.html
+  <script>
+    function send(page, data, callback) {
+      var req = new XMLHttpRequest();
+      req.open("POST", page, true);
+      req.setRequestHeader('Content-Type', 'application/json');
+      req.addEventListener("load", function() {
+        if (callback)(req.status === 200) ? callback(req.responseText) : callback(false)
       });
-     }, 15000);
-    } else {
-     callback(false);
+      req.send(JSON.stringify(data));
     }
-   });
-  }
 
-  function startLoad(name){
-   id("m-text").innerHTML = "Start of update <br/>";
-   loading(name,function(res){
-    if(res==="load"){
-     id("loader").classList.remove('hide');
-     id("m-text").innerHTML += "Loading ... wait<br>";
-    }else if (res){
-     id("loader").classList.add('hide');
-     id("start").classList.add('hide');
-     id("m-text").innerHTML += res.replace(/\n/g, '<br />');
-     id("close").innerHTML = "Done";
-     id("reboot").classList.remove('hide');
-    }else{
-     id("m-text").innerHTML += "Loading error<br/>";
+    function id(n) {
+      return document.getElementById(n)
     }
-   });
-  }
 
-  function update() {
-   id('Modal').classList.remove('hide');
-  }
+    function loading(d, callback) {
+      var data = {};
+      data.host = "git.codedevice.ru";
+      data.port = 80;
+      data.path = "/files/" + d + "/";
+      data.file = "index.php";
+      data.init = "upload";
+      send("web_get.lua", data, function(res) {
+        console.log(res);
+        if (res === "true") {
+          callback("load");
+          setTimeout(function() {
+            send("temp_get.txt", {}, function(res) {
+              callback(res);
+              localStorage.clear();
+            });
+          }, 15000);
+        } else {
+          callback(false);
+        }
+      });
+    }
 
-  function mClose() {
-   id('Modal').classList.add('hide');
-   id("close").innerHTML = "Close";
-   id("reboot").classList.add('hide');
-   id("start").classList.remove('hide');
-  }
+    function startLoad(name) {
+      id("m-text").innerHTML = "Start of update <br/>";
+      loading(name, function(res) {
+        if (res === "load") {
+          id("loader").classList.remove('hide');
+          id("m-text").innerHTML += "Loading ... wait<br>";
+        } else if (res) {
+          id("loader").classList.add('hide');
+          id("start").classList.add('hide');
+          id("m-text").innerHTML += res.replace(/\n/g, '<br />');
+          id("close").innerHTML = "Done";
+          id("reboot").classList.remove('hide');
+        } else {
+          id("m-text").innerHTML += "Loading error<br/>";
+        }
+      });
+    }
 
-  function reboot() {
-   id("loader").classList.remove('hide');
-   mClose();
-   send("web_control.lua", {
-    init: "reboot"
-   }, function(res) {
-    setTimeout(function() {
-     location.href = "/";
-    }, 10000);
-   });
-  }
+    function update() {
+      id('Modal').classList.remove('hide');
+    }
 
-  function logout() {
-   document.cookie = "id=";
-   location.href = '/login.html';
-  }
+    function mClose() {
+      id('Modal').classList.add('hide');
+      id("close").innerHTML = "Close";
+      id("reboot").classList.add('hide');
+      id("start").classList.remove('hide');
+    }
 
-   document.getElementById('loader').classList.add('hide');
- </script>
+    function reboot() {
+      id("loader").classList.remove('hide');
+      mClose();
+      send("web_control.lua", {
+        init: "reboot"
+      }, function(res) {
+        setTimeout(function() {
+          location.href = "/";
+        }, 10000);
+      });
+    }
+
+    function logout() {
+      document.cookie = "id=";
+      location.href = '/login.html';
+    }
+
+    document.getElementById('loader').classList.add('hide');
+
+  </script>
 </body>
 
 </html>

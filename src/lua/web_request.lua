@@ -18,7 +18,7 @@ local function parse(string, regular, c)
 end
 
 local function getReq(payload)
-  local requestData = {}
+  local request = {}
   local mimeType = payload:match("Content%-Type: ([%w/-]+)")
   local body = payload:sub( payload:find("\r\n\r\n", 1, true), #payload)
   print(body)
@@ -26,11 +26,11 @@ local function getReq(payload)
   collectgarbage()
   if mimeType == "application/json" then
     local _, result = pcall(sjson.decode, body)
-    requestData = result or {}
+    request = result or {}
   elseif mimeType == "application/x-www-form-urlencoded" then
-    requestData = parse(body, "%s*&?([^=]+=[^&]*)")
+    request = parse(body, "%s*&?([^=]+=[^&]*)")
   end
-  return requestData
+  return request
 end
 
 return function (req)
