@@ -1,1 +1,0 @@
-local a={}function a:new(b)b=b or{}b._on={}function b:on(a,c)self._on[a]=self._on[a]or{}table.insert(self._on[a],c)end;function b:l(a)return self._on[a]or{}end;function b:emit(a,...)for d,c in ipairs(self:l(a))do if"function"==type(c)then c(...)end end end;return b end;return function(e)return a end
