@@ -27,6 +27,25 @@ Template for your projects with a web interface.
 ![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/dot_screenshot_service.jpg)
 
 
+## Contributing
+Contributions are welcome.
+
+The package is made up of 2 main folders:
+
+- /src (Source files)
+- /files (Compiled and compressed files)
+
+To setup and run a local copy:
+1. Clone this repo with `git clone https://github.com/bondrogeen/DoT`
+2. Run `npm install` in root folder
+
+After installing the dependencies, you can start working with the sources.
+
+3. Run `gilp build` (Compile and compress files)
+
+When you're done working on your changes, submit a PR with the details and include a 
+screenshot if you've changed anything visually.
+
 
 ## Changelog
 
