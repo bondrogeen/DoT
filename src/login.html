@@ -8,6 +8,7 @@
     small:hover {
       color: #000000cc;
       cursor: pointer;
+      text-decoration: underline;
     }
 
     small {
@@ -28,79 +29,84 @@
     <div class="row">
       <div class="card s12 m4 of-m4 p-6">
         <h1 class="center">Login</h1>
-
         <div class="group">
           <input type="text" id="login" name="login" required=" " value="">
           <label for="login">LOGIN</label>
         </div>
-
         <div class="group">
           <input type="password" name="pass" id="pass" required=" " value="">
           <label for="pass">PASSWORD</label>
         </div>
-
         <div>
-          <small onclick="def()">*Default login "<b>admin</b>" password "<b>0000</b>"</small>
+          <small id="def">*Default login "<b>admin</b>" password "<b>0000</b>"</small>
         </div>
-
         <div class="group">
-          <button class="info" onclick="login()" id="myBtn">Sing in</button>
+          <button class="info" id="singIn">Sing in</button>
         </div>
-
       </div>
     </div>
   </div>
   //= template/footer.html
   <script>
-    document.getElementsByName('pass')[0].focus();
+    window.onload = function() {
 
-    function send(page, date, callback) {
-      var req = new XMLHttpRequest();
-      req.open("POST", page, true);
-      req.setRequestHeader('Content-Type', 'application/json');
-      req.addEventListener("load", function() {
-        if (req.status < 400) {
-          callback(req.responseText)
-        } else {
-          callback(req.status)
-        }
-      });
-      req.send(JSON.stringify(date));
-    }
-
-    function name(val) {
-      return document.getElementById(val).value
-    }
-
-    function def() {
-      document.getElementById('login').value = "admin";
-      document.getElementById('pass').value = "0000";
-    }
-
-    function login() {
-      var data = {};
-      data.login = name("login");
-      data.pass = name("pass");
-      send("web_control.lua", {
-        auth: data
-      }, function(res) {
-        console.log(res)
-        if (res == "false") {
-          document.getElementById('login').validity.valid = false;
-        } else {
-          document.cookie = "id=" + res;
-          document.cookie = "ids=" + res;
-          location.href = '/';
-        }
-      })
-    }
-
-    document.onkeyup = function(e) {
-      e = e || window.event;
-      if (e.keyCode === 13) {
-        login();
+      function $(val) {
+        return document.getElementById(val);
       }
-      return false;
+
+      document.getElementsByName('pass')[0].focus();
+
+      function send(page, data, callback) {
+        var req = new XMLHttpRequest();
+        req.open("POST", page, true);
+        req.setRequestHeader('Content-Type', 'application/json');
+        req.addEventListener("load", function() {
+          if (callback)(req.status === 200) ? callback(req.responseText) : callback(false)
+        });
+        req.send(JSON.stringify(data));
+      }
+
+      $('singIn').addEventListener("focus", function() {
+        var data = {};
+        data.login = $("login").value;
+        data.pass = $("pass").value;
+        send("web_control.lua", {
+          auth: data
+        }, function(res) {
+          console.log(res)
+          if (res == "false") {
+            $('login').classList.add('invalid');
+            $('pass').classList.add('invalid');
+          } else {
+            document.cookie = "id=" + res;
+            document.cookie = "ids=" + res;
+            location.href = '/';
+          }
+        })
+      })
+
+      $('def').addEventListener("click", function() {
+        $('login').value = "admin";
+        $('pass').value = "0000";
+      });
+
+      $('login').addEventListener("focus", function() {
+        $('login').classList.remove('invalid');
+        $('pass').classList.remove('invalid');
+      });
+
+      $('pass').addEventListener("focus", function() {
+        $('login').classList.remove('invalid');
+        $('pass').classList.remove('invalid');
+      });
+
+      document.onkeyup = function(e) {
+        e = e || window.event;
+        if (e.keyCode === 13) {
+          login();
+        }
+        return false;
+      }
     }
 
   </script>

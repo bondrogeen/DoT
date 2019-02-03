@@ -25,11 +25,8 @@ local function init(n)
 end
 
 local function def(value)
-  local setting, default = init("setting.json")
-  print((setting and value == 1))
-  print(setting )
-  print(value)
-  default = (setting and value == 1) and setting or setting_default
+  local setting, default = value == 1 and init("setting.json")
+  default = setting or setting_default
   if not settings then save("setting.json", default) end
   default.token = tostring(node.random(100000))
   return default
@@ -63,9 +60,6 @@ local function resave(t)
   local tab = init(t.Fname)
   if tab then
     for key, value in pairs(tab)do
-      print(tab[key])
-      print("==")
-      print(t[key])
       tab[key] = t[key] == nil and value or t[key]
     end
     save(t.Fname, tab)

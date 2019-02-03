@@ -15,7 +15,6 @@ end
 
 local function listap(list)
   status, result = pcall(sjson.encode, list)
-  print(result)
   saveToFile("get_network.json", result)
 end
 

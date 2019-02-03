@@ -20,7 +20,7 @@ local function str(text)
   return result
 end
 
-local op="web_control.luastyle.css.gzlogin.html"
+local access="web_control.luastyle.css.gzlogin.html"
 
 local function executeCode (string, regular)
   for v in string:gmatch(regular) do
@@ -45,7 +45,7 @@ return function(conn, request)
 
   if not _s.auth then
     if not cookie or cookie.id ~= _s.token then
-      fileName = op:match(fileType == "html" and "login.html" or fileName) or ""
+      fileName = access:match(fileType == "html" and "login.html" or fileName) or ""
     end
   end
 

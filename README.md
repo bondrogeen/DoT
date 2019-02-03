@@ -1,69 +1,65 @@
- # DoT  (development)
+# DoT  (development)
  
- 
- 
-Шаблон для ваших проектов с веб интерфейсом.
 
+Template for your projects with a web interface.
 
+[Rus](https://github.com/bondrogeen/DoT/tree/master/doc/ru)
 
-[English](https://github.com/bondrogeen/DoT/tree/master/doc/en)
+## Installation
 
-
-
-## Установка
-
-1. Необходимые модули ("crypto", "file", "gpio", "net", "node", "sjson", "tmr", "uart", "wifi") далее на ваше усмотрение. [Собрать прошивку](https://nodemcu-build.com/)
-2. Загрузить все [файлы](https://github.com/bondrogeen/dot/tree/master/files) в модуль.
-3. Подключиться к точке доступа **DoT-XXXXXX** и перейти по адресу **192.168.4.1**.
-	
+1. The modules you need (crypto, file, gpio, net, node, sjson, tmr, uart, wifi). [Building the firmware](https://nodemcu-build.com/)
+2. Download all [files](https://github.com/bondrogeen/DoT/tree/master/files) to the module.
+3. Connect to the access point **DoT-XXXXXX** and go to the address **192.168.4.1**.
+			
+   	
 [YouTube](https://www.youtube.com/watch?v=ZlZd6Yuta10)
-      
-![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/web_server_login.jpg)
+   
+![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/dot_screenshot_login.jpg)
 			
-4. Вводим логин (admin) и пароль (0000).
+4. Enter the login (admin) and password (0000).
+						
+5. Go to **Settings**.
 			
-5. Переходим в **Настройки**.
-			
-![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/web_server_settings_page.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/dot_screenshot_settings.jpg)
 
-6. Подключаемся к вашей wi-fi сети 
+6. Connect to your wi-fi network
 
-![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/web_server_service_page.jpg)
+![Logo](https://raw.githubusercontent.com/bondrogeen/DoT/master/doc/image/dot_screenshot_service.jpg)
+
+
 
 ## Changelog
 
 ### 0.2.1 (2019-01-31) 
 * (bondrogeen) Code optimization (development)
 ### 0.2.0 (2018-06-01)
-* (bondrogeen) Мелкие правки. 
+* (bondrogeen) Minor edits.
 ### 0.1.8 (2018-06-01)
-* (bondrogeen) Переводит table в JSON от lua скриптов для GET или POST запросов. 
+* (bondrogeen) Translates a table into JSON from lua scripts for GET or POST requests.
 ### 0.1.6 (2018-05-02)
-* (bondrogeen) Изменил пин для настроек по умолчанию. Tеперь это GPIO2 (4).
+* (bondrogeen) Changed the pin number for the default settings. Now it's a GPIO2 pin (4).
 ### 0.1.5 (2018-04-14)
-* (bondrogeen) Мелкие исправления.
+* (bondrogeen) Minor corrections.
 ### 0.1.4 (2018-04-11)
-* (bondrogeen) Изменил построение настроек.
+* (bondrogeen) Changed the configuration settings.
 ### 0.1.3 (2018-04-09)
-* (bondrogeen) Исправил проблему с цифровым паролем wi-fi.
+* (bondrogeen) fixed the problem with the digital password wi-fi.
 ### 0.1.0 (2018-03-26)
-* (bondrogeen) Существенно изменили классы разметки (было .xs-12 сейчас .s12 ). Изменил внешний вид.
+* (bondrogeen) Significantly changed the markup classes (before .xs-12 now .s12 ). Changed the appearance. 
 ### 0.0.7 (2018-03-22)
-* (bondrogeen) Добавил обновление файлов веб сервера
-* (bondrogeen) Исправил баг web_file.lua
+* (bondrogeen) Added update of web server files
+* (bondrogeen) Fixed bug web_file.lua
 ### 0.0.6 (2018-03-12)
-* (bondrogeen) Исправил баг в аутентификации
+* (bondrogeen) Fix authentication
 ### 0.0.5 (2018-03-04)
-* (bondrogeen) Добавлено тестовое прошивку, добавлено NodeMCU Flasher.
+* (bondrogeen) Added a test firmware, added NodeMCU Flasher
 ### 0.0.4 (2018-03-03)
-* (nedoskiv) Исправил утечку памяти.
-* (bondrogeen) Изменен внешний вид, мелкие исправления css.
+* (nedoskiv) Fix memory leak.
+* (bondrogeen) Changed the appearance, minor fixes css.
 ### 0.0.3 (2018-01-25)
-* (bondrogeen) Переименовал web_server.lua в web.lua
+* (bondrogeen) Rename web_server.lua to web.lua
 ### 0.0.2 (2018-01-13)
-* (bondrogeen) Изменил executeCode()
+* (bondrogeen) Changed executeCode()
 ### 0.0.1 (2017-12-08)
 * (bondrogeen) init.
-
-
 
