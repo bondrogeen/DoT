@@ -276,7 +276,7 @@ function reboot(d) {
   } else {
     document.getElementById("loader").classList.remove('hide');
     send("web_control.lua", {
-      init: "reboot"
+      reboot: true
     }, function (res) {
       document.getElementById("Modal").style.display = "none";
       setTimeout(function () {
