@@ -20,7 +20,7 @@
     "lua"
   ],
   "dependencies": {
-    "gulp": "^3.8.11",
+    "gulp": "^4.0.0",
     "gulp-watch": "^4.1.1",
     "gulp-util": "^3.0.8",
     "gulp-uglify": "^3.0.1",
