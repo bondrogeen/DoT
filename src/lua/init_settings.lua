@@ -21,7 +21,7 @@ local function init(n)
     state, result = pcall(sjson.decode,file.read())
     file.close()
   end
-  return result
+  return state and result
 end
 
 local function def(value)
@@ -46,7 +46,7 @@ local function run(t)
 end
 
 local function del(t)
-  if type(t)=="table" then
+  if type(t) == "table" then
     for i,v in pairs(t)do
       file.remove(v)
     end
