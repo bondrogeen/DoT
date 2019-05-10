@@ -1,4 +1,4 @@
-gpio.mode(2, gpio.INPUT)
+gpio.mode(2, gpio.INPUT, gpio.PULLUP)
 print(gpio.read(2))
 _s = dofile("init_settings.lua")({def = gpio.read(2)})
 node.setcpufreq(node.CPU160MHZ)

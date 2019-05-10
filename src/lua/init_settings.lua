@@ -39,9 +39,11 @@ local function run(t)
       n = init(k:match("(.*)%.")..".init")
       if k and n then
         n.run = t.name and true or n.run
-        n,f = pcall(dofile(k), n)end
+        n,f = pcall(dofile(k), n)
+        print(k, (f and "" or "not ").."running")
       end
     end
+  end
   return f
 end
 
